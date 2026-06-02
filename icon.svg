@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#2f7d57"/>
+  <circle cx="256" cy="235" r="92" fill="#ffffff" opacity="0.96"/>
+  <path d="M256 126c-42 42-68 78-68 118a68 68 0 0 0 136 0c0-40-26-76-68-118z" fill="#8fd19e"/>
+  <path d="M256 340c44-58 94-86 151-84-12 69-70 120-151 120s-139-51-151-120c57-2 107 26 151 84z" fill="#ffffff" opacity="0.92"/>
+  <text x="256" y="286" text-anchor="middle" font-size="110" font-family="Arial, sans-serif" font-weight="700" fill="#2f7d57">肥</text>
+</svg>
