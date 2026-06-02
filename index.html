@@ -10,7 +10,7 @@
   <title>果蔬施肥浇水记录</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="icon.svg">
   <style>
     :root {
       color-scheme: light;
@@ -1971,11 +1971,11 @@
 
     function doseForPlan(rule, growth, application, planting = els.planting.value) {
       const low = growth.level === "feed" ? "从 0.5-1 克/升试起" : "按 1 克/升以内";
-      if (application.startsWith("叶喷优先")) return `${low}，叶喷再稀释到 1:1500-1:2000，傍晚喷叶背。`;
-      if (rule.need.includes("有机肥")) return "灌根或浅埋后浇透；菌剂、海藻、黄腐酸单独低浓度更稳。";
+      if (application.startsWith("叶喷优先")) return `${low}，叶喷 1:1500-1:2000，傍晚喷叶背到湿而不滴；若还要灌根，至少间隔 48 小时。`;
+      if (rule.need.includes("有机肥")) return "灌根或浅埋后浇透；菌剂、海藻、黄腐酸单独低浓度更稳；叶喷另选海藻/氨基酸/螯合微量元素，间隔 48-72 小时。";
       return planting === "地栽"
-        ? `${low}，灌根 1:800-1:1200；地栽沿根区外缘少量施入。`
-        : `${low}，灌根 1:1200-1:1500；盆栽宁淡勿浓。`;
+        ? `${low}，灌根 1:800-1:1200；地栽沿根区外缘少量施入。叶喷辅助时 1:1500，和灌根间隔 48 小时。`
+        : `${low}，灌根 1:1200-1:1500；盆栽宁淡勿浓。叶喷辅助时 1:2000，和灌根间隔 48-72 小时。`;
     }
 
     function ratioNumber(ratio = "1份") {
@@ -2013,8 +2013,8 @@
       if (!items.length) return "灌根：当前库存缺少主要材料，先补齐配料。";
       const detail = items.map(item => `${item.name} ${item.amount}/${item.dilution || "不稀释"}`).join(" + ");
       const method = planting === "地栽"
-        ? "沿根区外缘或滴水线少量慢浇，施后补清水。"
-        : "沿盆边慢浇到基质湿润，避免积水和浓肥贴根。";
+        ? "沿根区外缘或滴水线少量慢浇，施后补清水；不要浇到主干根颈。"
+        : "沿盆边慢浇到基质湿润，避免积水和浓肥贴根；盆土过干时先清水润盆再灌肥。";
       return `灌根：${detail}，${method}`;
     }
 
@@ -2025,7 +2025,17 @@
       }
       const dilution = planting === "地栽" ? "1:1500" : "1:2000";
       const detail = sprayable.map(item => `${item.name} ${halfAmount(item.amount)}/${dilution}`).join(" + ");
-      return `叶喷：${detail}，傍晚喷叶背，先小范围试喷，花期和高温正午不喷。`;
+      return `叶喷：${detail}，傍晚喷叶背到湿而不滴，先小范围试喷；花期、高温正午、雨前不喷。`;
+    }
+
+    function rootFoliarIntervalText(growth, planting, temp = "") {
+      const value = temp === "" || Number.isNaN(Number(temp)) ? "" : Number(temp);
+      const cautious = growth.level === "feed" || planting === "盆栽" || (value !== "" && value >= 30);
+      const gap = cautious ? 72 : 48;
+      const order = /叶片发黄|不开花|落花落果/.test(growth.status || "")
+        ? "先叶喷快速补微量元素，间隔后再低浓度灌根。"
+        : "先灌根补根区营养，间隔后再叶喷作辅助。";
+      return `叶喷/灌根间隔：不要同一天叠加；建议间隔 ${gap} 小时。${order}同一周最多 1 次灌根 + 1 次叶喷，弱苗只保留一种。`;
     }
 
     function purchaseAdviceText(missing, cropName) {
@@ -2070,10 +2080,10 @@
       const interval = safeFertilizerInterval(rule, growth, els.planting.value || "盆栽", els.temperature.value);
       if (growth.level === "skip") return "时机判断：当前状态不适合施肥。";
       if (feedDays !== Infinity && feedDays < interval) {
-        return `时机判断：距离上次施肥 ${feedDays} 天，少于安全缩短后的建议间隔 ${interval} 天，本轮可先观察或只做极低浓度叶喷。`;
+        return `时机判断：距离上次施肥 ${feedDays} 天，少于本阶段缩短后的建议间隔 ${interval} 天，本轮可先观察；确有缺素信号时只做极低浓度叶喷，和下次灌根至少间隔 48-72 小时。`;
       }
       if (feedDays === Infinity) return "时机判断：没有历史施肥记录，可从推荐量的半量开始试施。";
-      return `时机判断：距离上次施肥 ${feedDays} 天，已达到安全缩短后的 ${interval} 天窗口，可按低浓度方案执行。`;
+      return `时机判断：距离上次施肥 ${feedDays} 天，已达到缩短后的 ${interval} 天窗口，可按低浓度方案执行；灌根和叶喷分开安排。`;
     }
 
     function currentRecipeContext() {
@@ -2153,13 +2163,14 @@
         }));
         const rootPlan = rootPlanText(items, planting);
         const foliarPlan = foliarPlanText(items, rule, planting);
+        const intervalPlan = rootFoliarIntervalText(growth, planting, els.temperature.value);
         return {
           name: recipe.name,
           planting,
           fertilizer: parts.join("、"),
           dilution,
           items,
-          note: `${selectedCrop}${planting}${recipe.name}：${ratios.length ? ratios.join(" + ") : "当前库存缺少主要材料"}。习性需求：${habit} 当前阶段：${currentMonth()}月${rule.stage}，需求 ${rule.need.join("、")}；植株状态：${growth.status}，${growth.text} ${timingAdvice} 库存分析：${stockAnalysis.text}${stockAnalysis.missing.length ? `；缺口：${stockAnalysis.missing.join("、")}` : "；关键需求已有匹配"}。${purchaseAdvice} ${baseAdvice} 品牌型谱：${profile} ${rootPlan} ${foliarPlan} 阶段建议：${dose} 施用方式：${application}。注意：${recipe.caution}`
+          note: `${selectedCrop}${planting}${recipe.name}：${ratios.length ? ratios.join(" + ") : "当前库存缺少主要材料"}。习性需求：${habit} 当前阶段：${currentMonth()}月${rule.stage}，需求 ${rule.need.join("、")}；植株状态：${growth.status}，${growth.text} ${timingAdvice} 库存分析：${stockAnalysis.text}${stockAnalysis.missing.length ? `；缺口：${stockAnalysis.missing.join("、")}` : "；关键需求已有匹配"}。${purchaseAdvice} ${baseAdvice} 品牌型谱：${profile} ${rootPlan} ${foliarPlan} ${intervalPlan} 阶段建议：${dose} 施用方式：${application}。注意：${recipe.caution}`
         };
       }).filter(plan => plan.fertilizer);
       if (plans.length) return plans;
@@ -2596,12 +2607,23 @@
       const missingText = missing.length ? `缺口：${[...new Set(missing)].join("、")}` : "材料齐全";
       const profile = profileForRule(rule, growth);
       const dose = doseForPlan(rule, growth, application);
+      const items = chosen.map(component => ({
+        name: component.name,
+        amount: amountForComponent(component, recipe, els.planting.value || "盆栽"),
+        dilution: dilutionForPlan(rule, growth, application, els.planting.value || "盆栽")
+      }));
+      const rootPlan = rootPlanText(items, els.planting.value || "盆栽");
+      const foliarPlan = foliarPlanText(items, rule, els.planting.value || "盆栽");
+      const intervalPlan = rootFoliarIntervalText(growth, els.planting.value || "盆栽", els.temperature.value);
       return `
         <div class="recipe">
           <p class="recipe-title">${escapeHtml(recipe.name)}</p>
           <p class="recipe-detail"><strong>配比：</strong>${escapeHtml(parts.join(" + ") || "当前库存缺主要材料")}</p>
           <p class="recipe-detail"><strong>参考：</strong>${escapeHtml(profile)}</p>
           <p class="recipe-detail"><strong>${escapeHtml(application)}。</strong>${escapeHtml(missingText)}，${escapeHtml(dose)}</p>
+          <p class="recipe-detail"><strong>灌根：</strong>${escapeHtml(rootPlan.replace(/^灌根：/, ""))}</p>
+          <p class="recipe-detail"><strong>叶喷：</strong>${escapeHtml(foliarPlan.replace(/^叶喷：/, ""))}</p>
+          <p class="recipe-detail"><strong>间隔：</strong>${escapeHtml(intervalPlan.replace(/^叶喷\/灌根间隔：/, ""))}</p>
         </div>
       `;
     }
@@ -2747,20 +2769,24 @@
       const highHeat = value !== "" && value >= 30;
       const riskyGrowth = growth.level === "skip" || /长势弱|叶缘焦枯/.test(growth.status || "");
 
-      let minimum = 10;
-      if (/连续|采收|花果期/.test(stageText)) minimum = 6;
-      if (/开花|坐果|膨果|现蕾|花苞|孕蕾/.test(stageText)) minimum = 7;
-      if (/萌芽|展叶|伸蔓|抽枝|缓苗/.test(stageText)) minimum = 9;
-      if (/采后|恢复|养枝/.test(stageText)) minimum = 12;
-      if (/高温|夏季/.test(stageText)) minimum = 18;
-      if (dormant) minimum = 28;
+      let minimum = 8;
+      if (/连续|采收|花果期/.test(stageText)) minimum = 5;
+      if (/开花|坐果|膨果|现蕾|花苞|孕蕾/.test(stageText)) minimum = 6;
+      if (/萌芽|展叶|伸蔓|抽枝|缓苗/.test(stageText)) minimum = 7;
+      if (/采后|恢复|养枝/.test(stageText)) minimum = 10;
+      if (/高温|夏季/.test(stageText)) minimum = 14;
+      if (dormant) minimum = 21;
 
-      if (riskyGrowth || highHeat || dormant) {
-        return Math.max(minimum, rule.interval);
+      if (dormant) {
+        return Math.max(minimum, Math.round(rule.interval * 0.72));
       }
 
-      const factor = plantingText === "地栽" ? 0.8 : 0.88;
-      const stageBonus = /连续|采收|膨果|坐果|花果期/.test(stageText) ? 1 : 0;
+      if (riskyGrowth || highHeat) {
+        return Math.max(minimum, Math.round(rule.interval * 0.9));
+      }
+
+      const factor = plantingText === "地栽" ? 0.68 : 0.75;
+      const stageBonus = /连续|采收|膨果|坐果|花果期/.test(stageText) ? 2 : 1;
       return Math.max(minimum, Math.round(rule.interval * factor) - stageBonus);
     }
 
