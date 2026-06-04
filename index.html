@@ -665,6 +665,55 @@
       min-height: 52px;
     }
 
+    .record-type-field {
+      margin-top: 6px;
+    }
+
+    .visually-hidden-select {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      border: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .record-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .record-type-card {
+      min-height: 74px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 900;
+      box-shadow: 0 8px 20px rgba(40, 55, 48, 0.06);
+    }
+
+    .record-type-card .type-mark {
+      display: block;
+      width: 28px;
+      height: 28px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--type-color) 16%, #fff);
+      color: var(--type-color);
+      line-height: 28px;
+      font-size: 13px;
+    }
+
+    .record-type-card.active {
+      border-color: var(--type-color);
+      background: color-mix(in srgb, var(--type-color) 10%, #fff);
+      box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--type-color) 35%, transparent);
+    }
+
     .detail-tabs {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -694,6 +743,10 @@
       box-shadow: inset 0 -2px 0 var(--crop);
     }
 
+    .detail-tab-panel {
+      margin-top: 12px;
+    }
+
     .detail-tab-panel:not(.active) {
       display: none;
     }
@@ -706,6 +759,32 @@
 
     .album-grid .empty {
       grid-column: 1 / -1;
+    }
+
+    .album-toolbar {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .album-mode-btn {
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .album-mode-btn.active {
+      border-color: var(--crop);
+      background: color-mix(in srgb, var(--crop) 12%, #fff);
+      color: var(--green);
+    }
+
+    .album-view:not(.active) {
+      display: none;
     }
 
     .album-photo {
@@ -728,6 +807,102 @@
       color: #fff;
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .album-photo-button {
+      width: 100%;
+      min-height: 150px;
+      border: 0;
+      padding: 0;
+      text-align: left;
+      color: inherit;
+      background: transparent;
+      border-radius: var(--radius);
+    }
+
+    .album-timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .album-timeline-item {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .album-timeline-thumb {
+      min-height: 92px;
+      border-radius: 14px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .album-meta {
+      display: grid;
+      gap: 6px;
+      align-content: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .album-meta strong {
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    .photo-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      align-items: end;
+      background: rgba(0, 0, 0, 0.86);
+      padding: max(18px, env(safe-area-inset-top)) 14px max(18px, env(safe-area-inset-bottom));
+    }
+
+    .photo-lightbox[hidden] {
+      display: none;
+    }
+
+    .photo-lightbox-panel {
+      display: grid;
+      gap: 12px;
+      width: min(100%, 520px);
+      margin: 0 auto;
+      color: #fff;
+    }
+
+    .photo-lightbox-image {
+      width: 100%;
+      max-height: 72vh;
+      border-radius: 18px;
+      object-fit: contain;
+      background: #111;
+    }
+
+    .photo-lightbox-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .photo-lightbox-meta {
+      display: grid;
+      gap: 4px;
+      font-weight: 800;
+    }
+
+    .photo-lightbox-meta span {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 13px;
     }
 
     .stats-grid {
@@ -1031,6 +1206,154 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+    }
+
+    .mine-menu {
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .mine-menu-item {
+      width: 100%;
+      min-height: 64px;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 20px;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      text-align: left;
+      color: var(--ink);
+    }
+
+    .mine-menu-item:last-child {
+      border-bottom: 0;
+    }
+
+    .mine-menu-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--item-color) 18%, #fff);
+      color: var(--item-color);
+      font-weight: 900;
+    }
+
+    .mine-menu-title {
+      display: grid;
+      gap: 3px;
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    .mine-menu-title small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .mine-menu-arrow {
+      color: var(--muted);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .material-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 4px 0 10px;
+    }
+
+    .material-tab {
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .material-tab.active {
+      border-color: var(--green);
+      background: color-mix(in srgb, var(--green) 14%, #fff);
+      color: var(--green);
+    }
+
+    .compact-material-form {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .compact-material-form summary {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 900;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .compact-material-form .task-form {
+      margin-top: 8px;
+      gap: 8px;
+    }
+
+    .tool-card {
+      display: grid;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .soil-dim {
+      display: none;
+    }
+
+    .soil-dim.show {
+      display: grid;
+    }
+
+    .soil-result {
+      display: grid;
+      gap: 8px;
+    }
+
+    .soil-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .soil-metric {
+      padding: 10px;
+      border-radius: 14px;
+      background: var(--soft);
+    }
+
+    .soil-metric strong {
+      display: block;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    .soil-metric span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
     }
 
     .sheet-backdrop {
@@ -1929,23 +2252,29 @@
             <label for="dateInput">日期</label>
             <input id="dateInput" type="date" required>
           </div>
-          <div class="field">
-            <label for="typeInput">类型</label>
-            <select id="typeInput" required>
-              <option value="浇水">浇水</option>
-              <option value="施肥">施肥</option>
-              <option value="修剪">修剪</option>
-              <option value="病虫害">病虫害</option>
-              <option value="拍照">拍照</option>
-              <option value="笔记">笔记</option>
-            </select>
-          </div>
+        </div>
+
+        <div class="field record-type-field">
+          <label for="typeInput">记录分类</label>
+          <select class="visually-hidden-select" id="typeInput" required aria-label="记录分类">
+            <option value="浇水">浇水</option>
+            <option value="施肥">施肥</option>
+            <option value="修剪">修剪</option>
+            <option value="换盆">换盆</option>
+            <option value="病虫害">病虫害</option>
+            <option value="测量">测量</option>
+            <option value="拍照">拍照</option>
+            <option value="笔记">笔记</option>
+            <option value="里程碑">里程碑</option>
+          </select>
+          <div class="record-type-grid" id="recordTypeGrid"></div>
         </div>
 
         <div class="row">
           <div class="field" id="amountField">
             <label for="amountInput">用量</label>
             <select id="amountInput"></select>
+            <input class="custom-input" id="measurementHeightInput" type="number" min="0" step="0.1" inputmode="decimal" placeholder="输入株高，例如 35">
             <input class="custom-input" id="customAmountInput" type="text" placeholder="输入其他用量">
           </div>
           <div class="field" id="fertilizerField">
@@ -2044,14 +2373,62 @@
       </form>
 
       <div class="content">
-        <section class="panel plan-panel app-page" id="materialsPage" data-page-panel="mine">
+        <section class="panel plan-panel app-page" data-page-panel="mine">
           <div class="panel-heading">
-            <h2 class="panel-title">农资管理</h2>
-            <select class="month-select" id="materialKindFilter">
-              <option value="肥料">肥料</option>
-              <option value="药剂">药剂</option>
-            </select>
+            <h2 class="panel-title">我的</h2>
           </div>
+          <div class="mine-menu">
+            <button class="mine-menu-item" type="button" id="openMaterialsBtn" style="--item-color:#d39a2f">
+              <span class="mine-menu-icon">资</span>
+              <span class="mine-menu-title">农资管理<small>肥料、药剂库存仓库</small></span>
+              <span class="mine-menu-arrow">›</span>
+            </button>
+            <button class="mine-menu-item" type="button" id="openCostStatsBtn" style="--item-color:#55b86a">
+              <span class="mine-menu-icon">费</span>
+              <span class="mine-menu-title">花费统计<small>农资数量与状态统计</small></span>
+              <span class="mine-menu-arrow">›</span>
+            </button>
+            <button class="mine-menu-item" type="button" id="openPlantTagsBtn" style="--item-color:#8a65d8">
+              <span class="mine-menu-icon">签</span>
+              <span class="mine-menu-title">植物标签<small>分类、健康状态标签</small></span>
+              <span class="mine-menu-arrow">›</span>
+            </button>
+            <button class="mine-menu-item" type="button" id="openTaskTemplatesBtn" style="--item-color:#35c676">
+              <span class="mine-menu-icon">模</span>
+              <span class="mine-menu-title">养护计划模板<small>自动任务模板</small></span>
+              <span class="mine-menu-arrow">›</span>
+            </button>
+            <button class="mine-menu-item" type="button" id="openToolsBtn" style="--item-color:#3aa7e8">
+              <span class="mine-menu-icon">工</span>
+              <span class="mine-menu-title">实用工具<small>土量计算器</small></span>
+              <span class="mine-menu-arrow">›</span>
+            </button>
+            <button class="mine-menu-item" type="button" id="mineRestoreShortcutBtn" style="--item-color:#3aa7e8">
+              <span class="mine-menu-icon">备</span>
+              <span class="mine-menu-title">数据备份/恢复<small>导出或恢复本地数据</small></span>
+              <span class="mine-menu-arrow">›</span>
+            </button>
+            <button class="mine-menu-item" type="button" data-mine-scroll="settingsPanel" style="--item-color:#8d9692">
+              <span class="mine-menu-icon">设</span>
+              <span class="mine-menu-title">设置<small>本地存储与入口说明</small></span>
+              <span class="mine-menu-arrow">›</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="panel plan-panel app-page" id="materialsPage" data-page-panel="materials">
+          <div class="panel-heading">
+            <button class="icon-btn" type="button" id="materialsBackBtn" title="返回">‹</button>
+            <h2 class="panel-title">农资管理</h2>
+          </div>
+          <div class="material-tabs" role="tablist" aria-label="农资类型">
+            <button class="material-tab active" type="button" data-material-kind="肥料" aria-pressed="true">肥料</button>
+            <button class="material-tab" type="button" data-material-kind="药剂" aria-pressed="false">药剂</button>
+          </div>
+          <select class="visually-hidden-select" id="materialKindFilter" aria-label="农资类型">
+            <option value="肥料">肥料</option>
+            <option value="药剂">药剂</option>
+          </select>
           <div class="filters">
             <select id="materialStatusFilter">
               <option value="全部">全部状态</option>
@@ -2061,58 +2438,63 @@
             </select>
           </div>
           <div class="guidance-box" id="materialExpiryAlert"></div>
-          <form class="task-form" id="materialForm">
-            <input type="hidden" id="materialIdInput">
-            <div class="row">
-              <div class="field">
-                <label for="materialNameInput">名称</label>
-                <input id="materialNameInput" type="text" required placeholder="例如：磷酸二氢钾">
+          <details class="compact-material-form">
+            <summary>添加/编辑农资</summary>
+            <form class="task-form" id="materialForm">
+              <input type="hidden" id="materialIdInput">
+              <div class="row">
+                <div class="field">
+                  <label for="materialNameInput">名称</label>
+                  <input id="materialNameInput" type="text" required placeholder="例如：磷酸二氢钾">
+                </div>
+                <div class="field">
+                  <label for="materialKindInput">类型</label>
+                  <select id="materialKindInput">
+                    <option value="肥料">肥料</option>
+                    <option value="药剂">药剂</option>
+                  </select>
+                </div>
               </div>
-              <div class="field">
-                <label for="materialKindInput">类型</label>
-                <select id="materialKindInput">
-                  <option value="肥料">肥料</option>
-                  <option value="药剂">药剂</option>
-                </select>
+              <div class="row">
+                <div class="field">
+                  <label for="materialStockInput">库存</label>
+                  <input id="materialStockInput" type="number" min="0" step="0.1" inputmode="decimal" placeholder="1">
+                </div>
+                <div class="field">
+                  <label for="materialUnitInput">单位</label>
+                  <input id="materialUnitInput" type="text" placeholder="瓶/袋/克">
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="field">
-                <label for="materialStockInput">库存</label>
-                <input id="materialStockInput" type="number" min="0" step="0.1" inputmode="decimal" placeholder="例如：1">
+              <div class="row">
+                <div class="field">
+                  <label for="materialBuyDateInput">购买</label>
+                  <input id="materialBuyDateInput" type="date">
+                </div>
+                <div class="field">
+                  <label for="materialExpireDateInput">有效期</label>
+                  <input id="materialExpireDateInput" type="date">
+                </div>
               </div>
-              <div class="field">
-                <label for="materialUnitInput">单位</label>
-                <input id="materialUnitInput" type="text" placeholder="瓶、袋、克、毫升">
+              <div class="row">
+                <div class="field">
+                  <label for="materialStatusInput">状态</label>
+                  <select id="materialStatusInput">
+                    <option value="有效">有效</option>
+                    <option value="过期">过期</option>
+                    <option value="已用完">已用完</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="materialNoteInput">备注</label>
+                  <input id="materialNoteInput" type="text" placeholder="浓度/注意事项">
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="field">
-                <label for="materialBuyDateInput">购买日期</label>
-                <input id="materialBuyDateInput" type="date">
+              <div class="form-actions">
+                <button class="btn primary" type="submit">保存</button>
+                <button class="btn secondary" type="button" id="materialCancelBtn">取消</button>
               </div>
-              <div class="field">
-                <label for="materialExpireDateInput">有效期</label>
-                <input id="materialExpireDateInput" type="date">
-              </div>
-            </div>
-            <div class="field">
-              <label for="materialStatusInput">状态</label>
-              <select id="materialStatusInput">
-                <option value="有效">有效</option>
-                <option value="过期">过期</option>
-                <option value="已用完">已用完</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="materialNoteInput">备注</label>
-              <textarea id="materialNoteInput" rows="2" placeholder="浓度、适用作物、注意事项"></textarea>
-            </div>
-            <div class="form-actions">
-              <button class="btn primary" type="submit">保存农资</button>
-              <button class="btn secondary" type="button" id="materialCancelBtn">取消编辑</button>
-            </div>
-          </form>
+            </form>
+          </details>
           <div class="material-list" id="materialList"></div>
         </section>
 
@@ -2168,44 +2550,146 @@
           </div>
         </section>
 
-        <section class="panel plan-panel app-page" data-page-panel="mine">
+        <section class="panel plan-panel app-page" data-page-panel="tasks">
           <div class="panel-heading">
             <h2 class="panel-title">动态建议</h2>
             <select class="month-select" id="planMonth"></select>
           </div>
-          <details class="compact-details">
-            <summary>肥料库存</summary>
-            <div class="stock-tools">
-              <span class="bulk-status" id="fertilizerDeleteStatus">待删 0 个肥料</span>
-              <button class="btn secondary" id="deleteSelectedFertilizersBtn" type="button">删除所选肥料</button>
-            </div>
-            <div class="stock-grid" id="fertilizerStock"></div>
-            <div class="stock-add">
-              <input id="customFertilizerInput" type="text" placeholder="添加肥料">
-              <button class="btn secondary" id="addFertilizerBtn" type="button">添加</button>
-            </div>
-          </details>
-          <details class="compact-details">
-            <summary>病虫害药物</summary>
-            <div class="stock-tools">
-              <span class="bulk-status" id="pesticideDeleteStatus">待删 0 个药物</span>
-              <button class="btn secondary" id="deleteSelectedPesticidesBtn" type="button">删除所选药物</button>
-            </div>
-            <div class="stock-grid" id="pesticideStock"></div>
-            <div class="stock-add">
-              <input id="customPesticideInput" type="text" placeholder="添加药物">
-              <button class="btn secondary" id="addPesticideBtn" type="button">添加</button>
-            </div>
-          </details>
           <div class="plan-grid" id="planGrid"></div>
         </section>
 
-        <section class="panel guidance-panel app-page" data-page-panel="mine">
+        <section class="panel guidance-panel app-page" data-page-panel="tasks">
           <div class="panel-heading">
             <h2 class="panel-title">配料建议与指导</h2>
           </div>
           <div class="guidance-box" id="recipeGuidance">
             <div class="empty">选择一键配料方案后，这里会显示购买建议、底肥指导、灌根和叶喷方案。</div>
+          </div>
+        </section>
+
+        <section class="panel plan-panel app-page" id="costStatsPage" data-page-panel="cost-stats">
+          <div class="panel-heading">
+            <button class="icon-btn" type="button" id="costStatsBackBtn" title="返回">‹</button>
+            <h2 class="panel-title">花费统计</h2>
+          </div>
+          <div class="guidance-box" id="costStatsBox"></div>
+        </section>
+
+        <section class="panel plan-panel app-page" id="plantTagsPage" data-page-panel="plant-tags">
+          <div class="panel-heading">
+            <button class="icon-btn" type="button" id="plantTagsBackBtn" title="返回">‹</button>
+            <h2 class="panel-title">植物标签</h2>
+          </div>
+          <div class="task-list" id="plantTagList"></div>
+        </section>
+
+        <section class="panel plan-panel app-page" id="taskTemplatesPage" data-page-panel="task-templates">
+          <div class="panel-heading">
+            <button class="icon-btn" type="button" id="taskTemplatesBackBtn" title="返回">‹</button>
+            <h2 class="panel-title">养护计划模板</h2>
+          </div>
+          <div class="task-list" id="taskTemplateList"></div>
+        </section>
+
+        <section class="panel plan-panel app-page" id="toolsPage" data-page-panel="tools">
+          <div class="panel-heading">
+            <button class="icon-btn" type="button" id="toolsBackBtn" title="返回">‹</button>
+            <h2 class="panel-title">实用工具</h2>
+          </div>
+          <div class="tool-card">
+            <div class="panel-heading">
+              <h3 class="panel-title">土量计算器</h3>
+            </div>
+            <form class="task-form" id="soilCalcForm">
+              <div class="row">
+                <div class="field">
+                  <label for="soilShapeInput">盆形</label>
+                  <select id="soilShapeInput">
+                    <option value="cylinder">圆柱形</option>
+                    <option value="cone">圆锥形</option>
+                    <option value="frustum">截锥形</option>
+                    <option value="rectangle">长方形</option>
+                    <option value="square">正方形</option>
+                    <option value="hemisphere">半球形</option>
+                    <option value="hexagon">六边形</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="soilTypeInput">土壤类型</label>
+                  <select id="soilTypeInput">
+                    <option value="通用型培养土">通用型培养土</option>
+                    <option value="多肉专用土">多肉专用土</option>
+                    <option value="腐叶土">腐叶土</option>
+                    <option value="园艺泥炭土">园艺泥炭土</option>
+                    <option value="普通园土">普通园土</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label for="soilFillInput">填满程度(%)</label>
+                  <input id="soilFillInput" type="number" min="1" max="100" step="1" inputmode="decimal" value="90">
+                </div>
+                <div class="field soil-dim" data-soil-dim="height">
+                  <label for="soilHeightInput">高度(cm)</label>
+                  <input id="soilHeightInput" type="number" min="0" step="0.1" inputmode="decimal" value="25">
+                </div>
+              </div>
+              <div class="row">
+                <div class="field soil-dim" data-soil-dim="diameter">
+                  <label for="soilDiameterInput">直径(cm)</label>
+                  <input id="soilDiameterInput" type="number" min="0" step="0.1" inputmode="decimal" value="30">
+                </div>
+                <div class="field soil-dim" data-soil-dim="topDiameter">
+                  <label for="soilTopDiameterInput">上口直径(cm)</label>
+                  <input id="soilTopDiameterInput" type="number" min="0" step="0.1" inputmode="decimal" value="30">
+                </div>
+              </div>
+              <div class="row">
+                <div class="field soil-dim" data-soil-dim="bottomDiameter">
+                  <label for="soilBottomDiameterInput">底部直径(cm)</label>
+                  <input id="soilBottomDiameterInput" type="number" min="0" step="0.1" inputmode="decimal" value="22">
+                </div>
+                <div class="field soil-dim" data-soil-dim="length">
+                  <label for="soilLengthInput">长度(cm)</label>
+                  <input id="soilLengthInput" type="number" min="0" step="0.1" inputmode="decimal" value="40">
+                </div>
+              </div>
+              <div class="row">
+                <div class="field soil-dim" data-soil-dim="width">
+                  <label for="soilWidthInput">宽度(cm)</label>
+                  <input id="soilWidthInput" type="number" min="0" step="0.1" inputmode="decimal" value="25">
+                </div>
+                <div class="field soil-dim" data-soil-dim="side">
+                  <label for="soilSideInput">边长(cm)</label>
+                  <input id="soilSideInput" type="number" min="0" step="0.1" inputmode="decimal" value="25">
+                </div>
+              </div>
+            </form>
+            <div class="guidance-box soil-result" id="soilCalcResult"></div>
+          </div>
+        </section>
+
+        <section class="panel plan-panel app-page" data-page-panel="mine">
+          <div class="panel-heading">
+            <h2 class="panel-title">数据备份/恢复</h2>
+          </div>
+          <div class="form-actions">
+            <button class="btn primary" id="mineBackupBtn" type="button">备份数据</button>
+            <button class="btn secondary" id="mineRestoreBtn" type="button">恢复数据</button>
+          </div>
+          <div class="guidance-box">
+            <div class="empty">备份会导出 plants、records、tasks、materials 四类数据；恢复时会兼容旧库存字段并合并到农资管理。</div>
+          </div>
+        </section>
+
+        <section class="panel plan-panel app-page" id="settingsPanel" data-page-panel="mine">
+          <div class="panel-heading">
+            <h2 class="panel-title">设置</h2>
+          </div>
+          <div class="guidance-box">
+            <p><strong>数据存储：</strong>本页面使用手机/浏览器本地存储保存记录。</p>
+            <p><strong>农资入口：</strong>肥料和药剂统一在“农资管理”中维护。</p>
           </div>
         </section>
 
@@ -2266,7 +2750,8 @@
         <form class="plant-form" id="plantForm">
           <div class="field">
             <label for="plantNameInput">植物名称</label>
-            <input id="plantNameInput" type="text" required placeholder="例如：蓝莓、月季">
+            <input id="plantNameInput" type="text" required list="plantNameLibrary" placeholder="例如：蓝莓、月季">
+            <datalist id="plantNameLibrary"></datalist>
           </div>
           <div class="row">
             <div class="field">
@@ -2303,6 +2788,15 @@
         </form>
       </section>
     </div>
+    <div class="photo-lightbox" id="photoLightbox" hidden>
+      <div class="photo-lightbox-panel" role="dialog" aria-modal="true" aria-label="照片预览">
+        <div class="photo-lightbox-head">
+          <div class="photo-lightbox-meta" id="photoLightboxMeta"></div>
+          <button class="icon-btn" type="button" id="photoLightboxCloseBtn" title="关闭">×</button>
+        </div>
+        <img class="photo-lightbox-image" id="photoLightboxImage" alt="植物照片">
+      </div>
+    </div>
   </main>
 
   <script>
@@ -2316,6 +2810,36 @@
       { name: "草莓", code: "莓", color: "#d94656", hint: "结果期补钾钙", varieties: ["草莓"] },
       { name: "无花果", code: "果", color: "#7b8f38", hint: "结果期稳钾", varieties: ["无花果"] }
     ];
+    const plantLibrary = {
+      "水果": [
+        "苹果", "梨", "桃", "油桃", "蟠桃", "李子", "杏", "樱桃", "甜樱桃", "葡萄",
+        "蓝莓", "草莓", "树莓", "黑莓", "无花果", "猕猴桃", "柿子", "枣", "石榴", "山楂",
+        "柑橘", "橙子", "柚子", "柠檬", "金桔", "杨梅", "枇杷", "桑葚", "菠萝", "香蕉",
+        "芒果", "荔枝", "龙眼", "火龙果", "百香果", "番石榴", "莲雾", "木瓜", "椰子", "榴莲",
+        "菠萝蜜", "杨桃", "人参果", "西瓜", "甜瓜", "哈密瓜", "香瓜", "蔓越莓", "醋栗", "沙棘"
+      ],
+      "作物": [
+        "水稻", "小麦", "玉米", "高粱", "大麦", "燕麦", "荞麦", "谷子", "黍子", "薏米",
+        "大豆", "绿豆", "红豆", "黑豆", "豌豆", "蚕豆", "鹰嘴豆", "花生", "芝麻", "油菜",
+        "向日葵", "棉花", "甘蔗", "甜菜", "烟草", "茶树", "咖啡", "可可", "亚麻", "苎麻",
+        "黄麻", "红薯", "马铃薯", "木薯", "山药", "芋头", "魔芋", "莲藕", "姜", "荞头",
+        "紫苏", "薄荷", "罗勒", "香茅", "藿香", "金银花", "菊花", "板蓝根", "丹参", "黄芪"
+      ],
+      "蔬菜": [
+        "番茄", "小番茄", "黄瓜", "茄子", "辣椒", "甜椒", "西葫芦", "南瓜", "冬瓜", "丝瓜",
+        "苦瓜", "佛手瓜", "瓠瓜", "菜豆", "豇豆", "四季豆", "荷兰豆", "毛豆", "蚕豆苗", "豌豆苗",
+        "白菜", "小白菜", "上海青", "油麦菜", "生菜", "菠菜", "空心菜", "苋菜", "茼蒿", "芹菜",
+        "香菜", "韭菜", "大葱", "洋葱", "大蒜", "蒜苗", "萝卜", "胡萝卜", "甜菜根", "芥菜",
+        "西兰花", "花椰菜", "甘蓝", "包菜", "羽衣甘蓝", "莴笋", "芦笋", "秋葵", "玉米笋", "蘑菇"
+      ],
+      "花卉": [
+        "月季", "玫瑰", "蔷薇", "桂花", "茉莉", "栀子", "茶花", "杜鹃", "绣球", "铁线莲",
+        "兰花", "蝴蝶兰", "君子兰", "长寿花", "天竺葵", "矮牵牛", "百万小铃", "三角梅", "扶桑", "木槿",
+        "牡丹", "芍药", "菊花", "大丽花", "百合", "郁金香", "风信子", "水仙", "朱顶红", "鸢尾",
+        "荷花", "睡莲", "太阳花", "向日葵", "康乃馨", "满天星", "薰衣草", "迷迭香", "薄荷", "罗勒",
+        "紫罗兰", "报春花", "仙客来", "倒挂金钟", "蟹爪兰", "令箭荷花", "多肉", "仙人球", "文竹", "绿萝"
+      ]
+    };
     const varietyNotes = {
       "Duke": "Duke 偏早熟，春季萌芽开花期薄肥，采后及时恢复树势。",
       "中熟品种": "中熟蓝莓拉长膨果和采收期，钾钙镁补充要稳，不追猛肥。",
@@ -2351,7 +2875,131 @@
     const customPesticideKey = "fruit-care-custom-pesticides-v1";
     const deletedPesticideKey = "fruit-care-deleted-pesticides-v1";
     const pesticideImportKey = "fruit-care-pesticides-imported-v1";
+    const recordTypes = ["浇水", "施肥", "修剪", "换盆", "病虫害", "测量", "拍照", "笔记", "里程碑"];
+    const recordTypeMeta = {
+      "浇水": { mark: "水", color: "#3aa7e8", amountLabel: "水量", amountPlaceholder: "输入浇水量" },
+      "施肥": { mark: "肥", color: "#b9832f", amountLabel: "用量", amountPlaceholder: "选择或输入用量" },
+      "修剪": { mark: "剪", color: "#55b86a", note: "记录修剪部位、幅度和原因。" },
+      "换盆": { mark: "盆", color: "#33b8c8", note: "记录盆径、介质、根系情况和缓苗安排。" },
+      "病虫害": { mark: "病", color: "#e05757", note: "选择发生部位和严重程度后，会自动给出优先处理方式。" },
+      "测量": { mark: "量", color: "#a45bc4", amountLabel: "株高(cm)", amountPlaceholder: "输入株高，例如 35" },
+      "拍照": { mark: "照", color: "#20a99a", note: "可记录拍照对象、角度和观察重点。" },
+      "笔记": { mark: "记", color: "#6d75c9", note: "记录观察、想法或后续事项。" },
+      "里程碑": { mark: "碑", color: "#e0a72f", note: "记录萌芽、开花、坐果、采收等关键节点。" }
+    };
+    const soilTypeProfiles = {
+      "通用型培养土": {
+        density: 0.45,
+        ratio: "泥炭/椰糠 50% + 腐叶土/堆肥 30% + 珍珠岩 20%"
+      },
+      "多肉专用土": {
+        density: 0.65,
+        ratio: "颗粒土 60% + 泥炭/椰糠 25% + 珍珠岩 15%"
+      },
+      "腐叶土": {
+        density: 0.35,
+        ratio: "腐叶土 70% + 园土 20% + 河沙/珍珠岩 10%"
+      },
+      "园艺泥炭土": {
+        density: 0.30,
+        ratio: "泥炭土 70% + 珍珠岩 20% + 腐熟有机质/缓释肥 10%"
+      },
+      "普通园土": {
+        density: 1.20,
+        ratio: "园土 70% + 腐熟有机质 20% + 河沙/珍珠岩 10%"
+      }
+    };
     const taskTypes = ["浇水", "换水", "施肥", "修剪", "换盆", "病虫害", "测量", "里程碑", "拍照", "笔记"];
+    const taskTemplates = [
+      {
+        id: "template-water",
+        name: "基础浇水",
+        type: "浇水",
+        categories: ["*"],
+        firstAfterDays: 2,
+        cycleDays: 3,
+        note: "按土表干湿调整，夏季或小盆可提前。"
+      },
+      {
+        id: "template-feed",
+        name: "缓苗后施肥",
+        type: "施肥",
+        categories: ["*"],
+        firstAfterDays: 10,
+        cycleDays: 10,
+        note: "新建植物先缓苗，恢复后低浓度薄肥勤施。"
+      },
+      {
+        id: "template-pest",
+        name: "病虫害巡查",
+        type: "病虫害",
+        categories: ["*"],
+        firstAfterDays: 7,
+        cycleDays: 7,
+        note: "检查叶背、新梢、花果和盆土表面，早发现早处理。"
+      },
+      {
+        id: "template-photo",
+        name: "生长拍照",
+        type: "拍照",
+        categories: ["*"],
+        firstAfterDays: 7,
+        cycleDays: 14,
+        note: "固定角度拍照，方便对比长势和病斑变化。"
+      },
+      {
+        id: "template-prune-fruit",
+        name: "果菜整枝修剪",
+        type: "修剪",
+        categories: ["葡萄", "番茄", "西瓜", "无花果", "月季", "草莓"],
+        firstAfterDays: 21,
+        cycleDays: 21,
+        note: "只做轻剪、去病弱枝叶；高温、弱苗、缓苗期先暂停。"
+      },
+      {
+        id: "template-repot",
+        name: "换盆评估",
+        type: "换盆",
+        categories: ["蓝莓", "月季", "桂花", "草莓", "无花果"],
+        firstAfterDays: 60,
+        cycleDays: 90,
+        note: "观察根系、介质板结和盆土排水，非必要不频繁换盆。"
+      }
+    ];
+    const taskTemplateOverrides = {
+      "蓝莓": {
+        "template-water": { firstAfterDays: 2, cycleDays: 3, note: "保持酸性介质微湿但不积水。" },
+        "template-feed": { firstAfterDays: 14, cycleDays: 14, note: "恢复后用偏酸性、低浓度方案，避开高盐高磷。" }
+      },
+      "葡萄": {
+        "template-water": { firstAfterDays: 3, cycleDays: 5, note: "见干见湿，转色前后避免忽干忽湿。" },
+        "template-feed": { firstAfterDays: 12, cycleDays: 12, note: "坐果后偏磷钾，旺长时减少氮肥。" }
+      },
+      "番茄": {
+        "template-water": { firstAfterDays: 2, cycleDays: 2, note: "结果期水分要稳，避免裂果和脐腐。" },
+        "template-feed": { firstAfterDays: 8, cycleDays: 8, note: "少量多次补钾钙镁，弱苗先养根。" }
+      },
+      "西瓜": {
+        "template-water": { firstAfterDays: 2, cycleDays: 3, note: "伸蔓和膨瓜期稳水，采前避免大水。" },
+        "template-feed": { firstAfterDays: 9, cycleDays: 9, note: "伸蔓期平衡，坐瓜后偏钾，薄肥勤施。" }
+      },
+      "月季": {
+        "template-water": { firstAfterDays: 2, cycleDays: 2, note: "盆栽土表干后浇透，高温通风优先。" },
+        "template-feed": { firstAfterDays: 7, cycleDays: 7, note: "抽芽和花后恢复薄肥，病弱或高温先停速效肥。" }
+      },
+      "桂花": {
+        "template-water": { firstAfterDays: 3, cycleDays: 4, note: "保持通透，避免长期积水闷根。" },
+        "template-feed": { firstAfterDays: 14, cycleDays: 20, note: "春季养梢、花前偏磷钾，冬季少速效肥。" }
+      },
+      "草莓": {
+        "template-water": { firstAfterDays: 2, cycleDays: 2, note: "小盆和挂果期更容易缺水，避免叶心积水。" },
+        "template-feed": { firstAfterDays: 7, cycleDays: 7, note: "花果期低浓度补钾钙镁，避免氮过多。" }
+      },
+      "无花果": {
+        "template-water": { firstAfterDays: 3, cycleDays: 4, note: "耐旱但怕涝，盆土干湿交替更稳。" },
+        "template-feed": { firstAfterDays: 10, cycleDays: 12, note: "结果期偏钾钙，枝叶过旺时控氮。" }
+      }
+    };
     const ownedFertilizers = [
       "硫酸铵",
       "硫酸钾",
@@ -2655,8 +3303,10 @@
       planting: document.getElementById("plantingInput"),
       date: document.getElementById("dateInput"),
       type: document.getElementById("typeInput"),
+      recordTypeGrid: document.getElementById("recordTypeGrid"),
       amountField: document.getElementById("amountField"),
       amount: document.getElementById("amountInput"),
+      measurementHeight: document.getElementById("measurementHeightInput"),
       customAmount: document.getElementById("customAmountInput"),
       fertilizer: document.getElementById("fertilizerInput"),
       fertilizerSummary: document.getElementById("fertilizerSummary"),
@@ -2684,6 +3334,10 @@
       plantDetailTitle: document.getElementById("plantDetailTitle"),
       plantDetailContent: document.getElementById("plantDetailContent"),
       detailPhoto: document.getElementById("detailPhotoInput"),
+      photoLightbox: document.getElementById("photoLightbox"),
+      photoLightboxImage: document.getElementById("photoLightboxImage"),
+      photoLightboxMeta: document.getElementById("photoLightboxMeta"),
+      photoLightboxClose: document.getElementById("photoLightboxCloseBtn"),
       plantSheet: document.getElementById("plantSheet"),
       plantForm: document.getElementById("plantForm"),
       plantSheetClose: document.getElementById("plantSheetCloseBtn"),
@@ -2697,20 +3351,13 @@
       plantNote: document.getElementById("plantNoteInput"),
       cancel: document.getElementById("cancelBtn"),
       summary: document.getElementById("summary"),
-      fertilizerStock: document.getElementById("fertilizerStock"),
-      customFertilizer: document.getElementById("customFertilizerInput"),
-      addFertilizer: document.getElementById("addFertilizerBtn"),
-      fertilizerDeleteStatus: document.getElementById("fertilizerDeleteStatus"),
-      deleteSelectedFertilizers: document.getElementById("deleteSelectedFertilizersBtn"),
-      pesticideStock: document.getElementById("pesticideStock"),
-      customPesticide: document.getElementById("customPesticideInput"),
-      addPesticide: document.getElementById("addPesticideBtn"),
-      pesticideDeleteStatus: document.getElementById("pesticideDeleteStatus"),
-      deleteSelectedPesticides: document.getElementById("deleteSelectedPesticidesBtn"),
       planMonth: document.getElementById("planMonth"),
       planGrid: document.getElementById("planGrid"),
       recipeGuidance: document.getElementById("recipeGuidance"),
       seedlingGrid: document.getElementById("seedlingGrid"),
+      taskTemplateList: document.getElementById("taskTemplateList"),
+      costStatsBox: document.getElementById("costStatsBox"),
+      plantTagList: document.getElementById("plantTagList"),
       taskForm: document.getElementById("taskForm"),
       taskId: document.getElementById("taskIdInput"),
       taskPlant: document.getElementById("taskPlantInput"),
@@ -2734,10 +3381,35 @@
       materialStatus: document.getElementById("materialStatusInput"),
       materialNote: document.getElementById("materialNoteInput"),
       materialCancel: document.getElementById("materialCancelBtn"),
+      materialsBack: document.getElementById("materialsBackBtn"),
+      openMaterials: document.getElementById("openMaterialsBtn"),
+      openCostStats: document.getElementById("openCostStatsBtn"),
+      costStatsBack: document.getElementById("costStatsBackBtn"),
+      openPlantTags: document.getElementById("openPlantTagsBtn"),
+      plantTagsBack: document.getElementById("plantTagsBackBtn"),
+      openTaskTemplates: document.getElementById("openTaskTemplatesBtn"),
+      taskTemplatesBack: document.getElementById("taskTemplatesBackBtn"),
+      openTools: document.getElementById("openToolsBtn"),
+      toolsBack: document.getElementById("toolsBackBtn"),
+      mineRestoreShortcut: document.getElementById("mineRestoreShortcutBtn"),
+      materialTabs: document.querySelectorAll("[data-material-kind]"),
+      mineScrollButtons: document.querySelectorAll("[data-mine-scroll]"),
       materialKindFilter: document.getElementById("materialKindFilter"),
       materialStatusFilter: document.getElementById("materialStatusFilter"),
       materialExpiryAlert: document.getElementById("materialExpiryAlert"),
       materialList: document.getElementById("materialList"),
+      soilShape: document.getElementById("soilShapeInput"),
+      soilType: document.getElementById("soilTypeInput"),
+      soilFill: document.getElementById("soilFillInput"),
+      soilHeight: document.getElementById("soilHeightInput"),
+      soilDiameter: document.getElementById("soilDiameterInput"),
+      soilTopDiameter: document.getElementById("soilTopDiameterInput"),
+      soilBottomDiameter: document.getElementById("soilBottomDiameterInput"),
+      soilLength: document.getElementById("soilLengthInput"),
+      soilWidth: document.getElementById("soilWidthInput"),
+      soilSide: document.getElementById("soilSideInput"),
+      soilDimFields: document.querySelectorAll("[data-soil-dim]"),
+      soilCalcResult: document.getElementById("soilCalcResult"),
       calendarTitle: document.getElementById("calendarTitle"),
       prevMonth: document.getElementById("prevMonthBtn"),
       nextMonth: document.getElementById("nextMonthBtn"),
@@ -2753,6 +3425,8 @@
       backup: document.getElementById("backupBtn"),
       restore: document.getElementById("restoreBtn"),
       restoreInput: document.getElementById("restoreInput"),
+      mineBackup: document.getElementById("mineBackupBtn"),
+      mineRestore: document.getElementById("mineRestoreBtn"),
       sample: document.getElementById("sampleBtn"),
       pageButtons: document.querySelectorAll("[data-page]"),
       pagePanels: document.querySelectorAll("[data-page-panel]")
@@ -2763,7 +3437,8 @@
       els.pagePanels.forEach(panel => {
         panel.classList.toggle("active", panel.dataset.pagePanel === page);
       });
-      const navPage = page === "plant-detail" ? "home" : page;
+      const mineSubPages = ["materials", "cost-stats", "plant-tags", "task-templates", "tools"];
+      const navPage = page === "plant-detail" ? "home" : mineSubPages.includes(page) ? "mine" : page;
       els.pageButtons.forEach(button => {
         button.classList.toggle("active", button.dataset.page === navPage);
       });
@@ -2860,6 +3535,131 @@
         completedAt: task?.completedAt || "",
         note: task?.note || ""
       };
+    }
+
+    function taskTemplatesForPlant(plant) {
+      const category = plant?.category || plant?.name || "";
+      const overrides = taskTemplateOverrides[category] || {};
+      return taskTemplates
+        .filter(template => template.categories.includes("*") || template.categories.includes(category))
+        .map(template => ({ ...template, ...(overrides[template.id] || {}) }));
+    }
+
+    function taskTemplateForType(plant, type) {
+      return taskTemplatesForPlant(plant).find(template => template.type === type);
+    }
+
+    function seasonAdjust(type, month = currentMonth()) {
+      const summer = month >= 6 && month <= 8;
+      const winter = month === 12 || month <= 2;
+      if (type === "浇水") return summer ? -1 : winter ? 2 : 0;
+      if (type === "施肥") return summer ? 2 : winter ? 10 : 0;
+      if (type === "病虫害") return summer ? -3 : winter ? 2 : 0;
+      if (type === "拍照") return summer ? -2 : winter ? 2 : 0;
+      return 0;
+    }
+
+    function healthAdjust(type, health = "健康") {
+      if (health === "观察") {
+        if (type === "施肥") return 4;
+        if (type === "病虫害") return -2;
+      }
+      if (health === "偏弱") {
+        if (type === "浇水") return 1;
+        if (type === "施肥") return 7;
+        if (type === "病虫害") return -3;
+        if (type === "拍照") return -3;
+      }
+      if (health === "病虫害") {
+        if (type === "浇水") return 1;
+        if (type === "施肥") return 10;
+        if (type === "病虫害") return -4;
+        if (type === "拍照") return -5;
+      }
+      return 0;
+    }
+
+    function taskIntervalBounds(type) {
+      if (type === "浇水") return [1, 7];
+      if (type === "施肥") return [7, 35];
+      if (type === "病虫害") return [2, 14];
+      if (type === "拍照") return [5, 30];
+      if (type === "修剪") return [14, 45];
+      if (type === "换盆") return [45, 180];
+      return [1, 120];
+    }
+
+    function clampDays(value, type) {
+      const [min, max] = taskIntervalBounds(type);
+      return Math.max(min, Math.min(max, Math.round(Number(value) || min)));
+    }
+
+    function latestPlantOperation(plant, type) {
+      return latest(records.filter(record =>
+        (record.plantId && record.plantId === plant.id) ||
+        (!record.plantId && record.crop === (plant.category || plant.name))
+      ), type);
+    }
+
+    function dynamicTaskSchedule(plant, template, fromDate = today()) {
+      const type = template.type;
+      const baseCycle = Number(template.cycleDays) || Number(template.firstAfterDays) || 7;
+      const adjustedCycle = clampDays(baseCycle + seasonAdjust(type) + healthAdjust(type, plant.health), type);
+      const lastRecord = latestPlantOperation(plant, type);
+      const baseNext = lastRecord?.date
+        ? addDays(lastRecord.date, adjustedCycle)
+        : addDays(fromDate, clampDays(Number(template.firstAfterDays) || adjustedCycle, type));
+      const nextDate = baseNext < today() ? today() : baseNext;
+      const reason = [
+        `动态周期 ${adjustedCycle} 天`,
+        `季节 ${currentMonth()}月`,
+        `状态 ${plant.health || "健康"}`,
+        lastRecord?.date ? `上次${type} ${lastRecord.date}` : "暂无上次记录"
+      ].join("；");
+      return { cycleDays: adjustedCycle, nextDate, reason };
+    }
+
+    function createTasksFromTemplates(plant, options = {}) {
+      if (!plant?.id) return [];
+      const skipExisting = options.skipExisting !== false;
+      const existingActive = new Set((appData.tasks || [])
+        .filter(task => task.plantId === plant.id && task.enabled !== false)
+        .map(task => task.type));
+      const created = taskTemplatesForPlant(plant)
+        .filter(template => !skipExisting || !existingActive.has(template.type))
+        .map(template => {
+          const schedule = dynamicTaskSchedule(plant, template);
+          return normalizeTask({
+            id: makeId("task", `${plant.id}:${template.id}`),
+            plantId: plant.id,
+            type: template.type,
+            nextDate: schedule.nextDate,
+            cycleDays: schedule.cycleDays,
+            enabled: true,
+            completedAt: "",
+            note: `${template.name}：${template.note || ""} ${schedule.reason}`
+          }, appData.plants);
+        });
+      if (created.length) {
+        appData.tasks = [...(appData.tasks || []), ...created];
+      }
+      return created;
+    }
+
+    function refreshDynamicTasksForPlant(plant) {
+      if (!plant?.id) return;
+      appData.tasks = (appData.tasks || []).map(task => {
+        if (task.plantId !== plant.id || task.enabled === false) return task;
+        const template = taskTemplateForType(plant, task.type);
+        if (!template) return task;
+        const schedule = dynamicTaskSchedule(plant, template);
+        return {
+          ...task,
+          nextDate: schedule.nextDate,
+          cycleDays: schedule.cycleDays,
+          note: `${template.name}：${template.note || ""} ${schedule.reason}`
+        };
+      });
     }
 
     function materialFromName(name, kind, active = true, status = "有效", existing = {}) {
@@ -3136,6 +3936,56 @@
       return Number(els.planMonth.value) || new Date(today() + "T00:00:00").getMonth() + 1;
     }
 
+    function plantLibraryNames() {
+      return [...new Set(Object.values(plantLibrary).flat())];
+    }
+
+    function plantLibraryCategoryHtml(selected = "") {
+      const existing = [...new Set((appData.plants || []).map(plant => plant.category || plant.name).filter(Boolean))]
+        .filter(name => !plantLibraryNames().includes(name) && !crops.some(crop => crop.name === name));
+      const groupHtml = Object.entries(plantLibrary).map(([group, names]) => `
+        <optgroup label="${escapeHtml(group)}">
+          ${names.map(name => `<option value="${escapeHtml(name)}" ${name === selected ? "selected" : ""}>${escapeHtml(name)}</option>`).join("")}
+        </optgroup>
+      `).join("");
+      const customHtml = existing.length ? `
+        <optgroup label="已添加">
+          ${existing.map(name => `<option value="${escapeHtml(name)}" ${name === selected ? "selected" : ""}>${escapeHtml(name)}</option>`).join("")}
+        </optgroup>
+      ` : "";
+      return groupHtml + customHtml;
+    }
+
+    function renderPlantLibraryOptions() {
+      const datalist = document.getElementById("plantNameLibrary");
+      if (!datalist) return;
+      datalist.innerHTML = Object.entries(plantLibrary).flatMap(([group, names]) =>
+        names.map(name => `<option value="${escapeHtml(name)}" label="${escapeHtml(group)}"></option>`)
+      ).join("");
+    }
+
+    function matchPlantLibraryName(value) {
+      const text = String(value || "").trim();
+      if (!text) return null;
+      const entries = Object.entries(plantLibrary).flatMap(([group, names]) => names.map(name => ({ group, name })));
+      return entries.find(item => item.name === text)
+        || entries.find(item => item.name.startsWith(text))
+        || entries.find(item => item.name.includes(text));
+    }
+
+    function syncPlantCategoryFromName() {
+      const match = matchPlantLibraryName(els.plantName.value);
+      if (match && els.plantCategory) {
+        els.plantCategory.value = match.name;
+      }
+    }
+
+    function syncPlantNameFromCategory() {
+      if (!els.plantName.value.trim() && els.plantCategory?.value) {
+        els.plantName.value = els.plantCategory.value;
+      }
+    }
+
     function renderCropChoices() {
       const names = [...new Set([
         ...crops.map(crop => crop.name),
@@ -3144,8 +3994,11 @@
       els.crop.innerHTML = names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
       els.crop.value = selectedCrop;
       if (els.plantCategory) {
-        els.plantCategory.innerHTML = names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
+        const current = els.plantCategory.value || selectedCrop || crops[0].name;
+        els.plantCategory.innerHTML = plantLibraryCategoryHtml(current);
+        els.plantCategory.value = plantLibraryNames().includes(current) || names.includes(current) ? current : crops[0].name;
       }
+      renderPlantLibraryOptions();
     }
 
     function resetPlantForm() {
@@ -3224,6 +4077,11 @@
       els.cropFilter.innerHTML = `<option value="全部">全部作物</option>` + names
         .map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`)
         .join("");
+      const currentType = els.typeFilter.value || "全部";
+      els.typeFilter.innerHTML = `<option value="全部">全部类型</option>` + recordTypes
+        .map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`)
+        .join("");
+      els.typeFilter.value = ["全部", ...recordTypes].includes(currentType) ? currentType : "全部";
     }
 
     function renderMonthOptions() {
@@ -3235,9 +4093,50 @@
       }).join("");
     }
 
+    function renderRecordTypePicker() {
+      if (!els.recordTypeGrid) return;
+      const current = recordTypes.includes(els.type.value) ? els.type.value : recordTypes[0];
+      els.type.value = current;
+      els.recordTypeGrid.innerHTML = recordTypes.map(type => {
+        const meta = recordTypeMeta[type] || {};
+        const active = type === current;
+        return `
+          <button class="record-type-card ${active ? "active" : ""}" type="button" data-record-type="${escapeHtml(type)}" style="--type-color:${meta.color || "#35c676"}" aria-pressed="${active ? "true" : "false"}">
+            <span class="type-mark">${escapeHtml(meta.mark || type.slice(0, 1))}</span>
+            ${escapeHtml(type)}
+          </button>
+        `;
+      }).join("");
+      els.recordTypeGrid.querySelectorAll("[data-record-type]").forEach(button => {
+        button.addEventListener("click", () => setRecordType(button.dataset.recordType));
+      });
+    }
+
+    function setRecordType(type) {
+      if (!recordTypes.includes(type)) return;
+      els.type.value = type;
+      if (type === "病虫害") {
+        els.growth.value = "病虫害疑似";
+      } else if (els.growth.value === "病虫害疑似") {
+        els.growth.value = "正常";
+      }
+      renderAmountOptions();
+      renderDilutionOptions();
+      renderRecordFertilizerOptions(type === "施肥" ? selectedFertilizerValue() : "");
+      togglePestPanel();
+      syncPestAction();
+      renderRecipeOptions();
+      renderFormAdvice();
+      renderPlans();
+      renderRecordTypePicker();
+    }
+
     function amountOptions() {
       if (els.type.value === "浇水") {
         return ["1 升", "1.5 升", "2 升", "3 升", "5 升", "浇透", "其他"];
+      }
+      if (els.type.value === "测量") {
+        return ["株高(cm)"];
       }
       return Array.from({ length: 10 }, (_, index) => `${(index + 1) * 0.5} 克`).concat("其他");
     }
@@ -3252,6 +4151,11 @@
       els.amount.innerHTML = options.map(option => `<option value="${option}">${option}</option>`).join("");
       els.amount.value = value;
       els.customAmount.value = value === "其他" ? selected : "";
+      if (els.type.value === "测量") {
+        els.measurementHeight.value = measurementHeightFromAmount(selected);
+      } else {
+        els.measurementHeight.value = "";
+      }
       toggleCustomInputs();
     }
 
@@ -3262,6 +4166,11 @@
       els.dilution.value = value;
       els.customDilution.value = value === "其他" ? selected : "";
       toggleCustomInputs();
+    }
+
+    function measurementHeightFromAmount(value) {
+      const match = String(value || "").match(/(\d+(?:\.\d+)?)/);
+      return match ? match[1] : "";
     }
 
     function splitFertilizerNames(value) {
@@ -3650,15 +4559,28 @@
     }
 
     function toggleCustomInputs() {
-      const isFeeding = els.type.value === "施肥";
-      els.amountField.classList.toggle("custom-input", isFeeding);
-      els.amountField.classList.toggle("show", !isFeeding);
+      const type = els.type.value;
+      const isFeeding = type === "施肥";
+      const isMeasurement = type === "测量";
+      const needsAmount = type === "浇水" || type === "测量";
+      const typeMeta = recordTypeMeta[type] || {};
+      els.amountField.querySelector("label").textContent = typeMeta.amountLabel || "用量";
+      els.customAmount.placeholder = typeMeta.amountPlaceholder || "输入其他用量";
+      els.amount.classList.toggle("custom-input", isMeasurement);
+      els.amountField.classList.toggle("custom-input", !needsAmount);
+      els.amountField.classList.toggle("show", needsAmount);
       document.getElementById("fertilizerField").classList.toggle("custom-input", !isFeeding);
       document.getElementById("fertilizerField").classList.toggle("show", isFeeding);
       els.dilutionField.classList.toggle("show", false);
-      els.customAmount.classList.toggle("show", !isFeeding && els.amount.value === "其他");
+      els.measurementHeight.classList.toggle("show", isMeasurement);
+      els.customAmount.classList.toggle("show", !isMeasurement && needsAmount && els.amount.value === "其他");
       els.customFertilizerRecord.classList.toggle("show", isFeeding);
       els.customDilution.classList.toggle("show", false);
+      if (!els.note.value && typeMeta.note) {
+        els.note.placeholder = typeMeta.note;
+      } else {
+        els.note.placeholder = "例如：土表干了再浇，叶片状态良好";
+      }
     }
 
     function selectedAmountValue() {
@@ -3667,6 +4589,11 @@
           .map(item => `${item.name} ${item.amount}`)
           .join("；");
       }
+      if (els.type.value === "测量") {
+        const height = String(els.measurementHeight.value || "").trim();
+        return height ? `株高 ${height} cm` : "";
+      }
+      if (els.type.value !== "浇水" && els.type.value !== "测量") return "";
       return els.amount.value === "其他" ? els.customAmount.value.trim() : els.amount.value;
     }
 
@@ -3690,153 +4617,6 @@
       const match = amount.match(/(1:\d+)\s*稀释?/);
       if (!match) return { amount, dilution: "" };
       return { amount: "", dilution: match[1] };
-    }
-
-    function renderFertilizerStock() {
-      const names = allFertilizers();
-      selectedFertilizersToDelete = new Set([...selectedFertilizersToDelete].filter(name => names.includes(name)));
-      updateFertilizerDeleteStatus();
-      els.fertilizerStock.innerHTML = names.map(name => `
-        <label class="check-card">
-          <input class="stock-active" type="checkbox" value="${escapeHtml(name)}" ${fertilizerStock.includes(name) ? "checked" : ""}>
-          <span>${escapeHtml(name)}</span>
-          <input class="stock-pick-delete" type="checkbox" title="选择后批量删除" data-pick-delete-fertilizer="${escapeHtml(name)}" ${selectedFertilizersToDelete.has(name) ? "checked" : ""}>
-          <button class="stock-delete" type="button" title="删除肥料" data-delete-fertilizer="${escapeHtml(name)}">删</button>
-        </label>
-      `).join("");
-
-      els.fertilizerStock.querySelectorAll(".stock-active").forEach(input => {
-        input.addEventListener("change", () => {
-          fertilizerStock = [...els.fertilizerStock.querySelectorAll(".stock-active:checked")].map(item => item.value);
-          saveFertilizerStock();
-          refreshAfterFertilizerStockChange();
-        });
-      });
-
-      els.fertilizerStock.querySelectorAll("[data-pick-delete-fertilizer]").forEach(input => {
-        input.addEventListener("change", () => {
-          const name = input.dataset.pickDeleteFertilizer;
-          if (input.checked) {
-            selectedFertilizersToDelete.add(name);
-          } else {
-            selectedFertilizersToDelete.delete(name);
-          }
-          updateFertilizerDeleteStatus();
-        });
-      });
-
-      els.fertilizerStock.querySelectorAll("[data-delete-fertilizer]").forEach(button => {
-        button.addEventListener("click", event => {
-          event.preventDefault();
-          event.stopPropagation();
-          const name = button.dataset.deleteFertilizer;
-          deleteFertilizer(name);
-        });
-      });
-
-    }
-
-    function deleteFertilizer(name) {
-      deleteFertilizers([name]);
-    }
-
-    function deleteFertilizers(names) {
-      const uniqueNames = [...new Set(names)].filter(Boolean);
-      if (!uniqueNames.length) return;
-      fertilizerStock = fertilizerStock.filter(item => !uniqueNames.includes(item));
-      customFertilizers = customFertilizers.filter(item => !uniqueNames.includes(item));
-      uniqueNames.forEach(name => {
-        if (baseFertilizers.includes(name) && !deletedFertilizers.includes(name)) {
-          deletedFertilizers.push(name);
-        }
-        selectedFertilizersToDelete.delete(name);
-      });
-      saveFertilizerStock();
-      renderFertilizerStock();
-      refreshAfterFertilizerStockChange();
-    }
-
-    function deleteSelectedFertilizers() {
-      deleteFertilizers([...selectedFertilizersToDelete]);
-    }
-
-    function updateFertilizerDeleteStatus() {
-      if (!els.fertilizerDeleteStatus || !els.deleteSelectedFertilizers) return;
-      const count = selectedFertilizersToDelete.size;
-      els.fertilizerDeleteStatus.textContent = `待删 ${count} 个肥料`;
-      els.deleteSelectedFertilizers.disabled = count === 0;
-    }
-
-    function renderPesticideStock() {
-      const names = allPesticides();
-      selectedPesticidesToDelete = new Set([...selectedPesticidesToDelete].filter(name => names.includes(name)));
-      updatePesticideDeleteStatus();
-      els.pesticideStock.innerHTML = names.map(name => {
-        const meta = pesticideMeta(name);
-        return `
-          <label class="check-card" title="${escapeHtml(meta.target)} ${escapeHtml(meta.caution)}">
-            <input class="pesticide-active" type="checkbox" value="${escapeHtml(name)}" ${pesticideStock.includes(name) ? "checked" : ""}>
-            <span>${escapeHtml(name)}<br><small>${escapeHtml(meta.type)}</small></span>
-            <input class="stock-pick-delete" type="checkbox" title="选择后批量删除" data-pick-delete-pesticide="${escapeHtml(name)}" ${selectedPesticidesToDelete.has(name) ? "checked" : ""}>
-            <button class="stock-delete" type="button" title="删除药物" data-delete-pesticide="${escapeHtml(name)}">删</button>
-          </label>
-        `;
-      }).join("");
-
-      els.pesticideStock.querySelectorAll(".pesticide-active").forEach(input => {
-        input.addEventListener("change", () => {
-          pesticideStock = [...els.pesticideStock.querySelectorAll(".pesticide-active:checked")].map(item => item.value);
-          savePesticideStock();
-          renderPlans();
-        });
-      });
-
-      els.pesticideStock.querySelectorAll("[data-pick-delete-pesticide]").forEach(input => {
-        input.addEventListener("change", () => {
-          const name = input.dataset.pickDeletePesticide;
-          if (input.checked) {
-            selectedPesticidesToDelete.add(name);
-          } else {
-            selectedPesticidesToDelete.delete(name);
-          }
-          updatePesticideDeleteStatus();
-        });
-      });
-
-      els.pesticideStock.querySelectorAll("[data-delete-pesticide]").forEach(button => {
-        button.addEventListener("click", event => {
-          event.preventDefault();
-          event.stopPropagation();
-          deletePesticides([button.dataset.deletePesticide]);
-        });
-      });
-    }
-
-    function deletePesticides(names) {
-      const uniqueNames = [...new Set(names)].filter(Boolean);
-      if (!uniqueNames.length) return;
-      pesticideStock = pesticideStock.filter(item => !uniqueNames.includes(item));
-      customPesticides = customPesticides.filter(item => !uniqueNames.includes(item));
-      uniqueNames.forEach(name => {
-        if (basePesticides.some(item => item.name === name) && !deletedPesticides.includes(name)) {
-          deletedPesticides.push(name);
-        }
-        selectedPesticidesToDelete.delete(name);
-      });
-      savePesticideStock();
-      renderPesticideStock();
-      renderPlans();
-    }
-
-    function deleteSelectedPesticides() {
-      deletePesticides([...selectedPesticidesToDelete]);
-    }
-
-    function updatePesticideDeleteStatus() {
-      if (!els.pesticideDeleteStatus || !els.deleteSelectedPesticides) return;
-      const count = selectedPesticidesToDelete.size;
-      els.pesticideDeleteStatus.textContent = `待删 ${count} 个药物`;
-      els.deleteSelectedPesticides.disabled = count === 0;
     }
 
     function renderSummary() {
@@ -3906,6 +4686,11 @@
       if (!els.materialList) return;
       syncStockArraysFromMaterials();
       const kind = els.materialKindFilter.value || "肥料";
+      els.materialTabs?.forEach(button => {
+        const active = button.dataset.materialKind === kind;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", active ? "true" : "false");
+      });
       const statusFilter = els.materialStatusFilter.value || "全部";
       const visible = (appData.materials || [])
         .map(normalizeMaterial)
@@ -3970,7 +4755,7 @@
       els.materialExpireDate.value = item.expireDate || "";
       els.materialStatus.value = materialDisplayStatus(item);
       els.materialNote.value = item.note || "";
-      switchPage("mine");
+      switchPage("materials");
     }
 
     function deleteMaterial(id) {
@@ -3987,8 +4772,6 @@
       saveData();
       resetMaterialForm();
       renderAll();
-      renderFertilizerStock();
-      renderPesticideStock();
     }
 
     function plantAgeText(plant) {
@@ -3996,6 +4779,13 @@
       const date = String(plant.createdAt).slice(0, 10);
       const days = daysBetween(date);
       return `第${Number.isFinite(days) ? days + 1 : 1}天`;
+    }
+
+    function plantAgeTextForDate(plant, dateString) {
+      const start = String(plant?.createdAt || today()).slice(0, 10);
+      const target = dateString || today();
+      const days = Math.max(0, Math.round((new Date(target + "T00:00:00") - new Date(start + "T00:00:00")) / 86400000));
+      return `养护第${Number.isFinite(days) ? days + 1 : 1}天`;
     }
 
     function latestPlantRecord(plantId) {
@@ -4093,6 +4883,136 @@
       `;
     }
 
+    function renderTaskTemplates() {
+      if (!els.taskTemplateList) return;
+      const previewPlant = normalizePlant({
+        id: "__template-preview",
+        name: selectedCrop || crops[0].name,
+        category: selectedCrop || crops[0].name,
+        health: "健康",
+        createdAt: new Date().toISOString()
+      });
+      els.taskTemplateList.innerHTML = taskTemplates.map(template => {
+        const categoryText = template.categories.includes("*") ? "全部植物" : template.categories.join("、");
+        const firstText = Number(template.firstAfterDays) > 0 ? `${template.firstAfterDays} 天后首次执行` : "当天执行";
+        const cycleText = Number(template.cycleDays) > 0 ? `${template.cycleDays} 天循环` : "不循环";
+        const schedule = dynamicTaskSchedule(previewPlant, template);
+        return `
+          <article class="task-card" style="--crop:#35c676">
+            <div class="task-card-head">
+              <div class="task-card-title">
+                <strong>${escapeHtml(template.name)}</strong>
+                <span>${escapeHtml(categoryText)} · 基础：${escapeHtml(firstText)} / ${escapeHtml(cycleText)}</span>
+              </div>
+              <span class="tag" style="--crop:#35c676">${escapeHtml(template.type)}</span>
+            </div>
+            <div class="task-card-meta">当前季节参考：${escapeHtml(schedule.cycleDays)} 天一次；下次 ${escapeHtml(schedule.nextDate)}。${escapeHtml(template.note || "")}</div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderMinePanels() {
+      if (els.costStatsBox) {
+        const materials = (appData.materials || []).filter(item => item.status !== "已删除");
+        const countByStatus = status => materials.filter(item => materialDisplayStatus(item) === status).length;
+        const fertilizerCount = materials.filter(item => item.kind === "肥料").length;
+        const pesticideCount = materials.filter(item => item.kind === "药剂").length;
+        els.costStatsBox.innerHTML = `
+          <p><strong>农资数量：</strong>${materials.length} 个，肥料 ${fertilizerCount} 个，药剂 ${pesticideCount} 个。</p>
+          <p><strong>状态：</strong>有效 ${countByStatus("有效")} 个，过期 ${countByStatus("过期")} 个，已用完 ${countByStatus("已用完")} 个。</p>
+          <p><strong>说明：</strong>当前版本先统计库存状态；后续可在农资里增加单价/金额后计算真实花费。</p>
+        `;
+      }
+      if (els.plantTagList) {
+        const plants = (appData.plants || []).map(normalizePlant);
+        const categoryCounts = [...plants.reduce((map, plant) => {
+          const key = plant.category || plant.name || "未分类";
+          map.set(key, (map.get(key) || 0) + 1);
+          return map;
+        }, new Map())];
+        const healthCounts = [...plants.reduce((map, plant) => {
+          const key = plant.health || "健康";
+          map.set(key, (map.get(key) || 0) + 1);
+          return map;
+        }, new Map())];
+        const tagHtml = (items, title) => `
+          <article class="task-card" style="--crop:#35c676">
+            <div class="task-card-head">
+              <div class="task-card-title">
+                <strong>${escapeHtml(title)}</strong>
+                <span>${items.length ? items.map(([name, count]) => `${name} ${count}`).join(" · ") : "暂无植物"}</span>
+              </div>
+            </div>
+          </article>
+        `;
+        els.plantTagList.innerHTML = tagHtml(categoryCounts, "分类标签") + tagHtml(healthCounts, "健康标签");
+      }
+    }
+
+    function numberInputValue(input) {
+      return Math.max(0, Number(input?.value) || 0);
+    }
+
+    function soilVolumeCm3() {
+      const shape = els.soilShape?.value || "cylinder";
+      const height = numberInputValue(els.soilHeight);
+      const diameter = numberInputValue(els.soilDiameter);
+      const topDiameter = numberInputValue(els.soilTopDiameter);
+      const bottomDiameter = numberInputValue(els.soilBottomDiameter);
+      const length = numberInputValue(els.soilLength);
+      const width = numberInputValue(els.soilWidth);
+      const side = numberInputValue(els.soilSide);
+      const radius = diameter / 2;
+      const topRadius = topDiameter / 2;
+      const bottomRadius = bottomDiameter / 2;
+
+      if (shape === "cone") return Math.PI * radius * radius * height / 3;
+      if (shape === "frustum") return Math.PI * height * (topRadius * topRadius + topRadius * bottomRadius + bottomRadius * bottomRadius) / 3;
+      if (shape === "rectangle") return length * width * height;
+      if (shape === "square") return side * side * height;
+      if (shape === "hemisphere") return 2 * Math.PI * radius * radius * radius / 3;
+      if (shape === "hexagon") return (3 * Math.sqrt(3) / 2) * side * side * height;
+      return Math.PI * radius * radius * height;
+    }
+
+    function toggleSoilFields() {
+      if (!els.soilDimFields?.length) return;
+      const visibleByShape = {
+        cylinder: ["diameter", "height"],
+        cone: ["diameter", "height"],
+        frustum: ["topDiameter", "bottomDiameter", "height"],
+        rectangle: ["length", "width", "height"],
+        square: ["side", "height"],
+        hemisphere: ["diameter"],
+        hexagon: ["side", "height"]
+      };
+      const visible = visibleByShape[els.soilShape?.value || "cylinder"] || visibleByShape.cylinder;
+      els.soilDimFields.forEach(field => {
+        field.classList.toggle("show", visible.includes(field.dataset.soilDim));
+      });
+    }
+
+    function renderSoilCalculator() {
+      if (!els.soilCalcResult) return;
+      toggleSoilFields();
+      const profile = soilTypeProfiles[els.soilType?.value] || soilTypeProfiles["通用型培养土"];
+      const fillRate = Math.min(100, Math.max(1, Number(els.soilFill?.value) || 100)) / 100;
+      const liters = soilVolumeCm3() / 1000 * fillRate;
+      const gallons = liters / 3.78541;
+      const weight = liters * profile.density;
+      els.soilCalcResult.innerHTML = `
+        <div class="soil-metrics">
+          <div class="soil-metric"><strong>${liters.toFixed(1)} L</strong><span>所需土壤</span></div>
+          <div class="soil-metric"><strong>${gallons.toFixed(2)} gal</strong><span>盆容量</span></div>
+          <div class="soil-metric"><strong>${weight.toFixed(1)} kg</strong><span>估算重量</span></div>
+          <div class="soil-metric"><strong>${profile.density.toFixed(2)} kg/L</strong><span>土壤密度</span></div>
+        </div>
+        <p><strong>配比建议：</strong>${escapeHtml(profile.ratio)}</p>
+        <p class="empty">按当前填满程度计算，实际用土会受盆底垫层、根团体积和土壤含水量影响，建议多预留 10% 左右。</p>
+      `;
+    }
+
     function renderTasks() {
       if (!els.todayTaskList) return;
       renderTaskControls();
@@ -4144,9 +5064,12 @@
     function completeTask(id) {
       const task = appData.tasks.find(item => item.id === id);
       if (!task || task.enabled === false) return;
+      const plant = taskPlant(task);
+      const template = taskTemplateForType(plant, task.type);
       task.enabled = false;
       task.completedAt = today();
-      const cycleDays = Number(task.cycleDays) || 0;
+      const schedule = template ? dynamicTaskSchedule(plant, template, today()) : null;
+      const cycleDays = schedule?.cycleDays || Number(task.cycleDays) || 0;
       if (cycleDays > 0) {
         appData.tasks.push({
           id: makeId("task"),
@@ -4156,11 +5079,31 @@
           cycleDays,
           enabled: true,
           completedAt: "",
-          note: task.note || ""
+          note: schedule && template
+            ? `${template.name}：${template.note || ""} ${schedule.reason}`
+            : task.note || ""
         });
       }
       saveData();
       renderAll();
+    }
+
+    function openPhotoLightbox(record, plant) {
+      if (!record?.photo || !els.photoLightbox) return;
+      els.photoLightboxImage.src = record.photo;
+      els.photoLightboxMeta.innerHTML = `
+        <strong>${escapeHtml(record.date || "未填写日期")}</strong>
+        <span>${escapeHtml(plantAgeTextForDate(plant, record.date))}</span>
+        <span>${escapeHtml(record.note || recordDetailText(record) || "暂无备注")}</span>
+      `;
+      els.photoLightbox.hidden = false;
+    }
+
+    function closePhotoLightbox() {
+      if (!els.photoLightbox) return;
+      els.photoLightbox.hidden = true;
+      els.photoLightboxImage.removeAttribute("src");
+      els.photoLightboxMeta.innerHTML = "";
     }
 
     function renderPlantDetail(plantId) {
@@ -4178,7 +5121,9 @@
         (record.temperature !== "" && record.temperature !== undefined)
       );
       const careRecords = plantRecords.filter(record => ["浇水", "施肥", "修剪", "病虫害", "换盆", "换水"].includes(record.type));
-      const photoRecords = plantRecords.filter(record => record.photo);
+      const photoRecords = plantRecords
+        .filter(record => record.photo)
+        .sort((a, b) => b.date.localeCompare(a.date) || (b.createdAt || 0) - (a.createdAt || 0));
       const countByType = type => plantRecords.filter(record => record.type === type).length;
       const photoStyle = plant.photo ? `background-image:url('${escapeHtml(plant.photo)}')` : "";
       els.plantDetailTitle.textContent = plant.name;
@@ -4219,30 +5164,50 @@
             <button class="btn ${type === "施肥" ? "primary" : "secondary"}" type="button" data-quick-record="${type}">${escapeHtml(type)}</button>
           `).join("")}
         </div>
-        <nav class="detail-tabs" style="--crop:${crop.color}" aria-label="植物详情分类">
-          <button class="detail-tab active" type="button" data-detail-tab="growth">生长记录</button>
-          <button class="detail-tab" type="button" data-detail-tab="care">养护记录</button>
-          <button class="detail-tab" type="button" data-detail-tab="album">植物相册</button>
-          <button class="detail-tab" type="button" data-detail-tab="stats">统计分析</button>
+        <nav class="detail-tabs" style="--crop:${crop.color}" aria-label="植物详情分类" role="tablist">
+          <button class="detail-tab active" type="button" role="tab" aria-selected="true" data-detail-tab="growth">生长记录</button>
+          <button class="detail-tab" type="button" role="tab" aria-selected="false" data-detail-tab="care">养护记录</button>
+          <button class="detail-tab" type="button" role="tab" aria-selected="false" data-detail-tab="album">植物相册</button>
+          <button class="detail-tab" type="button" role="tab" aria-selected="false" data-detail-tab="stats">统计分析</button>
         </nav>
-        <section class="detail-tab-panel active timeline" data-detail-panel="growth" style="--crop:${crop.color}">
+        <section class="detail-tab-panel active timeline" role="tabpanel" data-detail-panel="growth" style="--crop:${crop.color}">
           <h3>生长记录</h3>
           ${timelineHtml(growthRecords, "暂无生长记录。")}
         </section>
-        <section class="detail-tab-panel timeline" data-detail-panel="care" style="--crop:${crop.color}">
+        <section class="detail-tab-panel timeline" role="tabpanel" data-detail-panel="care" style="--crop:${crop.color}" hidden>
           <h3>养护记录</h3>
           ${timelineHtml(careRecords, "暂无养护记录。")}
         </section>
-        <section class="detail-tab-panel" data-detail-panel="album" style="--crop:${crop.color}">
-          <div class="album-grid">
-            ${photoRecords.map(record => `
-              <div class="album-photo" style="background-image:url('${escapeHtml(record.photo)}')">
-                <span>${escapeHtml(record.date)} · ${escapeHtml(record.type)}</span>
-              </div>
-            `).join("") || `<div class="empty">暂无植物照片。</div>`}
+        <section class="detail-tab-panel" role="tabpanel" data-detail-panel="album" style="--crop:${crop.color}" hidden>
+          <div class="album-toolbar" role="tablist" aria-label="相册显示模式">
+            <button class="album-mode-btn active" type="button" data-album-mode="timeline" aria-pressed="true">时间轴</button>
+            <button class="album-mode-btn" type="button" data-album-mode="grid" aria-pressed="false">网格</button>
           </div>
+          ${photoRecords.length ? `
+            <div class="album-view active album-timeline" data-album-view="timeline">
+              ${photoRecords.map(record => `
+                <button class="album-photo-button album-timeline-item" type="button" data-open-photo="${escapeHtml(record.id)}">
+                  <span class="album-timeline-thumb" style="background-image:url('${escapeHtml(record.photo)}')"></span>
+                  <span class="album-meta">
+                    <strong>${escapeHtml(record.date)}</strong>
+                    <span>${escapeHtml(plantAgeTextForDate(plant, record.date))}</span>
+                    <span>${escapeHtml(record.note || recordDetailText(record) || "暂无备注")}</span>
+                  </span>
+                </button>
+              `).join("")}
+            </div>
+            <div class="album-view album-grid" data-album-view="grid">
+              ${photoRecords.map(record => `
+                <button class="album-photo-button" type="button" data-open-photo="${escapeHtml(record.id)}">
+                  <span class="album-photo" style="display:block;background-image:url('${escapeHtml(record.photo)}')">
+                    <span>${escapeHtml(record.date)} · ${escapeHtml(plantAgeTextForDate(plant, record.date))}</span>
+                  </span>
+                </button>
+              `).join("")}
+            </div>
+          ` : `<div class="empty">暂无植物照片。</div>`}
         </section>
-        <section class="detail-tab-panel" data-detail-panel="stats" style="--crop:${crop.color}">
+        <section class="detail-tab-panel" role="tabpanel" data-detail-panel="stats" style="--crop:${crop.color}" hidden>
           <div class="stats-grid">
             <div class="detail-stat"><span>全部记录</span><strong>${plantRecords.length} 条</strong></div>
             <div class="detail-stat"><span>浇水</span><strong>${countByType("浇水")} 次</strong></div>
@@ -4261,14 +5226,37 @@
       els.plantDetailContent.querySelectorAll("[data-edit-plant-record]").forEach(button => {
         button.addEventListener("click", () => editRecord(button.dataset.editPlantRecord));
       });
+      els.plantDetailContent.querySelectorAll("[data-album-mode]").forEach(button => {
+        button.addEventListener("click", () => {
+          const mode = button.dataset.albumMode;
+          els.plantDetailContent.querySelectorAll("[data-album-mode]").forEach(item => {
+            const active = item.dataset.albumMode === mode;
+            item.classList.toggle("active", active);
+            item.setAttribute("aria-pressed", active ? "true" : "false");
+          });
+          els.plantDetailContent.querySelectorAll("[data-album-view]").forEach(view => {
+            view.classList.toggle("active", view.dataset.albumView === mode);
+          });
+        });
+      });
+      els.plantDetailContent.querySelectorAll("[data-open-photo]").forEach(button => {
+        button.addEventListener("click", () => {
+          const record = photoRecords.find(item => item.id === button.dataset.openPhoto);
+          openPhotoLightbox(record, plant);
+        });
+      });
       els.plantDetailContent.querySelectorAll("[data-detail-tab]").forEach(button => {
         button.addEventListener("click", () => {
           const tab = button.dataset.detailTab;
           els.plantDetailContent.querySelectorAll("[data-detail-tab]").forEach(item => {
-            item.classList.toggle("active", item.dataset.detailTab === tab);
+            const active = item.dataset.detailTab === tab;
+            item.classList.toggle("active", active);
+            item.setAttribute("aria-selected", active ? "true" : "false");
           });
           els.plantDetailContent.querySelectorAll("[data-detail-panel]").forEach(panel => {
-            panel.classList.toggle("active", panel.dataset.detailPanel === tab);
+            const active = panel.dataset.detailPanel === tab;
+            panel.classList.toggle("active", active);
+            panel.hidden = !active;
           });
         });
       });
@@ -4323,9 +5311,11 @@
       els.date.value = today();
       els.note.value = type === "病虫害" ? `${plant.name} 病虫害观察` : `${plant.name} ${type}`;
       if (type === "病虫害") {
-        els.growth.value = "病虫害";
+        els.growth.value = "病虫害疑似";
       }
+      renderRecordTypePicker();
       renderAmountOptions();
+      renderDilutionOptions();
       renderRecordFertilizerOptions(type === "施肥" ? selectedFertilizerValue() : "");
       togglePestPanel(false);
       renderFormAdvice();
@@ -4583,7 +5573,7 @@
         missing,
         text: matched.length
           ? `${matched.map(item => `${item.role}→${item.name}`).join("；")}。${evidenceText}${riskText ? `。${riskText}` : ""}`
-          : `当前没有可用库存，先在肥料库存中勾选或添加肥料。${evidenceText}`
+          : `当前没有可用库存，先到“我的 → 农资管理”添加或启用肥料。${evidenceText}`
       };
     }
 
@@ -4636,7 +5626,7 @@
     }
 
     function currentPestDiagnosis() {
-      if (els.growth.value !== "病虫害疑似") return null;
+      if (els.type.value !== "病虫害" && els.growth.value !== "病虫害疑似") return null;
       return {
         problem: els.pestProblem.value,
         part: els.pestPart.value,
@@ -4666,12 +5656,12 @@
     }
 
     function syncPestAction() {
-      if (els.growth.value !== "病虫害疑似") return;
+      if (els.type.value !== "病虫害" && els.growth.value !== "病虫害疑似") return;
       els.pestAction.value = recommendedPestAction(els.pestProblem.value, els.pestPart.value, els.pestSeverity.value);
     }
 
     function togglePestPanel(clear = true) {
-      const active = els.growth.value === "病虫害疑似";
+      const active = els.type.value === "病虫害" || els.growth.value === "病虫害疑似";
       els.pestPanel.classList.toggle("active", active);
       if (!active && clear) {
         els.pestProblem.value = "未确认";
@@ -5130,7 +6120,9 @@
       selectedCrop = crops[0].name;
       els.formTitle.textContent = "新增记录";
       els.planting.value = "盆栽";
+      els.type.value = "浇水";
       renderVarietyOptions();
+      renderRecordTypePicker();
       renderAmountOptions();
       renderDilutionOptions();
       renderRecordFertilizerOptions();
@@ -5152,6 +6144,7 @@
       els.type.value = "浇水";
       els.planting.value = planting;
       renderVarietyOptions();
+      renderRecordTypePicker();
       renderAmountOptions();
       renderDilutionOptions();
       renderRecordFertilizerOptions();
@@ -5176,6 +6169,7 @@
       els.planting.value = record.planting || "盆栽";
       els.date.value = record.date;
       els.type.value = record.type;
+      renderRecordTypePicker();
       const amountParts = splitAmountAndDilution(record.amount, record.dilution);
       renderAmountOptions(amountParts.amount);
       renderDilutionOptions(amountParts.dilution);
@@ -5280,8 +6274,7 @@
             pesticideStock = appData.materials.filter(item => item.kind === "药剂" && item.status === "有效" && Number(item.stock) > 0).map(item => item.name);
           }
           saveData();
-          renderFertilizerStock();
-          renderPesticideStock();
+          syncStockArraysFromMaterials();
           refreshAfterFertilizerStockChange();
           renderAll();
           alert("备份已恢复到本机。");
@@ -5319,6 +6312,9 @@
       renderHome();
       renderMaterials();
       renderTasks();
+      renderTaskTemplates();
+      renderMinePanels();
+      renderSoilCalculator();
       renderPlans();
       renderSeedlingPlans();
       renderCalendar();
@@ -5356,6 +6352,7 @@
         records.push(payload);
       }
 
+      refreshDynamicTasksForPlant(plant);
       saveRecords();
       resetForm();
       renderAll();
@@ -5412,8 +6409,6 @@
       syncStockArraysFromMaterials();
       saveData();
       resetMaterialForm();
-      renderFertilizerStock();
-      renderPesticideStock();
       renderAll();
       switchPage("mine");
     });
@@ -5427,6 +6422,47 @@
       renderMaterials();
     });
     els.materialStatusFilter.addEventListener("change", renderMaterials);
+    els.openMaterials.addEventListener("click", () => switchPage("materials"));
+    els.materialsBack.addEventListener("click", () => switchPage("mine"));
+    els.openCostStats.addEventListener("click", () => switchPage("cost-stats"));
+    els.costStatsBack.addEventListener("click", () => switchPage("mine"));
+    els.openPlantTags.addEventListener("click", () => switchPage("plant-tags"));
+    els.plantTagsBack.addEventListener("click", () => switchPage("mine"));
+    els.openTaskTemplates.addEventListener("click", () => switchPage("task-templates"));
+    els.taskTemplatesBack.addEventListener("click", () => switchPage("mine"));
+    els.openTools.addEventListener("click", () => switchPage("tools"));
+    els.toolsBack.addEventListener("click", () => switchPage("mine"));
+    [
+      els.soilShape,
+      els.soilType,
+      els.soilFill,
+      els.soilHeight,
+      els.soilDiameter,
+      els.soilTopDiameter,
+      els.soilBottomDiameter,
+      els.soilLength,
+      els.soilWidth,
+      els.soilSide
+    ].filter(Boolean).forEach(input => {
+      input.addEventListener("input", renderSoilCalculator);
+      input.addEventListener("change", renderSoilCalculator);
+    });
+    els.materialTabs.forEach(button => {
+      button.addEventListener("click", () => {
+        els.materialKindFilter.value = button.dataset.materialKind;
+        resetMaterialForm();
+        renderMaterials();
+      });
+    });
+    els.mineScrollButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.mineScroll);
+        target?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+    els.mineRestoreShortcut.addEventListener("click", () => {
+      document.getElementById("mineBackupBtn")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
     els.prevMonth.addEventListener("click", () => shiftCalendarMonth(-1));
     els.nextMonth.addEventListener("click", () => shiftCalendarMonth(1));
     els.homeAddRecord.addEventListener("click", openPlantModal);
@@ -5434,6 +6470,13 @@
     els.plantCancel.addEventListener("click", closePlantModal);
     els.plantSheet.addEventListener("click", event => {
       if (event.target === els.plantSheet) closePlantModal();
+    });
+    els.plantName.addEventListener("input", syncPlantCategoryFromName);
+    els.plantName.addEventListener("change", syncPlantCategoryFromName);
+    els.plantCategory.addEventListener("change", syncPlantNameFromCategory);
+    els.photoLightboxClose.addEventListener("click", closePhotoLightbox);
+    els.photoLightbox.addEventListener("click", event => {
+      if (event.target === els.photoLightbox) closePhotoLightbox();
     });
     els.plantPhoto.addEventListener("change", async () => {
       const file = els.plantPhoto.files?.[0];
@@ -5468,8 +6511,9 @@
       event.preventDefault();
       const name = els.plantName.value.trim();
       if (!name) return;
+      syncPlantCategoryFromName();
       const category = els.plantCategory.value || name;
-      appData.plants.push(normalizePlant({
+      const plant = normalizePlant({
         id: makeId("plant", name),
         name,
         variety: els.plantVariety.value.trim(),
@@ -5478,7 +6522,9 @@
         health: els.plantHealth.value,
         createdAt: new Date().toISOString(),
         note: els.plantNote.value.trim()
-      }));
+      });
+      appData.plants.push(plant);
+      createTasksFromTemplates(plant);
       saveData();
       renderAll();
       closePlantModal();
@@ -5489,14 +6535,14 @@
     els.export.addEventListener("click", exportCsv);
     els.backup.addEventListener("click", exportBackup);
     els.restore.addEventListener("click", () => els.restoreInput.click());
+    els.mineBackup.addEventListener("click", exportBackup);
+    els.mineRestore.addEventListener("click", () => els.restoreInput.click());
     els.restoreInput.addEventListener("change", () => restoreBackupFile(els.restoreInput.files[0]));
     els.sample.addEventListener("click", addSampleData);
     els.pageButtons.forEach(button => {
       button.addEventListener("click", () => switchPage(button.dataset.page));
     });
     els.bulkDelete.addEventListener("click", deleteSelectedRecords);
-    els.deleteSelectedFertilizers.addEventListener("click", deleteSelectedFertilizers);
-    els.deleteSelectedPesticides.addEventListener("click", deleteSelectedPesticides);
     els.crop.addEventListener("change", () => {
       selectedCrop = els.crop.value;
       resetFormDefaultsForContext();
@@ -5505,45 +6551,13 @@
     els.planting.addEventListener("change", () => {
       resetFormDefaultsForContext();
     });
-    els.addFertilizer.addEventListener("click", () => {
-      const name = els.customFertilizer.value.trim();
-      if (!name) return;
-      deletedFertilizers = deletedFertilizers.filter(item => item !== name);
-      if (!customFertilizers.includes(name) && !baseFertilizers.includes(name)) {
-        customFertilizers.push(name);
-      }
-      if (!fertilizerStock.includes(name)) {
-        fertilizerStock.push(name);
-      }
-      els.customFertilizer.value = "";
-      saveFertilizerStock();
-      renderFertilizerStock();
-      refreshAfterFertilizerStockChange();
-    });
-    els.addPesticide.addEventListener("click", () => {
-      const name = els.customPesticide.value.trim();
-      if (!name) return;
-      deletedPesticides = deletedPesticides.filter(item => item !== name);
-      if (!customPesticides.includes(name) && !basePesticides.some(item => item.name === name)) {
-        customPesticides.push(name);
-      }
-      if (!pesticideStock.includes(name)) {
-        pesticideStock.push(name);
-      }
-      els.customPesticide.value = "";
-      savePesticideStock();
-      renderPesticideStock();
-      renderPlans();
-    });
     els.planMonth.addEventListener("change", () => {
       renderRecipeOptions();
       renderFormAdvice();
       renderPlans();
     });
     els.type.addEventListener("change", () => {
-      renderAmountOptions();
-      renderDilutionOptions();
-      renderRecordFertilizerOptions(els.type.value === "施肥" ? selectedFertilizerValue() : "");
+      setRecordType(els.type.value);
     });
     els.amount.addEventListener("change", toggleCustomInputs);
     els.fertilizer.addEventListener("change", () => {
@@ -5599,8 +6613,8 @@
 
     renderFilters();
     renderMonthOptions();
-    renderFertilizerStock();
-    renderPesticideStock();
+    renderRecordTypePicker();
+    syncStockArraysFromMaterials();
     resetForm();
     resetTaskForm();
     resetMaterialForm();
