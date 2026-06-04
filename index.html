@@ -2,8 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#2f7d57">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f8f4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111814" media="(prefers-color-scheme: dark)">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="施肥记录">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -14,7 +15,7 @@
   <style>
     :root {
       color-scheme: light;
-      --bg: #f6f7f3;
+      --bg: #f4f7f3;
       --panel: #ffffff;
       --text: #202522;
       --muted: #657067;
@@ -25,11 +26,21 @@
       --red: #c2574a;
       --yellow: #d99c29;
       --ink: #17201b;
-      --shadow: 0 4px 14px rgba(28, 41, 32, 0.06);
+      --radius: 18px;
+      --radius-sm: 14px;
+      --tap: 48px;
+      --shadow: 0 10px 28px rgba(28, 41, 32, 0.08);
     }
 
     * {
       box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
     }
 
     body {
@@ -39,6 +50,8 @@
       color: var(--text);
       font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
       letter-spacing: 0;
+      -webkit-text-size-adjust: 100%;
+      overscroll-behavior-x: none;
     }
 
     button,
@@ -51,12 +64,14 @@
     button {
       border: 0;
       cursor: pointer;
+      touch-action: manipulation;
     }
 
     .app {
-      width: min(1280px, calc(100% - 24px));
+      width: min(560px, 100%);
       margin: 0 auto;
-      padding: 10px 0 82px;
+      padding: calc(10px + env(safe-area-inset-top)) 14px calc(92px + env(safe-area-inset-bottom));
+      overflow-x: hidden;
     }
 
     .topbar {
@@ -64,15 +79,15 @@
       justify-content: space-between;
       gap: 12px;
       align-items: flex-end;
-      margin-bottom: 10px;
-      padding: 8px 0;
+      margin-bottom: 14px;
+      padding: 10px 2px 6px;
     }
 
     h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 30px;
       line-height: 1.08;
-      font-weight: 800;
+      font-weight: 900;
       color: var(--ink);
     }
 
@@ -88,18 +103,27 @@
       gap: 8px;
       flex-wrap: wrap;
       justify-content: flex-end;
+      max-width: 100%;
+    }
+
+    .actions .btn {
+      min-height: 40px;
+      padding: 0 12px;
+      border-radius: 12px;
+      font-size: 13px;
     }
 
     .btn {
-      min-height: 34px;
-      padding: 0 10px;
-      border-radius: 7px;
+      min-height: var(--tap);
+      padding: 0 16px;
+      border-radius: 14px;
       background: var(--ink);
       color: #fff;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      font-weight: 700;
+      font-weight: 850;
       box-shadow: none;
     }
 
@@ -113,8 +137,9 @@
     .layout {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 14px;
       align-items: start;
+      min-width: 0;
     }
 
     .app-page:not(.active) {
@@ -134,19 +159,21 @@
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 0;
-      padding: 6px max(8px, env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-right));
-      background: rgba(255, 255, 255, 0.96);
+      padding: 8px max(10px, env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-right));
+      background: rgba(255, 255, 255, 0.94);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
       border-top: 1px solid var(--line);
       box-shadow: 0 -6px 18px rgba(23, 32, 27, 0.08);
     }
 
     .bottom-nav button {
-      min-height: 46px;
-      border-radius: 8px;
+      min-height: 54px;
+      border-radius: 14px;
       background: transparent;
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
+      font-size: 13px;
+      font-weight: 850;
       display: grid;
       place-items: center;
     }
@@ -159,15 +186,16 @@
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
+      min-width: 0;
     }
 
     .form-panel {
-      padding: 12px;
+      padding: 16px;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 8px 10px;
+      gap: 14px;
       align-items: start;
     }
 
@@ -189,21 +217,22 @@
     }
 
     .panel-title {
-      margin: 0 0 14px;
-      font-size: 17px;
+      margin: 0 0 16px;
+      font-size: 22px;
       line-height: 1.2;
+      font-weight: 900;
     }
 
     .field {
       display: grid;
-      gap: 5px;
-      margin-bottom: 8px;
+      gap: 9px;
+      margin-bottom: 12px;
     }
 
     label {
       color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 850;
     }
 
     input,
@@ -211,11 +240,13 @@
     textarea {
       width: 100%;
       border: 1px solid var(--line);
-      border-radius: 7px;
-      background: #fff;
+      border-radius: var(--radius-sm);
+      background: #f6f7f6;
       color: var(--text);
-      padding: 7px 9px;
+      min-height: var(--tap);
+      padding: 12px 14px;
       outline: none;
+      font-size: 16px;
     }
 
     .custom-input {
@@ -228,21 +259,24 @@
     }
 
     textarea {
-      min-height: 58px;
+      min-height: 108px;
       resize: vertical;
+      line-height: 1.45;
     }
 
     .select-panel {
       border: 1px solid var(--line);
-      border-radius: 7px;
-      background: #fff;
+      border-radius: var(--radius-sm);
+      background: #f8faf7;
+      overflow: hidden;
     }
 
     .select-panel summary {
       cursor: pointer;
-      padding: 8px 10px;
+      min-height: var(--tap);
+      padding: 13px 14px;
       color: var(--text);
-      font-size: 14px;
+      font-size: 16px;
       list-style-position: inside;
     }
 
@@ -252,25 +286,25 @@
 
     .multi-options {
       display: grid;
-      gap: 4px;
-      max-height: 190px;
+      gap: 8px;
+      max-height: 240px;
       overflow: auto;
-      padding: 8px;
+      padding: 10px;
     }
 
     .multi-option {
       display: flex;
       align-items: center;
-      gap: 8px;
-      min-height: 30px;
+      gap: 10px;
+      min-height: 42px;
       color: var(--text);
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 750;
     }
 
     .multi-option input {
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       accent-color: var(--green);
       flex: 0 0 auto;
     }
@@ -283,11 +317,11 @@
 
     .fertilizer-dose-row {
       display: grid;
-      grid-template-columns: minmax(88px, 1fr) minmax(110px, 1fr) minmax(110px, 1fr);
-      gap: 8px;
-      padding: 8px;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 12px;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       background: var(--soft);
       align-items: start;
     }
@@ -320,7 +354,7 @@
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
     }
 
     .crop-grid {
@@ -416,6 +450,660 @@
       padding: 8px;
       min-height: auto;
       border-top: 4px solid var(--crop);
+    }
+
+    .home-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .home-head h2 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.1;
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .home-task-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .home-task-card h3,
+    .home-section-head h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    .home-task-card p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .home-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 8px 0 10px;
+    }
+
+    .home-section-head span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .plant-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .plant-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      text-align: left;
+      box-shadow: var(--shadow);
+      padding: 0;
+      color: var(--text);
+      min-width: 0;
+      min-height: 220px;
+    }
+
+    .plant-photo {
+      position: relative;
+      min-height: 148px;
+      aspect-ratio: 1 / 0.78;
+      background:
+        linear-gradient(145deg, color-mix(in srgb, var(--crop) 45%, #ffffff), color-mix(in srgb, var(--crop) 15%, #17201b)),
+        #dfe5dc;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .plant-photo .health-pill,
+    .plant-photo .day-pill {
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      padding: 4px 8px;
+    }
+
+    .plant-photo .health-pill {
+      top: 8px;
+      right: 8px;
+    }
+
+    .plant-photo .day-pill {
+      left: 8px;
+      bottom: 8px;
+      color: #fff;
+      background: rgba(23, 32, 27, 0.46);
+    }
+
+    .plant-card-body {
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .plant-card-body strong {
+      font-size: 19px;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+
+    .plant-card-body span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .plant-detail-hero {
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fff;
+      margin-bottom: 10px;
+    }
+
+    .plant-detail-hero .plant-photo {
+      min-height: 180px;
+    }
+
+    .plant-detail-body {
+      padding: 12px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .plant-detail-hero.detail-full .plant-photo {
+      min-height: 260px;
+    }
+
+    .plant-detail-name {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .plant-detail-name h3 {
+      margin: 0;
+      font-size: 24px;
+      color: var(--ink);
+    }
+
+    .plant-detail-name .health-pill {
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--crop) 14%, #fff);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      padding: 5px 9px;
+      white-space: nowrap;
+    }
+
+    .detail-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .detail-stat {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      background: #f8faf7;
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .detail-stat span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .detail-stat strong {
+      color: var(--ink);
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .quick-actions .btn {
+      justify-content: center;
+      padding: 10px 8px;
+      min-height: 52px;
+    }
+
+    .detail-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      margin: 12px 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+    }
+
+    .detail-tab {
+      min-height: 42px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+      padding: 0 10px;
+    }
+
+    .detail-tab.active {
+      background: color-mix(in srgb, var(--crop) 14%, #fff);
+      border-color: var(--crop);
+      color: var(--green);
+      box-shadow: inset 0 -2px 0 var(--crop);
+    }
+
+    .detail-tab-panel:not(.active) {
+      display: none;
+    }
+
+    .album-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .album-grid .empty {
+      grid-column: 1 / -1;
+    }
+
+    .album-photo {
+      min-height: 150px;
+      border-radius: var(--radius);
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .album-photo span {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(23, 32, 27, 0.55);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 8px;
+    }
+
+    .timeline h3 {
+      margin: 10px 0 2px;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    .timeline-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 6px;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--crop);
+      position: absolute;
+      left: -4px;
+      top: 18px;
+    }
+
+    .timeline-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .timeline-head strong {
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    .timeline-head span,
+    .timeline-detail {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .timeline-photo {
+      min-height: 120px;
+      border-radius: 8px;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--line);
+    }
+
+    .task-form {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .task-columns {
+      display: grid;
+      gap: 12px;
+    }
+
+    .task-columns h3 {
+      margin: 4px 0 8px;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    .task-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .task-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+      border-left: 4px solid var(--crop);
+      box-shadow: var(--shadow);
+    }
+
+    .task-card.done {
+      opacity: 0.78;
+      background: #f8faf7;
+    }
+
+    .task-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .task-card-title {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .task-card-title strong {
+      color: var(--ink);
+      font-size: 16px;
+      overflow-wrap: anywhere;
+    }
+
+    .task-card-title span,
+    .task-card-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .task-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .task-actions .btn {
+      min-height: 34px;
+      padding: 7px 10px;
+    }
+
+    .btn.danger {
+      color: #b42323;
+      border-color: #f0b8b8;
+      background: #fff7f7;
+    }
+
+    .calendar-weekdays,
+    .calendar-month {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .calendar-weekdays {
+      margin: 8px 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .calendar-day {
+      min-height: 62px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--text);
+      display: grid;
+      align-content: start;
+      justify-items: center;
+      gap: 5px;
+      padding: 7px 4px;
+      font-weight: 800;
+      box-shadow: none;
+    }
+
+    .calendar-day.muted {
+      color: #a6aea8;
+      background: #f8faf7;
+    }
+
+    .calendar-day.today {
+      border-color: var(--green);
+      box-shadow: inset 0 0 0 2px var(--green);
+      color: var(--green);
+    }
+
+    .calendar-day.selected {
+      background: color-mix(in srgb, var(--green) 10%, #fff);
+    }
+
+    .calendar-dots {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      min-height: 8px;
+    }
+
+    .calendar-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .calendar-dot.record {
+      background: #2e92f2;
+    }
+
+    .calendar-dot.task {
+      background: var(--green);
+    }
+
+    .calendar-day-detail {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .calendar-day-detail h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    .calendar-detail-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 5px;
+    }
+
+    .calendar-detail-card strong {
+      color: var(--ink);
+    }
+
+    .calendar-detail-card span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .material-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .material-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--green);
+    }
+
+    .material-card.expired {
+      border-left-color: #d95757;
+    }
+
+    .material-card.used {
+      border-left-color: #9aa3a0;
+      opacity: 0.82;
+    }
+
+    .material-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .material-head strong {
+      color: var(--ink);
+      font-size: 16px;
+      overflow-wrap: anywhere;
+    }
+
+    .material-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .material-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      align-items: end;
+      background: rgba(17, 24, 20, 0.42);
+      padding: 16px;
+    }
+
+    .sheet-backdrop[hidden] {
+      display: none;
+    }
+
+    .sheet-panel {
+      width: min(100%, 560px);
+      max-height: calc(100vh - 34px);
+      overflow: auto;
+      margin: 0 auto;
+      border-radius: 18px 18px 8px 8px;
+      background: #fff;
+      padding: 10px 14px 16px;
+      box-shadow: 0 -16px 40px rgba(23, 32, 27, 0.22);
+    }
+
+    .sheet-handle {
+      width: 48px;
+      height: 5px;
+      border-radius: 999px;
+      background: #dfe5dc;
+      margin: 0 auto 12px;
+    }
+
+    .sheet-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .sheet-head h2 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--ink);
+    }
+
+    .plant-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .plant-photo-preview {
+      min-height: 132px;
+      border: 1px dashed #cfd8d0;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      background:
+        linear-gradient(145deg, rgba(53, 198, 118, 0.14), rgba(43, 183, 213, 0.12)),
+        #f8faf7;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .plant-photo-preview.has-photo {
+      color: transparent;
+      border-style: solid;
     }
 
     .crop-card h2 {
@@ -721,6 +1409,23 @@
       color: var(--text);
     }
 
+    .seedling-list {
+      display: grid;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .seedling-list p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .seedling-list strong {
+      color: var(--text);
+    }
+
     .brief-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -939,13 +1644,14 @@
     }
 
     .icon-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 7px;
+      width: var(--tap);
+      height: var(--tap);
+      border-radius: 14px;
       border: 1px solid var(--line);
       background: #fff;
       color: var(--ink);
       font-weight: 900;
+      font-size: 20px;
     }
 
     .icon-btn.danger {
@@ -956,6 +1662,59 @@
       width: 18px;
       height: 18px;
       accent-color: var(--green);
+    }
+
+    img,
+    video,
+    canvas,
+    svg {
+      max-width: 100%;
+    }
+
+    .content,
+    .summary,
+    .filters,
+    .plan-grid,
+    .stock-grid,
+    .record-list,
+    .task-columns,
+    .material-list,
+    .calendar-month,
+    .calendar-weekdays,
+    .table-wrap {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .record-card,
+    .task-card,
+    .material-card,
+    .calendar-detail-card,
+    .recipe,
+    .plan-card,
+    .crop-card {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .records-panel,
+    .plan-panel,
+    .guidance-panel {
+      padding: 16px;
+    }
+
+    .record-card,
+    .recipe,
+    .plan-card,
+    .crop-card {
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
     }
 
     .empty {
@@ -998,10 +1757,45 @@
       }
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+        --bg: #111814;
+        --panel: #18211c;
+        --text: #e8eee9;
+        --muted: #a8b5ad;
+        --line: #2d3a33;
+        --soft: #1d2822;
+        --ink: #f5f8f5;
+        --shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      }
+
+      input,
+      select,
+      textarea,
+      .btn.secondary,
+      .plant-card,
+      .home-task-card,
+      .task-form,
+      .task-card,
+      .material-card,
+      .timeline-item,
+      .calendar-detail-card,
+      .record-card,
+      .panel,
+      .select-panel {
+        background: var(--panel);
+      }
+
+      .bottom-nav {
+        background: rgba(18, 25, 21, 0.94);
+      }
+    }
+
     @media (max-width: 620px) {
       .app {
-        width: min(100% - 12px, 1180px);
-        padding-top: 10px;
+        width: 100%;
+        padding: calc(10px + env(safe-area-inset-top)) 14px calc(96px + env(safe-area-inset-bottom));
       }
 
       .summary,
@@ -1009,7 +1803,6 @@
       .row,
       .records-head,
       .panel-heading,
-      .crop-grid,
       .fertilizer-dose-row {
         grid-template-columns: 1fr;
       }
@@ -1033,7 +1826,7 @@
       }
 
       .btn {
-        width: 100%;
+        width: auto;
         justify-content: center;
       }
 
@@ -1051,7 +1844,7 @@
       .form-panel,
       .plan-panel,
       .records-panel {
-        padding: 10px;
+        padding: 16px;
       }
 
       .summary {
@@ -1059,7 +1852,7 @@
       }
 
       .crop-card {
-        padding: 8px;
+        padding: 12px;
       }
 
       th,
@@ -1086,7 +1879,35 @@
     </header>
 
     <section class="layout">
-      <form class="panel form-panel app-page active" id="recordForm" data-page-panel="new">
+      <section class="app-page active" id="page-home" data-page-panel="home">
+        <div class="home-head">
+          <h2>我的花园</h2>
+          <button class="icon-btn" type="button" id="homeAddRecordBtn" title="添加植物">+</button>
+        </div>
+        <section class="home-task-card">
+          <div>
+            <h3>今日任务</h3>
+            <p id="todayTaskText">今天没有任务，好好休息吧~</p>
+          </div>
+          <button class="btn secondary" type="button" id="viewTasksBtn">查看</button>
+        </section>
+        <section class="home-section-head">
+          <h3>植物</h3>
+          <span id="plantCountText">0 株</span>
+        </section>
+        <div class="plant-grid" id="plantGrid"></div>
+      </section>
+
+      <section class="panel plan-panel app-page" id="plantDetailPage" data-page-panel="plant-detail">
+        <div class="panel-heading">
+          <button class="icon-btn" type="button" id="plantDetailBackBtn" title="返回">‹</button>
+          <h2 class="panel-title" id="plantDetailTitle">植物详情</h2>
+        </div>
+        <div id="plantDetailContent"></div>
+        <input id="detailPhotoInput" type="file" accept="image/*" capture="environment" hidden>
+      </section>
+
+      <form class="panel form-panel app-page" id="recordForm" data-page-panel="records">
         <h2 class="panel-title" id="formTitle">新增记录</h2>
         <input type="hidden" id="recordId">
 
@@ -1113,6 +1934,10 @@
             <select id="typeInput" required>
               <option value="浇水">浇水</option>
               <option value="施肥">施肥</option>
+              <option value="修剪">修剪</option>
+              <option value="病虫害">病虫害</option>
+              <option value="拍照">拍照</option>
+              <option value="笔记">笔记</option>
             </select>
           </div>
         </div>
@@ -1219,9 +2044,131 @@
       </form>
 
       <div class="content">
-        <section class="summary app-page" id="summary" data-page-panel="overview"></section>
+        <section class="panel plan-panel app-page" id="materialsPage" data-page-panel="mine">
+          <div class="panel-heading">
+            <h2 class="panel-title">农资管理</h2>
+            <select class="month-select" id="materialKindFilter">
+              <option value="肥料">肥料</option>
+              <option value="药剂">药剂</option>
+            </select>
+          </div>
+          <div class="filters">
+            <select id="materialStatusFilter">
+              <option value="全部">全部状态</option>
+              <option value="有效">有效</option>
+              <option value="过期">过期</option>
+              <option value="已用完">已用完</option>
+            </select>
+          </div>
+          <div class="guidance-box" id="materialExpiryAlert"></div>
+          <form class="task-form" id="materialForm">
+            <input type="hidden" id="materialIdInput">
+            <div class="row">
+              <div class="field">
+                <label for="materialNameInput">名称</label>
+                <input id="materialNameInput" type="text" required placeholder="例如：磷酸二氢钾">
+              </div>
+              <div class="field">
+                <label for="materialKindInput">类型</label>
+                <select id="materialKindInput">
+                  <option value="肥料">肥料</option>
+                  <option value="药剂">药剂</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="materialStockInput">库存</label>
+                <input id="materialStockInput" type="number" min="0" step="0.1" inputmode="decimal" placeholder="例如：1">
+              </div>
+              <div class="field">
+                <label for="materialUnitInput">单位</label>
+                <input id="materialUnitInput" type="text" placeholder="瓶、袋、克、毫升">
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="materialBuyDateInput">购买日期</label>
+                <input id="materialBuyDateInput" type="date">
+              </div>
+              <div class="field">
+                <label for="materialExpireDateInput">有效期</label>
+                <input id="materialExpireDateInput" type="date">
+              </div>
+            </div>
+            <div class="field">
+              <label for="materialStatusInput">状态</label>
+              <select id="materialStatusInput">
+                <option value="有效">有效</option>
+                <option value="过期">过期</option>
+                <option value="已用完">已用完</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="materialNoteInput">备注</label>
+              <textarea id="materialNoteInput" rows="2" placeholder="浓度、适用作物、注意事项"></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="btn primary" type="submit">保存农资</button>
+              <button class="btn secondary" type="button" id="materialCancelBtn">取消编辑</button>
+            </div>
+          </form>
+          <div class="material-list" id="materialList"></div>
+        </section>
 
-        <section class="panel plan-panel app-page" data-page-panel="advice">
+        <section class="panel plan-panel app-page" id="page-tasks" data-page-panel="tasks">
+          <div class="panel-heading">
+            <h2 class="panel-title">任务管理</h2>
+            <select class="month-select" id="taskTypeFilter"></select>
+          </div>
+          <form class="task-form" id="taskForm">
+            <input type="hidden" id="taskIdInput">
+            <div class="row">
+              <div class="field">
+                <label for="taskPlantInput">植物</label>
+                <select id="taskPlantInput"></select>
+              </div>
+              <div class="field">
+                <label for="taskTypeInput">任务类型</label>
+                <select id="taskTypeInput"></select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="taskNextDateInput">下次日期</label>
+                <input id="taskNextDateInput" type="date" required>
+              </div>
+              <div class="field">
+                <label for="taskCycleInput">循环天数</label>
+                <input id="taskCycleInput" type="number" min="0" step="1" inputmode="numeric" placeholder="例如：7">
+              </div>
+            </div>
+            <div class="field">
+              <label for="taskNoteInput">备注</label>
+              <textarea id="taskNoteInput" rows="2" placeholder="例如：盆土干透后再浇，避开中午"></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="btn primary" type="submit">保存任务</button>
+              <button class="btn secondary" type="button" id="taskCancelBtn">取消编辑</button>
+            </div>
+          </form>
+          <div class="task-columns">
+            <section>
+              <h3>今日任务</h3>
+              <div class="task-list" id="todayTaskList"></div>
+            </section>
+            <section>
+              <h3>未来任务</h3>
+              <div class="task-list" id="futureTaskList"></div>
+            </section>
+            <section>
+              <h3>已完成任务</h3>
+              <div class="task-list" id="doneTaskList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="panel plan-panel app-page" data-page-panel="mine">
           <div class="panel-heading">
             <h2 class="panel-title">动态建议</h2>
             <select class="month-select" id="planMonth"></select>
@@ -1253,13 +2200,26 @@
           <div class="plan-grid" id="planGrid"></div>
         </section>
 
-        <section class="panel guidance-panel app-page" data-page-panel="recipe">
+        <section class="panel guidance-panel app-page" data-page-panel="mine">
           <div class="panel-heading">
             <h2 class="panel-title">配料建议与指导</h2>
           </div>
           <div class="guidance-box" id="recipeGuidance">
             <div class="empty">选择一键配料方案后，这里会显示购买建议、底肥指导、灌根和叶喷方案。</div>
           </div>
+        </section>
+
+        <section class="panel plan-panel app-page" id="page-calendar" data-page-panel="calendar">
+          <div class="panel-heading">
+            <button class="icon-btn" type="button" id="prevMonthBtn" title="上个月">‹</button>
+            <h2 class="panel-title" id="calendarTitle">日历</h2>
+            <button class="icon-btn" type="button" id="nextMonthBtn" title="下个月">›</button>
+          </div>
+          <div class="calendar-weekdays">
+            <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+          </div>
+          <div class="calendar-month" id="calendarGrid"></div>
+          <div class="calendar-day-detail" id="calendarDayDetail"></div>
         </section>
 
         <section class="panel records-panel app-page" data-page-panel="records">
@@ -1279,6 +2239,10 @@
               <option value="全部">全部类型</option>
               <option value="浇水">浇水</option>
               <option value="施肥">施肥</option>
+              <option value="修剪">修剪</option>
+              <option value="病虫害">病虫害</option>
+              <option value="拍照">拍照</option>
+              <option value="笔记">笔记</option>
             </select>
           </div>
           <div class="table-wrap" id="tableWrap"></div>
@@ -1286,12 +2250,59 @@
       </div>
     </section>
     <nav class="bottom-nav" aria-label="手机页面导航">
-      <button class="active" type="button" data-page="new">新增</button>
-      <button type="button" data-page="overview">记录</button>
-      <button type="button" data-page="advice">建议</button>
-      <button type="button" data-page="recipe">配料</button>
-      <button type="button" data-page="records">列表</button>
+      <button class="active" type="button" data-page="home">首页</button>
+      <button type="button" data-page="calendar">日历</button>
+      <button type="button" data-page="tasks">任务</button>
+      <button type="button" data-page="records">记录</button>
+      <button type="button" data-page="mine">我的</button>
     </nav>
+    <div class="sheet-backdrop" id="plantSheet" hidden>
+      <section class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="plantSheetTitle">
+        <div class="sheet-handle"></div>
+        <div class="sheet-head">
+          <h2 id="plantSheetTitle">添加植物</h2>
+          <button class="icon-btn" type="button" id="plantSheetCloseBtn" title="关闭">×</button>
+        </div>
+        <form class="plant-form" id="plantForm">
+          <div class="field">
+            <label for="plantNameInput">植物名称</label>
+            <input id="plantNameInput" type="text" required placeholder="例如：蓝莓、月季">
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="plantVarietyInput">品种</label>
+              <input id="plantVarietyInput" type="text" placeholder="可不填">
+            </div>
+            <div class="field">
+              <label for="plantCategoryInput">分类</label>
+              <select id="plantCategoryInput"></select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="plantHealthInput">健康状态</label>
+            <select id="plantHealthInput">
+              <option value="健康">健康</option>
+              <option value="观察">观察</option>
+              <option value="偏弱">偏弱</option>
+              <option value="病虫害">病虫害</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="plantPhotoInput">照片</label>
+            <input id="plantPhotoInput" type="file" accept="image/*" capture="environment">
+            <div class="plant-photo-preview" id="plantPhotoPreview">照片缩略图</div>
+          </div>
+          <div class="field">
+            <label for="plantNoteInput">备注</label>
+            <textarea id="plantNoteInput" rows="3" placeholder="位置、盆栽/地栽、特殊情况"></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn secondary" type="button" id="plantCancelBtn">取消</button>
+            <button class="btn primary" type="submit">保存植物</button>
+          </div>
+        </form>
+      </section>
+    </div>
   </main>
 
   <script>
@@ -1330,6 +2341,7 @@
       "无花果": "养护：结果期稳水补钾钙，忌积水。修剪：冬季落叶后疏除交叉枝、弱枝，夏季摘心控高。"
     };
 
+    const appDataKey = "fruit-care-app-data-v2";
     const storageKey = "fruit-care-records-v1";
     const stockKey = "fruit-care-fertilizer-stock-v1";
     const customFertilizerKey = "fruit-care-custom-fertilizers-v1";
@@ -1339,6 +2351,7 @@
     const customPesticideKey = "fruit-care-custom-pesticides-v1";
     const deletedPesticideKey = "fruit-care-deleted-pesticides-v1";
     const pesticideImportKey = "fruit-care-pesticides-imported-v1";
+    const taskTypes = ["浇水", "换水", "施肥", "修剪", "换盆", "病虫害", "测量", "里程碑", "拍照", "笔记"];
     const ownedFertilizers = [
       "硫酸铵",
       "硫酸钾",
@@ -1472,6 +2485,72 @@
       "草莓": "花果期低浓度多次补钾钙镁，氮过多会影响果实品质和病害风险。",
       "无花果": "耐肥但怕积水，结果期偏钾钙，冬季落叶后以修剪和有机质为主。"
     };
+    const seedlingCarePlans = {
+      "蓝莓": {
+        stage: "新苗/小苗缓苗",
+        water: "介质保持微湿不积水，表层略干再补水；优先用酸性介质和软水。",
+        fertilizer: "前 10-14 天不追肥；恢复新叶后可用硫酸铵或蓝莓酸性肥 1:2000 低浓度灌根，7-10 天后再评估。",
+        foliar: "叶色浅时可用海藻精或螯合微量元素 1:2000 叶喷，和灌根间隔 24-48 小时。",
+        light: "先散射光 3-5 天，再逐步增加日照；夏季小苗避开正午暴晒。",
+        prune: "不重剪，只去枯叶弱枝；第一年以养根和发枝为主。"
+      },
+      "葡萄": {
+        stage: "扦插苗/嫁接苗缓苗",
+        water: "定植后浇透定根水，之后见干见湿，避免长期湿脚。",
+        fertilizer: "缓苗 7-10 天后，新梢稳定生长再薄施平衡肥 1:1500；旺长时停氮，改控水通风。",
+        foliar: "新叶展开后可海藻精或微量元素 1:2000 叶喷；叶喷间隔 5 天以上。",
+        light: "先半阴缓苗，再逐步全日照；新梢嫩时防风折。",
+        prune: "保留 1 条强壮主蔓，其余弱芽及时抹除，先建骨架。"
+      },
+      "番茄": {
+        stage: "育苗/定植缓苗",
+        water: "定植后浇透，缓苗期保持土壤均匀湿润，不忽干忽湿。",
+        fertilizer: "缓苗 5-7 天后可用鱼蛋白或平衡肥 1:1500-1:2000 灌根；现蕾后再逐步转磷钾钙镁。",
+        foliar: "徒长不叶喷氮肥；叶色浅可微量元素 1:2000 叶喷，3-5 天后观察。",
+        light: "给足光照和通风，夜温低时防冷风。",
+        prune: "小番茄前期先养壮根和主枝，老叶病叶及时去掉。"
+      },
+      "西瓜": {
+        stage: "育苗/伸蔓前",
+        water: "苗期少量多次，盆土不干裂也不积水；定植后先稳根。",
+        fertilizer: "真叶展开后才可极淡平衡肥 1:2000；伸蔓稳定后再少量补氮钾。",
+        foliar: "缓苗弱时海藻精 1:2000 叶喷，和灌根间隔 24-48 小时。",
+        light: "喜强光和高温，低温阴雨时控水防猝倒。",
+        prune: "幼苗期不急整枝，伸蔓后再选主蔓和健壮侧蔓。"
+      },
+      "月季": {
+        stage: "小苗/新上盆",
+        water: "上盆后浇透，之后见干见湿；小盆夏季注意早晚水分。",
+        fertilizer: "缓苗 7-10 天内不追速效肥；新芽展开后平衡肥 1:1500-1:2000，宁淡勿浓。",
+        foliar: "海藻精或螯合微量元素 1:2000 可辅助叶喷，叶喷间隔 3-5 天。",
+        light: "先散射光缓苗，再逐步增加日照；高温新苗遮阴。",
+        prune: "不重剪，先摘残花、弱枝和病叶，等根系稳定后再塑形。"
+      },
+      "桂花": {
+        stage: "小苗/换盆缓苗",
+        water: "保持微湿通气，忌积水闷根；新盆先稳根。",
+        fertilizer: "新芽稳定前不追肥；恢复后用平衡肥或腐殖酸类 1:2000 低浓度灌根。",
+        foliar: "叶色发黄先查积水和土壤酸碱，再用螯合微量元素 1:2000 叶喷。",
+        light: "半阴缓苗 5-7 天后逐步见光，夏季避暴晒。",
+        prune: "只剪枯枝、内膛弱枝，不在缓苗期重剪。"
+      },
+      "草莓": {
+        stage: "定植苗/缓苗",
+        water: "定植后浇透，缓苗期保持根区湿润，叶心不积水。",
+        fertilizer: "缓苗 5-7 天后低浓度平衡肥 1:2000；现蕾后转高钾钙镁。",
+        foliar: "苗弱可海藻精 1:2000 叶喷，叶喷间隔 3-5 天；花期少喷。",
+        light: "先散射光，挺叶后增加光照；保持通风防灰霉。",
+        prune: "去老叶病叶和多余匍匐茎，保留中心新叶。"
+      },
+      "无花果": {
+        stage: "扦插苗/小苗",
+        water: "生根期保持介质微湿，根系稳定后见干见湿，忌盆底积水。",
+        fertilizer: "新叶稳定前不追肥；展叶后平衡肥 1:1500-1:2000 灌根，结果前不急高钾。",
+        foliar: "叶片浅黄可微量元素 1:2000 叶喷，和灌根间隔 24-48 小时。",
+        light: "逐步增加光照，小苗夏季先避正午暴晒。",
+        prune: "第一阶段先养主干，过长可轻摘心促分枝，不重剪。"
+      }
+    };
     const annualPlans = {
       "蓝莓": [
         { months: [1, 2], stage: "休眠期", need: ["有机肥"], action: "少量补有机质，保持土壤偏酸，不急着追速效肥。", interval: 45 },
@@ -1533,19 +2612,37 @@
         { months: [12], stage: "入冬休眠", need: ["有机肥"], action: "入冬后停速效肥，落叶后再做结构修剪。", interval: 45 }
       ]
     };
-    let records = loadRecords();
-    let customFertilizers = loadCustomFertilizers();
-    let deletedFertilizers = loadDeletedFertilizers();
-    let fertilizerStock = importOwnedFertilizers(loadFertilizerStock());
-    let customPesticides = loadCustomPesticides();
-    let deletedPesticides = loadDeletedPesticides();
-    let pesticideStock = importPesticides(loadPesticideStock());
+    let appData = loadData();
+    let records = appData.records;
+    let customFertilizers = appData.materials
+      .filter(item => item.kind === "肥料" && item.status !== "已删除" && !baseFertilizers.includes(item.name))
+      .map(item => item.name);
+    let deletedFertilizers = appData.materials
+      .filter(item => item.kind === "肥料" && item.status === "已删除")
+      .map(item => item.name);
+    let fertilizerStock = appData.materials
+      .filter(item => item.kind === "肥料" && item.status === "有效" && Number(item.stock) > 0)
+      .map(item => item.name);
+    let customPesticides = appData.materials
+      .filter(item => item.kind === "药剂" && item.status !== "已删除" && !basePesticides.some(base => base.name === item.name))
+      .map(item => item.name);
+    let deletedPesticides = appData.materials
+      .filter(item => item.kind === "药剂" && item.status === "已删除")
+      .map(item => item.name);
+    let pesticideStock = appData.materials
+      .filter(item => item.kind === "药剂" && item.status === "有效" && Number(item.stock) > 0)
+      .map(item => item.name);
     let selectedCrop = crops[0].name;
     let selectedRecordIds = new Set();
     let selectedFertilizersToDelete = new Set();
     let selectedPesticidesToDelete = new Set();
     let lastRecipeGuidance = "";
-    let activePage = "new";
+    let activePage = "home";
+    let selectedPlantId = "";
+    let formPlantId = "";
+    let plantPhotoBase64 = "";
+    let calendarCursor = today().slice(0, 7);
+    let selectedCalendarDate = today();
     let visibleRecordCount = 20;
     const recordPageSize = 20;
 
@@ -1578,6 +2675,26 @@
       pestAction: document.getElementById("pestActionInput"),
       temperature: document.getElementById("temperatureInput"),
       note: document.getElementById("noteInput"),
+      plantGrid: document.getElementById("plantGrid"),
+      plantCount: document.getElementById("plantCountText"),
+      todayTaskText: document.getElementById("todayTaskText"),
+      homeAddRecord: document.getElementById("homeAddRecordBtn"),
+      viewTasks: document.getElementById("viewTasksBtn"),
+      plantDetailBack: document.getElementById("plantDetailBackBtn"),
+      plantDetailTitle: document.getElementById("plantDetailTitle"),
+      plantDetailContent: document.getElementById("plantDetailContent"),
+      detailPhoto: document.getElementById("detailPhotoInput"),
+      plantSheet: document.getElementById("plantSheet"),
+      plantForm: document.getElementById("plantForm"),
+      plantSheetClose: document.getElementById("plantSheetCloseBtn"),
+      plantCancel: document.getElementById("plantCancelBtn"),
+      plantName: document.getElementById("plantNameInput"),
+      plantVariety: document.getElementById("plantVarietyInput"),
+      plantCategory: document.getElementById("plantCategoryInput"),
+      plantHealth: document.getElementById("plantHealthInput"),
+      plantPhoto: document.getElementById("plantPhotoInput"),
+      plantPhotoPreview: document.getElementById("plantPhotoPreview"),
+      plantNote: document.getElementById("plantNoteInput"),
       cancel: document.getElementById("cancelBtn"),
       summary: document.getElementById("summary"),
       fertilizerStock: document.getElementById("fertilizerStock"),
@@ -1593,6 +2710,39 @@
       planMonth: document.getElementById("planMonth"),
       planGrid: document.getElementById("planGrid"),
       recipeGuidance: document.getElementById("recipeGuidance"),
+      seedlingGrid: document.getElementById("seedlingGrid"),
+      taskForm: document.getElementById("taskForm"),
+      taskId: document.getElementById("taskIdInput"),
+      taskPlant: document.getElementById("taskPlantInput"),
+      taskType: document.getElementById("taskTypeInput"),
+      taskNextDate: document.getElementById("taskNextDateInput"),
+      taskCycle: document.getElementById("taskCycleInput"),
+      taskNote: document.getElementById("taskNoteInput"),
+      taskCancel: document.getElementById("taskCancelBtn"),
+      taskTypeFilter: document.getElementById("taskTypeFilter"),
+      todayTaskList: document.getElementById("todayTaskList"),
+      futureTaskList: document.getElementById("futureTaskList"),
+      doneTaskList: document.getElementById("doneTaskList"),
+      materialForm: document.getElementById("materialForm"),
+      materialId: document.getElementById("materialIdInput"),
+      materialName: document.getElementById("materialNameInput"),
+      materialKind: document.getElementById("materialKindInput"),
+      materialStock: document.getElementById("materialStockInput"),
+      materialUnit: document.getElementById("materialUnitInput"),
+      materialBuyDate: document.getElementById("materialBuyDateInput"),
+      materialExpireDate: document.getElementById("materialExpireDateInput"),
+      materialStatus: document.getElementById("materialStatusInput"),
+      materialNote: document.getElementById("materialNoteInput"),
+      materialCancel: document.getElementById("materialCancelBtn"),
+      materialKindFilter: document.getElementById("materialKindFilter"),
+      materialStatusFilter: document.getElementById("materialStatusFilter"),
+      materialExpiryAlert: document.getElementById("materialExpiryAlert"),
+      materialList: document.getElementById("materialList"),
+      calendarTitle: document.getElementById("calendarTitle"),
+      prevMonth: document.getElementById("prevMonthBtn"),
+      nextMonth: document.getElementById("nextMonthBtn"),
+      calendarGrid: document.getElementById("calendarGrid"),
+      calendarDayDetail: document.getElementById("calendarDayDetail"),
       tableWrap: document.getElementById("tableWrap"),
       bulkStatus: document.getElementById("bulkStatus"),
       bulkDelete: document.getElementById("bulkDeleteBtn"),
@@ -1613,8 +2763,9 @@
       els.pagePanels.forEach(panel => {
         panel.classList.toggle("active", panel.dataset.pagePanel === page);
       });
+      const navPage = page === "plant-detail" ? "home" : page;
       els.pageButtons.forEach(button => {
-        button.classList.toggle("active", button.dataset.page === page);
+        button.classList.toggle("active", button.dataset.page === navPage);
       });
       if (page === "recipe" && !lastRecipeGuidance) {
         const plans = recipePlanOptions();
@@ -1623,98 +2774,265 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function loadRecords() {
+    function emptyData() {
+      return { plants: [], records: [], tasks: [], materials: [] };
+    }
+
+    function hashText(value) {
+      let hash = 0;
+      String(value || "").split("").forEach(char => {
+        hash = ((hash << 5) - hash + char.charCodeAt(0)) | 0;
+      });
+      return Math.abs(hash).toString(36);
+    }
+
+    function makeId(prefix, seed = "") {
+      return seed ? `${prefix}-${hashText(seed)}` : `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+    }
+
+    function safeJson(value, fallback) {
       try {
-        return JSON.parse(localStorage.getItem(storageKey)) || [];
+        const parsed = JSON.parse(value);
+        return parsed ?? fallback;
       } catch {
-        return [];
+        return fallback;
       }
+    }
+
+    function plantFromCrop(cropName, variety = "", note = "") {
+      const crop = cropMeta(cropName);
+      return {
+        id: makeId("plant", crop.name),
+        name: crop.name,
+        variety: variety || defaultVariety(crop.name),
+        category: crop.name,
+        photo: "",
+        health: "健康",
+        createdAt: new Date().toISOString(),
+        note: note || crop.hint || ""
+      };
+    }
+
+    function normalizePlant(plant) {
+      const fallback = plantFromCrop(plant?.name || "蓝莓", plant?.variety || "");
+      return {
+        id: plant?.id || fallback.id,
+        name: plant?.name || fallback.name,
+        variety: plant?.variety || fallback.variety,
+        category: plant?.category || plant?.name || fallback.category,
+        photo: plant?.photo || "",
+        health: plant?.health || "健康",
+        createdAt: plant?.createdAt || fallback.createdAt,
+        note: plant?.note || ""
+      };
+    }
+
+    function normalizeRecord(record, plantMap) {
+      const cropName = record.crop || plantMap.get(record.plantId)?.name || crops[0].name;
+      const plant = record.plantId && plantMap.has(record.plantId)
+        ? plantMap.get(record.plantId)
+        : plantFromCrop(cropName, record.variety || defaultVariety(cropName));
+      if (!plantMap.has(plant.id)) plantMap.set(plant.id, plant);
+      return {
+        ...record,
+        id: record.id || makeId("record"),
+        plantId: record.plantId || plant.id,
+        crop: record.crop || plant.name,
+        type: record.type || "浇水",
+        date: record.date || today(),
+        amount: record.amount || "",
+        fertilizer: record.fertilizer || "",
+        dilution: record.dilution || "",
+        note: record.note || "",
+        photo: record.photo || "",
+        createdAt: record.createdAt || Date.now()
+      };
+    }
+
+    function normalizeTask(task, plants = appData.plants || []) {
+      return {
+        id: task?.id || makeId("task"),
+        plantId: task?.plantId || plants[0]?.id || "",
+        type: taskTypes.includes(task?.type) ? task.type : "浇水",
+        nextDate: task?.nextDate || today(),
+        cycleDays: Number(task?.cycleDays) || 0,
+        enabled: task?.enabled !== false,
+        completedAt: task?.completedAt || "",
+        note: task?.note || ""
+      };
+    }
+
+    function materialFromName(name, kind, active = true, status = "有效", existing = {}) {
+      return {
+        id: existing.id || makeId("material", `${kind}:${name}`),
+        name,
+        kind,
+        stock: active && status !== "已删除" ? (existing.stock || 1) : 0,
+        unit: existing.unit || "件",
+        buyDate: existing.buyDate || "",
+        expireDate: existing.expireDate || "",
+        status,
+        note: existing.note || ""
+      };
+    }
+
+    function normalizeMaterial(material) {
+      const rawStatus = material?.status || (Number(material?.stock) > 0 ? "有效" : "已用完");
+      const status = rawStatus === "已停用" ? "已用完" : rawStatus;
+      return materialFromName(
+        material?.name || "未命名",
+        material?.kind || "肥料",
+        Number(material?.stock) > 0,
+        status,
+        material || {}
+      );
+    }
+
+    function materialMap(materials) {
+      return new Map((materials || []).map(item => [`${item.kind}:${item.name}`, item]));
+    }
+
+    function buildMaterials(existingMaterials, legacy, preserveExisting = false) {
+      const existing = materialMap(existingMaterials.map(normalizeMaterial));
+      const output = new Map();
+      const add = (name, kind, active = true, status = "有效") => {
+        if (!name) return;
+        const key = `${kind}:${name}`;
+        if (preserveExisting && existing.has(key) && status !== "已删除") {
+          output.set(key, existing.get(key));
+          return;
+        }
+        const previous = existing.get(key);
+        const preservedStatus = previous && ["过期", "已用完"].includes(previous.status) ? previous.status : status;
+        output.set(key, materialFromName(name, kind, active && preservedStatus === "有效", preservedStatus, previous));
+      };
+
+      const fertilizerDeleted = new Set(legacy.deletedFertilizers || []);
+      const fertilizerActive = new Set([...(legacy.fertilizerStock || []), ...ownedFertilizers]);
+      [...baseFertilizers, ...(legacy.customFertilizers || []), ...fertilizerDeleted].forEach(name => {
+        add(name, "肥料", fertilizerActive.has(name) && !fertilizerDeleted.has(name), fertilizerDeleted.has(name) ? "已删除" : "有效");
+      });
+
+      const pesticideDeleted = new Set(legacy.deletedPesticides || []);
+      const pesticideActive = new Set([...(legacy.pesticideStock || []), ...basePesticides.map(item => item.name)]);
+      [...basePesticides.map(item => item.name), ...(legacy.customPesticides || []), ...pesticideDeleted].forEach(name => {
+        add(name, "药剂", pesticideActive.has(name) && !pesticideDeleted.has(name), pesticideDeleted.has(name) ? "已删除" : "有效");
+      });
+
+      existing.forEach((item, key) => {
+        if (!output.has(key)) output.set(key, item);
+      });
+      return [...output.values()];
+    }
+
+    function migrateOldData(source = {}) {
+      const stored = source.stored && !Array.isArray(source.stored) ? source.stored : {};
+      const legacy = source.legacy || {};
+      const data = {
+        plants: Array.isArray(stored.plants) ? stored.plants.map(normalizePlant) : [],
+        records: Array.isArray(stored.records) ? stored.records : [],
+        tasks: Array.isArray(stored.tasks) ? stored.tasks : [],
+        materials: Array.isArray(stored.materials) ? stored.materials.map(normalizeMaterial) : []
+      };
+      const plantMap = new Map(data.plants.map(plant => [plant.id, plant]));
+      const legacyRecords = Array.isArray(legacy.records) ? legacy.records : [];
+      const recordSource = data.records.length ? data.records : legacyRecords;
+
+      crops.forEach(crop => {
+        const plant = plantFromCrop(crop.name, defaultVariety(crop.name));
+        if (!plantMap.has(plant.id)) plantMap.set(plant.id, plant);
+      });
+
+      data.records = recordSource.map(record => normalizeRecord(record, plantMap));
+      data.plants = [...plantMap.values()].map(normalizePlant);
+      data.tasks = data.tasks.map(task => normalizeTask(task, data.plants));
+      data.materials = buildMaterials(data.materials, legacy, Boolean(source.stored));
+      return data;
+    }
+
+    function loadData() {
+      const stored = safeJson(localStorage.getItem(appDataKey), null);
+      const legacy = stored ? {} : {
+        records: safeJson(localStorage.getItem(storageKey), []),
+        fertilizerStock: safeJson(localStorage.getItem(stockKey), null) || ["有机肥", "平衡水溶肥", "高钾肥"],
+        customFertilizers: safeJson(localStorage.getItem(customFertilizerKey), []),
+        deletedFertilizers: safeJson(localStorage.getItem(deletedFertilizerKey), []),
+        pesticideStock: safeJson(localStorage.getItem(pesticideStockKey), null) || basePesticides.map(item => item.name),
+        customPesticides: safeJson(localStorage.getItem(customPesticideKey), []),
+        deletedPesticides: safeJson(localStorage.getItem(deletedPesticideKey), [])
+      };
+      const data = migrateOldData({ stored, legacy });
+      return data;
+    }
+
+    function syncDataFromGlobals() {
+      const plantMap = new Map((appData.plants || []).map(plant => [plant.id, normalizePlant(plant)]));
+      appData.records = records.map(record => normalizeRecord(record, plantMap));
+      appData.plants = [...plantMap.values()];
+      appData.materials = buildMaterials(appData.materials || [], {
+        fertilizerStock,
+        customFertilizers,
+        deletedFertilizers,
+        pesticideStock,
+        customPesticides,
+        deletedPesticides
+      });
+      syncStockArraysFromMaterials();
+      appData.tasks = Array.isArray(appData.tasks) ? appData.tasks.map(task => normalizeTask(task, appData.plants)) : [];
+    }
+
+    function saveData(data = appData) {
+      if (data !== appData) appData = migrateOldData({ stored: data, legacy: {} });
+      syncDataFromGlobals();
+      localStorage.setItem(appDataKey, JSON.stringify(appData));
+    }
+
+    function loadRecords() {
+      return appData.records || [];
     }
 
     function saveRecords() {
-      localStorage.setItem(storageKey, JSON.stringify(records));
+      saveData();
     }
 
     function loadCustomFertilizers() {
-      try {
-        return JSON.parse(localStorage.getItem(customFertilizerKey)) || [];
-      } catch {
-        return [];
-      }
+      return customFertilizers || [];
     }
 
     function loadFertilizerStock() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(stockKey));
-        return Array.isArray(saved) ? saved : ["有机肥", "平衡水溶肥", "高钾肥"];
-      } catch {
-        return ["有机肥", "平衡水溶肥", "高钾肥"];
-      }
+      return fertilizerStock || [];
     }
 
     function loadDeletedFertilizers() {
-      try {
-        return JSON.parse(localStorage.getItem(deletedFertilizerKey)) || [];
-      } catch {
-        return [];
-      }
+      return deletedFertilizers || [];
     }
 
     function loadCustomPesticides() {
-      try {
-        return JSON.parse(localStorage.getItem(customPesticideKey)) || [];
-      } catch {
-        return [];
-      }
+      return customPesticides || [];
     }
 
     function loadDeletedPesticides() {
-      try {
-        return JSON.parse(localStorage.getItem(deletedPesticideKey)) || [];
-      } catch {
-        return [];
-      }
+      return deletedPesticides || [];
     }
 
     function loadPesticideStock() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(pesticideStockKey));
-        return Array.isArray(saved) ? saved : basePesticides.map(item => item.name);
-      } catch {
-        return basePesticides.map(item => item.name);
-      }
+      return pesticideStock || [];
     }
 
     function importOwnedFertilizers(stock) {
-      if (localStorage.getItem(stockImportKey) === "done") {
-        return stock;
-      }
-      const merged = [...new Set([...stock, ...ownedFertilizers])];
-      localStorage.setItem(stockImportKey, "done");
-      localStorage.setItem(stockKey, JSON.stringify(merged));
-      return merged;
+      return [...new Set([...(stock || []), ...ownedFertilizers])].filter(name => !deletedFertilizers?.includes(name));
     }
 
     function importPesticides(stock) {
-      if (localStorage.getItem(pesticideImportKey) === "done") {
-        return stock;
-      }
-      const merged = [...new Set([...stock, ...basePesticides.map(item => item.name)])];
-      localStorage.setItem(pesticideImportKey, "done");
-      localStorage.setItem(pesticideStockKey, JSON.stringify(merged));
-      return merged;
+      return [...new Set([...(stock || []), ...basePesticides.map(item => item.name)])].filter(name => !deletedPesticides?.includes(name));
     }
 
     function saveFertilizerStock() {
-      localStorage.setItem(stockKey, JSON.stringify(fertilizerStock));
-      localStorage.setItem(customFertilizerKey, JSON.stringify(customFertilizers));
-      localStorage.setItem(deletedFertilizerKey, JSON.stringify(deletedFertilizers));
+      saveData();
     }
 
     function savePesticideStock() {
-      localStorage.setItem(pesticideStockKey, JSON.stringify(pesticideStock));
-      localStorage.setItem(customPesticideKey, JSON.stringify(customPesticides));
-      localStorage.setItem(deletedPesticideKey, JSON.stringify(deletedPesticides));
+      saveData();
     }
 
     async function requestPersistentStorage() {
@@ -1734,6 +3052,38 @@
     function allPesticides() {
       return [...new Set([...basePesticides.map(item => item.name), ...customPesticides])]
         .filter(name => !deletedPesticides.includes(name));
+    }
+
+    function materialDisplayStatus(material) {
+      if (material.status === "已删除") return "已删除";
+      if (material.status === "已用完") return "已用完";
+      if (material.expireDate && material.expireDate < today()) return "过期";
+      return material.status || "有效";
+    }
+
+    function daysUntilDate(dateString) {
+      if (!dateString) return Infinity;
+      const start = new Date(today() + "T00:00:00");
+      const end = new Date(dateString + "T00:00:00");
+      return Math.ceil((end - start) / 86400000);
+    }
+
+    function syncStockArraysFromMaterials() {
+      const active = (appData.materials || []).filter(item => materialDisplayStatus(item) === "有效" && Number(item.stock) > 0);
+      fertilizerStock = active.filter(item => item.kind === "肥料").map(item => item.name);
+      pesticideStock = active.filter(item => item.kind === "药剂").map(item => item.name);
+      customFertilizers = (appData.materials || [])
+        .filter(item => item.kind === "肥料" && item.status !== "已删除" && !baseFertilizers.includes(item.name))
+        .map(item => item.name);
+      customPesticides = (appData.materials || [])
+        .filter(item => item.kind === "药剂" && item.status !== "已删除" && !basePesticides.some(base => base.name === item.name))
+        .map(item => item.name);
+      deletedFertilizers = (appData.materials || [])
+        .filter(item => item.kind === "肥料" && item.status === "已删除")
+        .map(item => item.name);
+      deletedPesticides = (appData.materials || [])
+        .filter(item => item.kind === "药剂" && item.status === "已删除")
+        .map(item => item.name);
     }
 
     function pesticideMeta(name) {
@@ -1757,6 +3107,16 @@
       return cropMeta(cropName).varieties[0] || "";
     }
 
+    function plantForCrop(cropName) {
+      const fallback = plantFromCrop(cropName, defaultVariety(cropName));
+      let plant = appData.plants.find(item => item.name === cropName || item.category === cropName);
+      if (!plant) {
+        plant = fallback;
+        appData.plants.push(plant);
+      }
+      return plant;
+    }
+
     function daysSince(dateString) {
       if (!dateString) return "无记录";
       const start = new Date(dateString + "T00:00:00");
@@ -1777,8 +3137,75 @@
     }
 
     function renderCropChoices() {
-      els.crop.innerHTML = crops.map(crop => `<option value="${crop.name}">${crop.name}</option>`).join("");
+      const names = [...new Set([
+        ...crops.map(crop => crop.name),
+        ...(appData.plants || []).map(plant => plant.category || plant.name).filter(Boolean)
+      ])];
+      els.crop.innerHTML = names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
       els.crop.value = selectedCrop;
+      if (els.plantCategory) {
+        els.plantCategory.innerHTML = names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
+      }
+    }
+
+    function resetPlantForm() {
+      plantPhotoBase64 = "";
+      els.plantForm.reset();
+      if (els.plantCategory) {
+        els.plantCategory.value = selectedCrop || crops[0].name;
+      }
+      els.plantPhotoPreview.classList.remove("has-photo");
+      els.plantPhotoPreview.style.backgroundImage = "";
+      els.plantPhotoPreview.textContent = "照片缩略图";
+    }
+
+    function openPlantModal() {
+      resetPlantForm();
+      els.plantSheet.hidden = false;
+      requestAnimationFrame(() => els.plantName.focus());
+    }
+
+    function closePlantModal() {
+      els.plantSheet.hidden = true;
+    }
+
+    function compressImageToBase64(file) {
+      return new Promise((resolve, reject) => {
+        if (!file) {
+          resolve("");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error("图片读取失败"));
+        reader.onload = () => {
+          const image = new Image();
+          image.onerror = () => reject(new Error("图片解析失败"));
+          image.onload = () => {
+            const maxSide = 900;
+            const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+            const canvas = document.createElement("canvas");
+            canvas.width = Math.max(1, Math.round(image.width * scale));
+            canvas.height = Math.max(1, Math.round(image.height * scale));
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL("image/jpeg", 0.72));
+          };
+          image.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function previewPlantPhoto(base64) {
+      if (!base64) {
+        els.plantPhotoPreview.classList.remove("has-photo");
+        els.plantPhotoPreview.style.backgroundImage = "";
+        els.plantPhotoPreview.textContent = "照片缩略图";
+        return;
+      }
+      els.plantPhotoPreview.classList.add("has-photo");
+      els.plantPhotoPreview.style.backgroundImage = `url('${base64}')`;
+      els.plantPhotoPreview.textContent = "";
     }
 
     function renderVarietyOptions(selected = "") {
@@ -1790,8 +3217,12 @@
     }
 
     function renderFilters() {
-      els.cropFilter.innerHTML = `<option value="全部">全部作物</option>` + crops
-        .map(crop => `<option value="${crop.name}">${crop.name}</option>`)
+      const names = [...new Set([
+        ...crops.map(crop => crop.name),
+        ...(appData.plants || []).map(plant => plant.category || plant.name).filter(Boolean)
+      ])];
+      els.cropFilter.innerHTML = `<option value="全部">全部作物</option>` + names
+        .map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`)
         .join("");
     }
 
@@ -2409,6 +3840,7 @@
     }
 
     function renderSummary() {
+      if (!els.summary) return;
       const ranked = crops.map(crop => {
         const cropRecords = records.filter(record => record.crop === crop.name);
         const feed = latest(cropRecords, "施肥");
@@ -2452,6 +3884,581 @@
           ` : ""}
         </div>
       `;
+    }
+
+    function resetMaterialForm() {
+      if (!els.materialForm) return;
+      els.materialForm.reset();
+      els.materialId.value = "";
+      els.materialKind.value = els.materialKindFilter.value || "肥料";
+      els.materialStatus.value = "有效";
+      els.materialStock.value = "1";
+      els.materialUnit.value = "件";
+    }
+
+    function materialKindClass(status) {
+      if (status === "过期") return "expired";
+      if (status === "已用完") return "used";
+      return "";
+    }
+
+    function renderMaterials() {
+      if (!els.materialList) return;
+      syncStockArraysFromMaterials();
+      const kind = els.materialKindFilter.value || "肥料";
+      const statusFilter = els.materialStatusFilter.value || "全部";
+      const visible = (appData.materials || [])
+        .map(normalizeMaterial)
+        .filter(item => item.kind === kind && item.status !== "已删除")
+        .filter(item => statusFilter === "全部" || materialDisplayStatus(item) === statusFilter)
+        .sort((a, b) => materialDisplayStatus(a).localeCompare(materialDisplayStatus(b), "zh-Hans") || a.name.localeCompare(b.name, "zh-Hans"));
+      const expiring = (appData.materials || [])
+        .filter(item => item.status !== "已删除" && materialDisplayStatus(item) === "有效")
+        .map(item => ({ item, days: daysUntilDate(item.expireDate) }))
+        .filter(entry => entry.days >= 0 && entry.days <= 30)
+        .sort((a, b) => a.days - b.days);
+      els.materialExpiryAlert.innerHTML = expiring.length
+        ? expiring.map(({ item, days }) => `<p><strong>即将过期：</strong>${escapeHtml(item.name)} ${days === 0 ? "今天到期" : `${days} 天后到期`}（${escapeHtml(item.expireDate)}）</p>`).join("")
+        : `<div class="empty">暂无 30 天内即将过期的农资。</div>`;
+      els.materialList.innerHTML = visible.map(item => {
+        const status = materialDisplayStatus(item);
+        const expireDays = daysUntilDate(item.expireDate);
+        const expireText = item.expireDate
+          ? status === "过期"
+            ? `已过期 ${Math.abs(expireDays)} 天`
+            : expireDays <= 30 && expireDays >= 0
+              ? `${expireDays} 天后到期`
+              : item.expireDate
+          : "未填写";
+        return `
+          <article class="material-card ${materialKindClass(status)}">
+            <div class="material-head">
+              <strong>${escapeHtml(item.name)}</strong>
+              <span class="tag" style="--crop:${status === "有效" ? "#35c676" : status === "过期" ? "#d95757" : "#9aa3a0"}">${escapeHtml(status)}</span>
+            </div>
+            <div class="material-meta">
+              <span>类型：${escapeHtml(item.kind)}</span>
+              <span>库存：${escapeHtml(item.stock)} ${escapeHtml(item.unit || "件")}</span>
+              <span>购买：${escapeHtml(item.buyDate || "未填写")}</span>
+              <span>有效期：${escapeHtml(expireText)}</span>
+            </div>
+            ${item.note ? `<div class="record-note">${escapeHtml(item.note)}</div>` : ""}
+            <div class="material-actions">
+              <button class="btn secondary" type="button" data-edit-material="${escapeHtml(item.id)}">编辑</button>
+              <button class="btn secondary danger" type="button" data-delete-material="${escapeHtml(item.id)}">删除</button>
+            </div>
+          </article>
+        `;
+      }).join("") || `<div class="empty">暂无${escapeHtml(kind)}农资。</div>`;
+      els.materialList.querySelectorAll("[data-edit-material]").forEach(button => {
+        button.addEventListener("click", () => editMaterial(button.dataset.editMaterial));
+      });
+      els.materialList.querySelectorAll("[data-delete-material]").forEach(button => {
+        button.addEventListener("click", () => deleteMaterial(button.dataset.deleteMaterial));
+      });
+    }
+
+    function editMaterial(id) {
+      const item = appData.materials.find(material => material.id === id);
+      if (!item) return;
+      els.materialId.value = item.id;
+      els.materialName.value = item.name || "";
+      els.materialKind.value = item.kind || "肥料";
+      els.materialStock.value = Number(item.stock) || 0;
+      els.materialUnit.value = item.unit || "件";
+      els.materialBuyDate.value = item.buyDate || "";
+      els.materialExpireDate.value = item.expireDate || "";
+      els.materialStatus.value = materialDisplayStatus(item);
+      els.materialNote.value = item.note || "";
+      switchPage("mine");
+    }
+
+    function deleteMaterial(id) {
+      const item = appData.materials.find(material => material.id === id);
+      if (!item) return;
+      if (!confirm(`删除农资「${item.name}」？`)) return;
+      if ((item.kind === "肥料" && baseFertilizers.includes(item.name)) || (item.kind === "药剂" && basePesticides.some(base => base.name === item.name))) {
+        item.status = "已删除";
+        item.stock = 0;
+      } else {
+        appData.materials = appData.materials.filter(material => material.id !== id);
+      }
+      syncStockArraysFromMaterials();
+      saveData();
+      resetMaterialForm();
+      renderAll();
+      renderFertilizerStock();
+      renderPesticideStock();
+    }
+
+    function plantAgeText(plant) {
+      if (!plant?.createdAt) return "第1天";
+      const date = String(plant.createdAt).slice(0, 10);
+      const days = daysBetween(date);
+      return `第${Number.isFinite(days) ? days + 1 : 1}天`;
+    }
+
+    function latestPlantRecord(plantId) {
+      return latest(records.filter(record => record.plantId === plantId), record => true);
+    }
+
+    function plantCardHtml(plant) {
+      const crop = cropMeta(plant.category || plant.name);
+      const latestRecord = latestPlantRecord(plant.id);
+      const photoStyle = plant.photo ? `background-image:url('${escapeHtml(plant.photo)}')` : "";
+      return `
+        <button class="plant-card" type="button" data-plant-detail="${escapeHtml(plant.id)}" style="--crop:${crop.color}">
+          <div class="plant-photo" style="${photoStyle}">
+            <span class="health-pill">${escapeHtml(plant.health || "健康")}</span>
+            <span class="day-pill">${escapeHtml(plantAgeText(plant))}</span>
+          </div>
+          <div class="plant-card-body">
+            <strong>${escapeHtml(plant.name)}</strong>
+            <span>最近养护：${latestRecord?.date ? escapeHtml(latestRecord.date) : "暂无记录"}</span>
+          </div>
+        </button>
+      `;
+    }
+
+    function renderHome() {
+      if (!els.plantGrid) return;
+      syncDataFromGlobals();
+      const plants = appData.plants.map(normalizePlant);
+      const dueTasks = (appData.tasks || []).filter(task => task.enabled !== false && task.nextDate && task.nextDate <= today());
+      els.plantCount.textContent = `${plants.length} 株`;
+      els.todayTaskText.textContent = dueTasks.length
+        ? `今天有 ${dueTasks.length} 个任务待处理`
+        : "今天没有任务，好好休息吧~";
+      els.plantGrid.innerHTML = plants.map(plantCardHtml).join("") || `<div class="empty">暂无植物。</div>`;
+      els.plantGrid.querySelectorAll("[data-plant-detail]").forEach(button => {
+        button.addEventListener("click", () => renderPlantDetail(button.dataset.plantDetail));
+      });
+    }
+
+    function addDays(dateString, days) {
+      const date = new Date((dateString || today()) + "T00:00:00");
+      date.setDate(date.getDate() + Number(days || 0));
+      return localDateString(date);
+    }
+
+    function localDateString(date) {
+      return [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, "0"),
+        String(date.getDate()).padStart(2, "0")
+      ].join("-");
+    }
+
+    function taskPlant(task) {
+      return appData.plants.find(plant => plant.id === task.plantId) || appData.plants[0] || plantFromCrop(crops[0].name);
+    }
+
+    function taskTypeAllowed(task) {
+      return !els.taskTypeFilter?.value || els.taskTypeFilter.value === "全部" || task.type === els.taskTypeFilter.value;
+    }
+
+    function renderTaskControls() {
+      if (!els.taskType || !els.taskPlant || !els.taskTypeFilter) return;
+      const currentPlant = els.taskPlant.value;
+      const currentType = els.taskType.value;
+      const currentFilter = els.taskTypeFilter.value || "全部";
+      const plants = appData.plants.map(normalizePlant);
+      els.taskPlant.innerHTML = plants.map(plant => `<option value="${escapeHtml(plant.id)}">${escapeHtml(plant.name)}</option>`).join("");
+      els.taskType.innerHTML = taskTypes.map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`).join("");
+      els.taskTypeFilter.innerHTML = `<option value="全部">全部类型</option>` + taskTypes.map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`).join("");
+      els.taskPlant.value = plants.some(plant => plant.id === currentPlant) ? currentPlant : plants[0]?.id || "";
+      els.taskType.value = taskTypes.includes(currentType) ? currentType : taskTypes[0];
+      els.taskTypeFilter.value = ["全部", ...taskTypes].includes(currentFilter) ? currentFilter : "全部";
+    }
+
+    function taskCardHtml(task, done = false) {
+      const plant = taskPlant(task);
+      const crop = cropMeta(plant.category || plant.name);
+      const cycleText = Number(task.cycleDays) > 0 ? `${task.cycleDays} 天循环` : "不循环";
+      return `
+        <article class="task-card ${done ? "done" : ""}" style="--crop:${crop.color}">
+          <div class="task-card-head">
+            <div class="task-card-title">
+              <strong>${escapeHtml(plant.name)} · ${escapeHtml(task.type)}</strong>
+              <span>${done ? "完成于" : "计划"}：${escapeHtml(done ? task.completedAt || task.nextDate : task.nextDate || today())}</span>
+            </div>
+            <span class="tag" style="--crop:${crop.color}">${escapeHtml(task.type)}</span>
+          </div>
+          <div class="task-card-meta">${escapeHtml(cycleText)}${task.note ? ` · ${escapeHtml(task.note)}` : ""}</div>
+          <div class="task-actions">
+            ${done ? "" : `<button class="btn primary" type="button" data-complete-task="${escapeHtml(task.id)}">完成</button>`}
+            <button class="btn secondary" type="button" data-edit-task="${escapeHtml(task.id)}">编辑</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderTasks() {
+      if (!els.todayTaskList) return;
+      renderTaskControls();
+      const now = today();
+      const tasks = (appData.tasks || []).filter(taskTypeAllowed);
+      const active = tasks.filter(task => task.enabled !== false);
+      const todayTasks = active.filter(task => (task.nextDate || now) <= now).sort((a, b) => (a.nextDate || "").localeCompare(b.nextDate || ""));
+      const futureTasks = active.filter(task => (task.nextDate || now) > now).sort((a, b) => (a.nextDate || "").localeCompare(b.nextDate || ""));
+      const doneTasks = tasks
+        .filter(task => task.enabled === false)
+        .sort((a, b) => (b.completedAt || b.nextDate || "").localeCompare(a.completedAt || a.nextDate || ""))
+        .slice(0, 30);
+      els.todayTaskList.innerHTML = todayTasks.map(task => taskCardHtml(task)).join("") || `<div class="empty">今天没有任务。</div>`;
+      els.futureTaskList.innerHTML = futureTasks.map(task => taskCardHtml(task)).join("") || `<div class="empty">暂无未来任务。</div>`;
+      els.doneTaskList.innerHTML = doneTasks.map(task => taskCardHtml(task, true)).join("") || `<div class="empty">暂无已完成任务。</div>`;
+      [els.todayTaskList, els.futureTaskList, els.doneTaskList].forEach(list => {
+        list.querySelectorAll("[data-complete-task]").forEach(button => {
+          button.addEventListener("click", () => completeTask(button.dataset.completeTask));
+        });
+        list.querySelectorAll("[data-edit-task]").forEach(button => {
+          button.addEventListener("click", () => editTask(button.dataset.editTask));
+        });
+      });
+    }
+
+    function resetTaskForm() {
+      if (!els.taskForm) return;
+      els.taskForm.reset();
+      els.taskId.value = "";
+      renderTaskControls();
+      els.taskNextDate.value = today();
+      els.taskCycle.value = "7";
+      els.taskNote.value = "";
+    }
+
+    function editTask(id) {
+      const task = appData.tasks.find(item => item.id === id);
+      if (!task) return;
+      renderTaskControls();
+      els.taskId.value = task.id;
+      els.taskPlant.value = task.plantId || appData.plants[0]?.id || "";
+      els.taskType.value = task.type || "浇水";
+      els.taskNextDate.value = task.nextDate || today();
+      els.taskCycle.value = Number(task.cycleDays) || 0;
+      els.taskNote.value = task.note || "";
+      switchPage("tasks");
+    }
+
+    function completeTask(id) {
+      const task = appData.tasks.find(item => item.id === id);
+      if (!task || task.enabled === false) return;
+      task.enabled = false;
+      task.completedAt = today();
+      const cycleDays = Number(task.cycleDays) || 0;
+      if (cycleDays > 0) {
+        appData.tasks.push({
+          id: makeId("task"),
+          plantId: task.plantId,
+          type: task.type,
+          nextDate: addDays(today(), cycleDays),
+          cycleDays,
+          enabled: true,
+          completedAt: "",
+          note: task.note || ""
+        });
+      }
+      saveData();
+      renderAll();
+    }
+
+    function renderPlantDetail(plantId) {
+      const plant = appData.plants.find(item => item.id === plantId);
+      if (!plant) return;
+      selectedPlantId = plantId;
+      const crop = cropMeta(plant.category || plant.name);
+      const plantRecords = records
+        .filter(record => record.plantId === plant.id)
+        .sort((a, b) => b.date.localeCompare(a.date) || (b.createdAt || 0) - (a.createdAt || 0));
+      const latestRecord = plantRecords[0];
+      const growthRecords = plantRecords.filter(record =>
+        ["拍照", "笔记", "测量", "里程碑"].includes(record.type) ||
+        (record.growth && record.growth !== "正常") ||
+        (record.temperature !== "" && record.temperature !== undefined)
+      );
+      const careRecords = plantRecords.filter(record => ["浇水", "施肥", "修剪", "病虫害", "换盆", "换水"].includes(record.type));
+      const photoRecords = plantRecords.filter(record => record.photo);
+      const countByType = type => plantRecords.filter(record => record.type === type).length;
+      const photoStyle = plant.photo ? `background-image:url('${escapeHtml(plant.photo)}')` : "";
+      els.plantDetailTitle.textContent = plant.name;
+      const timelineHtml = (items, emptyText) => items.map(record => `
+        <article class="timeline-item">
+          <div class="timeline-head">
+            <strong>${escapeHtml(record.type)}</strong>
+            <span>${escapeHtml(record.date)}</span>
+          </div>
+          <div class="timeline-detail">${escapeHtml(recordDetailText(record) || "无详情")}</div>
+          ${record.photo ? `<div class="timeline-photo" style="background-image:url('${escapeHtml(record.photo)}')"></div>` : ""}
+          <button class="btn secondary" type="button" data-edit-plant-record="${escapeHtml(record.id)}">编辑记录</button>
+        </article>
+      `).join("") || `<div class="empty">${escapeHtml(emptyText)}</div>`;
+      els.plantDetailContent.innerHTML = `
+        <article class="plant-detail-hero detail-full" style="--crop:${crop.color}">
+          <div class="plant-photo" style="${photoStyle}">
+            <span class="health-pill">${escapeHtml(plant.health || "健康")}</span>
+            <span class="day-pill">${escapeHtml(plantAgeText(plant))}</span>
+          </div>
+          <div class="plant-detail-body">
+            <div class="plant-detail-name">
+              <h3>${escapeHtml(plant.name)}</h3>
+              <span class="health-pill">${escapeHtml(plant.health || "健康")}</span>
+            </div>
+            <div class="detail-stats">
+              <div class="detail-stat"><span>养护天数</span><strong>${escapeHtml(plantAgeText(plant))}</strong></div>
+              <div class="detail-stat"><span>最近养护</span><strong>${latestRecord?.date ? escapeHtml(latestRecord.date) : "暂无"}</strong></div>
+              <div class="detail-stat"><span>记录数</span><strong>${plantRecords.length} 条</strong></div>
+            </div>
+            <p class="plan-line"><strong>最近记录：</strong>${latestRecord ? escapeHtml(`${latestRecord.date} ${latestRecord.type} ${recordDetailText(latestRecord)}`) : "暂无养护记录"}</p>
+            <p class="plan-line"><strong>品种/分类：</strong>${escapeHtml([plant.variety, plant.category || plant.name].filter(Boolean).join(" · ") || "未填写")}</p>
+            <p class="plan-line"><strong>备注：</strong>${escapeHtml(plant.note || "暂无备注")}</p>
+          </div>
+        </article>
+        <div class="quick-actions" style="--crop:${crop.color}">
+          ${["浇水", "施肥", "修剪", "病虫害", "拍照", "笔记"].map(type => `
+            <button class="btn ${type === "施肥" ? "primary" : "secondary"}" type="button" data-quick-record="${type}">${escapeHtml(type)}</button>
+          `).join("")}
+        </div>
+        <nav class="detail-tabs" style="--crop:${crop.color}" aria-label="植物详情分类">
+          <button class="detail-tab active" type="button" data-detail-tab="growth">生长记录</button>
+          <button class="detail-tab" type="button" data-detail-tab="care">养护记录</button>
+          <button class="detail-tab" type="button" data-detail-tab="album">植物相册</button>
+          <button class="detail-tab" type="button" data-detail-tab="stats">统计分析</button>
+        </nav>
+        <section class="detail-tab-panel active timeline" data-detail-panel="growth" style="--crop:${crop.color}">
+          <h3>生长记录</h3>
+          ${timelineHtml(growthRecords, "暂无生长记录。")}
+        </section>
+        <section class="detail-tab-panel timeline" data-detail-panel="care" style="--crop:${crop.color}">
+          <h3>养护记录</h3>
+          ${timelineHtml(careRecords, "暂无养护记录。")}
+        </section>
+        <section class="detail-tab-panel" data-detail-panel="album" style="--crop:${crop.color}">
+          <div class="album-grid">
+            ${photoRecords.map(record => `
+              <div class="album-photo" style="background-image:url('${escapeHtml(record.photo)}')">
+                <span>${escapeHtml(record.date)} · ${escapeHtml(record.type)}</span>
+              </div>
+            `).join("") || `<div class="empty">暂无植物照片。</div>`}
+          </div>
+        </section>
+        <section class="detail-tab-panel" data-detail-panel="stats" style="--crop:${crop.color}">
+          <div class="stats-grid">
+            <div class="detail-stat"><span>全部记录</span><strong>${plantRecords.length} 条</strong></div>
+            <div class="detail-stat"><span>浇水</span><strong>${countByType("浇水")} 次</strong></div>
+            <div class="detail-stat"><span>施肥</span><strong>${countByType("施肥")} 次</strong></div>
+            <div class="detail-stat"><span>修剪</span><strong>${countByType("修剪")} 次</strong></div>
+            <div class="detail-stat"><span>病虫害</span><strong>${countByType("病虫害")} 次</strong></div>
+            <div class="detail-stat"><span>照片</span><strong>${photoRecords.length} 张</strong></div>
+            <div class="detail-stat"><span>最近记录</span><strong>${latestRecord?.date ? escapeHtml(latestRecord.date) : "暂无"}</strong></div>
+            <div class="detail-stat"><span>养护天数</span><strong>${escapeHtml(plantAgeText(plant))}</strong></div>
+          </div>
+        </section>
+      `;
+      els.plantDetailContent.querySelectorAll("[data-quick-record]").forEach(button => {
+        button.addEventListener("click", () => handleQuickRecord(plant.id, button.dataset.quickRecord));
+      });
+      els.plantDetailContent.querySelectorAll("[data-edit-plant-record]").forEach(button => {
+        button.addEventListener("click", () => editRecord(button.dataset.editPlantRecord));
+      });
+      els.plantDetailContent.querySelectorAll("[data-detail-tab]").forEach(button => {
+        button.addEventListener("click", () => {
+          const tab = button.dataset.detailTab;
+          els.plantDetailContent.querySelectorAll("[data-detail-tab]").forEach(item => {
+            item.classList.toggle("active", item.dataset.detailTab === tab);
+          });
+          els.plantDetailContent.querySelectorAll("[data-detail-panel]").forEach(panel => {
+            panel.classList.toggle("active", panel.dataset.detailPanel === tab);
+          });
+        });
+      });
+      switchPage("plant-detail");
+    }
+
+    function recordDetailText(record) {
+      return [
+        record.amount,
+        record.dilution,
+        record.fertilizer,
+        record.growth,
+        record.pestDiagnosis ? pestDiagnosisText(record.pestDiagnosis) : "",
+        record.note
+      ].filter(Boolean).join(" · ");
+    }
+
+    function createPlantRecord(plant, type, extra = {}) {
+      const payload = normalizeRecord({
+        id: crypto.randomUUID(),
+        plantId: plant.id,
+        crop: plant.category || plant.name,
+        variety: plant.variety || "",
+        planting: extra.planting || "盆栽",
+        date: today(),
+        type,
+        amount: extra.amount || "",
+        dilution: extra.dilution || "",
+        fertilizer: extra.fertilizer || "",
+        fertilizerItems: extra.fertilizerItems || [],
+        growth: extra.growth || "正常",
+        pestDiagnosis: extra.pestDiagnosis,
+        temperature: extra.temperature ?? "",
+        note: extra.note || "",
+        photo: extra.photo || "",
+        createdAt: Date.now()
+      }, new Map(appData.plants.map(item => [item.id, item])));
+      records.push(payload);
+      saveRecords();
+      renderAll();
+      renderPlantDetail(plant.id);
+    }
+
+    function prepareQuickRecordForm(plant, type) {
+      resetForm();
+      formPlantId = plant.id;
+      selectedCrop = plant.category || plant.name;
+      els.formTitle.textContent = `${plant.name} · ${type}`;
+      renderCropChoices();
+      els.crop.value = selectedCrop;
+      els.type.value = type;
+      els.date.value = today();
+      els.note.value = type === "病虫害" ? `${plant.name} 病虫害观察` : `${plant.name} ${type}`;
+      if (type === "病虫害") {
+        els.growth.value = "病虫害";
+      }
+      renderAmountOptions();
+      renderRecordFertilizerOptions(type === "施肥" ? selectedFertilizerValue() : "");
+      togglePestPanel(false);
+      renderFormAdvice();
+      switchPage("records");
+    }
+
+    function handleQuickRecord(plantId, type) {
+      const plant = appData.plants.find(item => item.id === plantId);
+      if (!plant) return;
+      if (type === "拍照") {
+        formPlantId = plant.id;
+        els.detailPhoto.value = "";
+        els.detailPhoto.click();
+        return;
+      }
+      if (type === "笔记") {
+        const note = prompt(`给 ${plant.name} 添加笔记`, "");
+        if (note === null) return;
+        createPlantRecord(plant, "笔记", { note: note.trim() || "快速笔记" });
+        return;
+      }
+      prepareQuickRecordForm(plant, type);
+    }
+
+    function seedlingCard(crop, compact = false) {
+      const plan = seedlingCarePlans[crop.name];
+      if (!plan) return "";
+      return `
+        <article class="plan-card" style="--crop:${crop.color}">
+          <div class="plan-head">
+            <h3>${escapeHtml(crop.name)}</h3>
+            <span class="month-badge">${escapeHtml(plan.stage)}</span>
+          </div>
+          <div class="seedling-list">
+            <p><strong>浇水：</strong>${escapeHtml(plan.water)}</p>
+            <p><strong>施肥：</strong>${escapeHtml(plan.fertilizer)}</p>
+            <p><strong>叶喷：</strong>${escapeHtml(plan.foliar)}</p>
+            ${compact ? "" : `<p><strong>光照：</strong>${escapeHtml(plan.light)}</p>`}
+            ${compact ? "" : `<p><strong>修剪：</strong>${escapeHtml(plan.prune)}</p>`}
+          </div>
+        </article>
+      `;
+    }
+
+    function renderSeedlingPlans() {
+      if (!els.seedlingGrid) return;
+      const current = cropMeta(selectedCrop);
+      const others = crops.filter(crop => crop.name !== current.name);
+      els.seedlingGrid.innerHTML = `
+        ${seedlingCard(current)}
+        <details class="compact-details">
+          <summary>其他作物幼苗方案</summary>
+          <div class="plan-grid">
+            ${others.map(crop => seedlingCard(crop, true)).join("")}
+          </div>
+        </details>
+      `;
+    }
+
+    function renderCalendar() {
+      if (!els.calendarGrid) return;
+      const [year, month] = calendarCursor.split("-").map(Number);
+      const first = new Date(year, month - 1, 1);
+      const start = new Date(first);
+      const mondayOffset = (first.getDay() + 6) % 7;
+      start.setDate(first.getDate() - mondayOffset);
+      const monthText = `${year}-${String(month).padStart(2, "0")}`;
+      els.calendarTitle.textContent = `${monthText} 日历`;
+      const days = Array.from({ length: 42 }, (_, index) => {
+        const date = new Date(start);
+        date.setDate(start.getDate() + index);
+        const iso = localDateString(date);
+        const dayRecords = records.filter(record => record.date === iso);
+        const dayTasks = (appData.tasks || []).filter(task => task.enabled !== false && task.nextDate === iso);
+        const inMonth = date.getMonth() === month - 1;
+        return `
+          <button class="calendar-day ${inMonth ? "" : "muted"} ${iso === today() ? "today" : ""} ${iso === selectedCalendarDate ? "selected" : ""}" type="button" data-calendar-date="${iso}">
+            <span>${date.getDate()}</span>
+            <span class="calendar-dots">
+              ${dayRecords.length ? `<i class="calendar-dot record" title="有记录"></i>` : ""}
+              ${dayTasks.length ? `<i class="calendar-dot task" title="有任务"></i>` : ""}
+            </span>
+          </button>
+        `;
+      });
+      els.calendarGrid.innerHTML = days.join("");
+      els.calendarGrid.querySelectorAll("[data-calendar-date]").forEach(button => {
+        button.addEventListener("click", () => {
+          selectedCalendarDate = button.dataset.calendarDate;
+          renderCalendar();
+        });
+      });
+      renderCalendarDayDetail();
+    }
+
+    function renderCalendarDayDetail() {
+      const date = selectedCalendarDate || today();
+      const dayRecords = records
+        .filter(record => record.date === date)
+        .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      const dayTasks = (appData.tasks || [])
+        .filter(task => task.nextDate === date)
+        .sort((a, b) => String(a.type).localeCompare(String(b.type)));
+      els.calendarDayDetail.innerHTML = `
+        <h3>${escapeHtml(date)}</h3>
+        ${dayRecords.map(record => {
+          const plant = appData.plants.find(item => item.id === record.plantId);
+          return `
+            <article class="calendar-detail-card">
+              <strong>记录 · ${escapeHtml(record.type)}</strong>
+              <span>${escapeHtml(plant?.name || record.crop || "植物")} ${escapeHtml(recordDetailText(record) || "")}</span>
+            </article>
+          `;
+        }).join("")}
+        ${dayTasks.map(task => {
+          const plant = taskPlant(task);
+          return `
+            <article class="calendar-detail-card">
+              <strong>任务 · ${escapeHtml(task.type)}</strong>
+              <span>${escapeHtml(plant.name)} ${escapeHtml(task.note || "")}${task.enabled === false ? " · 已完成" : ""}</span>
+            </article>
+          `;
+        }).join("")}
+        ${!dayRecords.length && !dayTasks.length ? `<div class="empty">当天没有记录和任务。</div>` : ""}
+      `;
+    }
+
+    function shiftCalendarMonth(delta) {
+      const [year, month] = calendarCursor.split("-").map(Number);
+      const date = new Date(year, month - 1 + delta, 1);
+      calendarCursor = localDateString(date).slice(0, 7);
+      selectedCalendarDate = `${calendarCursor}-01`;
+      renderCalendar();
     }
 
     function ruleForMonth(cropName, month) {
@@ -3119,6 +5126,7 @@
       els.form.reset();
       els.date.value = today();
       els.recordId.value = "";
+      formPlantId = "";
       selectedCrop = crops[0].name;
       els.formTitle.textContent = "新增记录";
       els.planting.value = "盆栽";
@@ -3138,6 +5146,7 @@
       const crop = selectedCrop;
       const planting = els.planting.value || "盆栽";
       els.recordId.value = "";
+      formPlantId = "";
       els.formTitle.textContent = "新增记录";
       els.date.value = today();
       els.type.value = "浇水";
@@ -3161,6 +5170,7 @@
       const record = records.find(item => item.id === id);
       if (!record) return;
       els.recordId.value = record.id;
+      formPlantId = record.plantId || "";
       selectedCrop = record.crop;
       renderVarietyOptions(record.variety || defaultVariety(record.crop));
       els.planting.value = record.planting || "盆栽";
@@ -3178,7 +5188,7 @@
       renderFormAdvice();
       els.formTitle.textContent = "编辑记录";
       renderCropChoices();
-      switchPage("new");
+      switchPage("records");
     }
 
     function deleteRecord(id) {
@@ -3219,16 +5229,14 @@
     }
 
     function exportBackup() {
+      syncDataFromGlobals();
       const backup = {
-        version: 1,
+        version: 2,
         exportedAt: new Date().toISOString(),
-        records,
-        fertilizerStock,
-        customFertilizers,
-        deletedFertilizers,
-        pesticideStock,
-        customPesticides,
-        deletedPesticides
+        plants: appData.plants,
+        records: appData.records,
+        tasks: appData.tasks,
+        materials: appData.materials
       };
       const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
@@ -3245,17 +5253,33 @@
       reader.addEventListener("load", () => {
         try {
           const backup = JSON.parse(String(reader.result || "{}"));
-          if (!Array.isArray(backup.records)) throw new Error("bad backup");
-          records = backup.records;
+          const restored = migrateOldData({
+            stored: {
+              plants: backup.plants,
+              records: backup.records,
+              tasks: backup.tasks,
+              materials: backup.materials
+            },
+            legacy: backup
+          });
+          if (!Array.isArray(restored.records)) throw new Error("bad backup");
+          appData = restored;
+          records = appData.records;
           fertilizerStock = Array.isArray(backup.fertilizerStock) ? backup.fertilizerStock : fertilizerStock;
           customFertilizers = Array.isArray(backup.customFertilizers) ? backup.customFertilizers : customFertilizers;
           deletedFertilizers = Array.isArray(backup.deletedFertilizers) ? backup.deletedFertilizers : deletedFertilizers;
           pesticideStock = Array.isArray(backup.pesticideStock) ? backup.pesticideStock : pesticideStock;
           customPesticides = Array.isArray(backup.customPesticides) ? backup.customPesticides : customPesticides;
           deletedPesticides = Array.isArray(backup.deletedPesticides) ? backup.deletedPesticides : deletedPesticides;
-          saveRecords();
-          saveFertilizerStock();
-          savePesticideStock();
+          if (Array.isArray(backup.materials)) {
+            customFertilizers = appData.materials.filter(item => item.kind === "肥料" && item.status !== "已删除" && !baseFertilizers.includes(item.name)).map(item => item.name);
+            deletedFertilizers = appData.materials.filter(item => item.kind === "肥料" && item.status === "已删除").map(item => item.name);
+            fertilizerStock = appData.materials.filter(item => item.kind === "肥料" && item.status === "有效" && Number(item.stock) > 0).map(item => item.name);
+            customPesticides = appData.materials.filter(item => item.kind === "药剂" && item.status !== "已删除" && !basePesticides.some(base => base.name === item.name)).map(item => item.name);
+            deletedPesticides = appData.materials.filter(item => item.kind === "药剂" && item.status === "已删除").map(item => item.name);
+            pesticideStock = appData.materials.filter(item => item.kind === "药剂" && item.status === "有效" && Number(item.stock) > 0).map(item => item.name);
+          }
+          saveData();
           renderFertilizerStock();
           renderPesticideStock();
           refreshAfterFertilizerStockChange();
@@ -3280,6 +5304,7 @@
       const now = Date.now();
       records = sample.map((item, index) => ({
         id: crypto.randomUUID(),
+        plantId: plantForCrop(item.crop).id,
         date: new Date(now - index * 86400000).toISOString().slice(0, 10),
         createdAt: now - index,
         ...item
@@ -3289,8 +5314,14 @@
     }
 
     function renderAll() {
-      renderSummary();
+      renderCropChoices();
+      renderFilters();
+      renderHome();
+      renderMaterials();
+      renderTasks();
       renderPlans();
+      renderSeedlingPlans();
+      renderCalendar();
       renderTable();
     }
 
@@ -3298,10 +5329,13 @@
       event.preventDefault();
       const id = els.recordId.value;
       const fertilizerItems = selectedFertilizerItems();
+      const existingPlant = formPlantId ? appData.plants.find(item => item.id === formPlantId) : null;
+      const plant = existingPlant || plantForCrop(selectedCrop);
       const payload = {
         id: id || crypto.randomUUID(),
-        crop: selectedCrop,
-        variety: defaultVariety(selectedCrop),
+        plantId: plant.id,
+        crop: plant.category || selectedCrop,
+        variety: plant.variety || defaultVariety(selectedCrop),
         planting: els.planting.value,
         date: els.date.value,
         type: els.type.value,
@@ -3328,7 +5362,130 @@
       switchPage("records");
     });
 
+    els.taskForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const id = els.taskId.value;
+      const existing = id ? appData.tasks.find(task => task.id === id) : null;
+      const payload = {
+        id: id || makeId("task"),
+        plantId: els.taskPlant.value || appData.plants[0]?.id || "",
+        type: els.taskType.value || "浇水",
+        nextDate: els.taskNextDate.value || today(),
+        cycleDays: Number(els.taskCycle.value) || 0,
+        enabled: existing ? existing.enabled !== false : true,
+        completedAt: existing?.completedAt || "",
+        note: els.taskNote.value.trim()
+      };
+      if (existing) {
+        appData.tasks = appData.tasks.map(task => task.id === id ? payload : task);
+      } else {
+        appData.tasks.push(payload);
+      }
+      saveData();
+      resetTaskForm();
+      renderAll();
+      switchPage("tasks");
+    });
+
+    els.materialForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const id = els.materialId.value;
+      const name = els.materialName.value.trim();
+      if (!name) return;
+      const payload = normalizeMaterial({
+        id: id || makeId("material", `${els.materialKind.value}:${name}`),
+        name,
+        kind: els.materialKind.value,
+        stock: Number(els.materialStock.value) || 0,
+        unit: els.materialUnit.value.trim() || "件",
+        buyDate: els.materialBuyDate.value,
+        expireDate: els.materialExpireDate.value,
+        status: els.materialStatus.value,
+        note: els.materialNote.value.trim()
+      });
+      const same = appData.materials.find(item => item.id !== id && item.kind === payload.kind && item.name === payload.name);
+      if (same) payload.id = same.id;
+      const exists = appData.materials.some(item => item.id === payload.id);
+      appData.materials = exists
+        ? appData.materials.map(item => item.id === payload.id ? payload : item)
+        : [...appData.materials, payload];
+      syncStockArraysFromMaterials();
+      saveData();
+      resetMaterialForm();
+      renderFertilizerStock();
+      renderPesticideStock();
+      renderAll();
+      switchPage("mine");
+    });
+
     els.cancel.addEventListener("click", resetForm);
+    els.taskCancel.addEventListener("click", resetTaskForm);
+    els.taskTypeFilter.addEventListener("change", renderTasks);
+    els.materialCancel.addEventListener("click", resetMaterialForm);
+    els.materialKindFilter.addEventListener("change", () => {
+      resetMaterialForm();
+      renderMaterials();
+    });
+    els.materialStatusFilter.addEventListener("change", renderMaterials);
+    els.prevMonth.addEventListener("click", () => shiftCalendarMonth(-1));
+    els.nextMonth.addEventListener("click", () => shiftCalendarMonth(1));
+    els.homeAddRecord.addEventListener("click", openPlantModal);
+    els.plantSheetClose.addEventListener("click", closePlantModal);
+    els.plantCancel.addEventListener("click", closePlantModal);
+    els.plantSheet.addEventListener("click", event => {
+      if (event.target === els.plantSheet) closePlantModal();
+    });
+    els.plantPhoto.addEventListener("change", async () => {
+      const file = els.plantPhoto.files?.[0];
+      if (!file) {
+        plantPhotoBase64 = "";
+        previewPlantPhoto("");
+        return;
+      }
+      els.plantPhotoPreview.textContent = "正在压缩...";
+      try {
+        plantPhotoBase64 = await compressImageToBase64(file);
+        previewPlantPhoto(plantPhotoBase64);
+      } catch (error) {
+        plantPhotoBase64 = "";
+        previewPlantPhoto("");
+        alert(error.message || "图片处理失败");
+      }
+    });
+    els.detailPhoto.addEventListener("change", async () => {
+      const file = els.detailPhoto.files?.[0];
+      if (!file) return;
+      const plant = appData.plants.find(item => item.id === formPlantId || item.id === selectedPlantId);
+      if (!plant) return;
+      try {
+        const photo = await compressImageToBase64(file);
+        createPlantRecord(plant, "拍照", { photo, note: "生长照片" });
+      } catch (error) {
+        alert(error.message || "图片处理失败");
+      }
+    });
+    els.plantForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const name = els.plantName.value.trim();
+      if (!name) return;
+      const category = els.plantCategory.value || name;
+      appData.plants.push(normalizePlant({
+        id: makeId("plant", name),
+        name,
+        variety: els.plantVariety.value.trim(),
+        category,
+        photo: plantPhotoBase64,
+        health: els.plantHealth.value,
+        createdAt: new Date().toISOString(),
+        note: els.plantNote.value.trim()
+      }));
+      saveData();
+      renderAll();
+      closePlantModal();
+      switchPage("home");
+    });
+    els.viewTasks.addEventListener("click", () => switchPage("tasks"));
+    els.plantDetailBack.addEventListener("click", () => switchPage("home"));
     els.export.addEventListener("click", exportCsv);
     els.backup.addEventListener("click", exportBackup);
     els.restore.addEventListener("click", () => els.restoreInput.click());
@@ -3343,6 +5500,7 @@
     els.crop.addEventListener("change", () => {
       selectedCrop = els.crop.value;
       resetFormDefaultsForContext();
+      renderSeedlingPlans();
     });
     els.planting.addEventListener("change", () => {
       resetFormDefaultsForContext();
@@ -3385,7 +5543,7 @@
     els.type.addEventListener("change", () => {
       renderAmountOptions();
       renderDilutionOptions();
-      renderRecordFertilizerOptions(els.type.value === "浇水" ? "" : selectedFertilizerValue());
+      renderRecordFertilizerOptions(els.type.value === "施肥" ? selectedFertilizerValue() : "");
     });
     els.amount.addEventListener("change", toggleCustomInputs);
     els.fertilizer.addEventListener("change", () => {
@@ -3444,6 +5602,8 @@
     renderFertilizerStock();
     renderPesticideStock();
     resetForm();
+    resetTaskForm();
+    resetMaterialForm();
     renderAll();
     requestPersistentStorage();
 
