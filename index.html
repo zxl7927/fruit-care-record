@@ -258,6 +258,10 @@
       display: block;
     }
 
+    .row.custom-input.show {
+      display: grid;
+    }
+
     textarea {
       min-height: 108px;
       resize: vertical;
@@ -494,6 +498,104 @@
       font-size: 14px;
     }
 
+    .home-card-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .home-card-actions .btn {
+      min-height: 42px;
+      padding-inline: 14px;
+    }
+
+    .advice-collapse {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .advice-collapse summary {
+      min-height: 52px;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 950;
+      color: var(--ink);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      touch-action: manipulation;
+    }
+
+    .advice-collapse summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .advice-collapse summary::after {
+      content: "展开";
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .advice-collapse[open] summary::after {
+      content: "收起";
+      color: var(--green);
+    }
+
+    .advice-collapse-body {
+      padding: 0 12px 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .plant-advice-item {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .plant-advice-item summary {
+      min-height: 52px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      list-style: none;
+      font-weight: 950;
+      color: var(--ink);
+    }
+
+    .plant-advice-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .plant-advice-item summary::after {
+      content: "展开";
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .plant-advice-item[open] summary::after {
+      content: "收起";
+      color: var(--green);
+    }
+
+    .plant-advice-content {
+      display: grid;
+      gap: 10px;
+      padding: 0 12px 12px;
+    }
+
     .home-section-head {
       display: flex;
       align-items: center;
@@ -524,7 +626,16 @@
       padding: 0;
       color: var(--text);
       min-width: 0;
-      min-height: 220px;
+      min-height: 260px;
+    }
+
+    .plant-card-main {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      text-align: left;
+      color: inherit;
     }
 
     .plant-photo {
@@ -577,6 +688,23 @@
       color: var(--muted);
       font-size: 12px;
       font-weight: 700;
+    }
+
+    .plant-card-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      padding: 0 10px 10px;
+    }
+
+    .plant-card-action {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--type-color) 10%, #fff);
+      color: var(--type-color);
+      font-size: 12px;
+      font-weight: 900;
     }
 
     .plant-detail-hero {
@@ -665,8 +793,12 @@
       min-height: 52px;
     }
 
+    .plant-manage-actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .record-type-field {
-      margin-top: 6px;
+      display: none !important;
     }
 
     .visually-hidden-select {
@@ -1050,6 +1182,198 @@
       padding: 7px 10px;
     }
 
+    #page-tasks {
+      background: #f4f7f3;
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    .task-page-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .task-page-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .task-regen-btn {
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 16px;
+      background: var(--green);
+      color: #fff;
+      font-size: 28px;
+      font-weight: 800;
+      box-shadow: 0 10px 22px rgba(53, 198, 118, 0.22);
+    }
+
+    .task-filter-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 0 12px;
+      margin-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .task-filter-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .task-filter-tab {
+      flex: 0 0 auto;
+      min-height: 38px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 16px;
+      background: transparent;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .task-filter-tab.active {
+      background: color-mix(in srgb, var(--green) 16%, #fff);
+      color: var(--green);
+    }
+
+    .task-section {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .task-section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 0;
+      color: var(--ink);
+      font-size: 21px;
+      line-height: 1.2;
+    }
+
+    .task-section-title > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .task-section-dot {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      border-radius: 50%;
+      background: var(--green);
+      flex: 0 0 auto;
+    }
+
+    .task-section-dot.red {
+      background: #e64d4d;
+    }
+
+    .task-section-dot.blue {
+      background: #2e92f2;
+    }
+
+    .task-section-dot.green {
+      background: var(--green);
+    }
+
+    .task-card-row {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      padding: 10px;
+      box-shadow: 0 10px 24px rgba(40, 55, 48, 0.06);
+    }
+
+    .task-thumb-wrap {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      flex: 0 0 auto;
+    }
+
+    .task-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--task-color) 24%, #fff), #e9efe8);
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--line);
+    }
+
+    .task-type-badge {
+      position: absolute;
+      right: -4px;
+      bottom: -4px;
+      width: 23px;
+      height: 23px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--task-color);
+      color: #fff;
+      border: 2px solid #fff;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .task-main {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .task-title {
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .task-date {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .task-row-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      max-width: 104px;
+    }
+
+    .task-row-actions .btn {
+      min-height: 34px;
+      padding: 6px 9px;
+      font-size: 12px;
+      border-radius: 12px;
+    }
+
     .btn.danger {
       color: #b42323;
       border-color: #f0b8b8;
@@ -1319,6 +1643,69 @@
       box-shadow: var(--shadow);
     }
 
+    .soil-shape-field {
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .soil-shape-select {
+      display: none;
+    }
+
+    .soil-shape-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      padding: 2px 2px 8px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+
+    .soil-shape-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .soil-shape-card {
+      flex: 0 0 92px;
+      min-height: 104px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #f7faf7;
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      gap: 4px;
+      padding: 10px 8px;
+      scroll-snap-align: start;
+      font-weight: 900;
+      touch-action: manipulation;
+    }
+
+    .soil-shape-card.active {
+      border-color: #24c46b;
+      background: #eafff1;
+      box-shadow: 0 10px 22px rgba(36, 196, 107, 0.16);
+      color: #13924b;
+    }
+
+    .soil-shape-drawing {
+      width: 56px;
+      height: 46px;
+      display: block;
+    }
+
+    .soil-shape-drawing * {
+      vector-effect: non-scaling-stroke;
+    }
+
+    .soil-shape-card span {
+      font-size: 13px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
     .soil-dim {
       display: none;
     }
@@ -1354,6 +1741,45 @@
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .memorial-card {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .memorial-photo {
+      min-height: 98px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--crop) 18%, #fff), #f2f5f3);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .memorial-body {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .memorial-body strong {
+      font-size: 17px;
+      color: var(--ink);
+    }
+
+    .memorial-meta {
+      display: grid;
+      gap: 3px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
     }
 
     .sheet-backdrop {
@@ -1953,11 +2379,11 @@
 
     .type {
       font-weight: 800;
-      color: var(--blue);
+      color: var(--type-color, var(--blue));
     }
 
     .type.feed {
-      color: var(--yellow);
+      color: var(--type-color, var(--yellow));
     }
 
     .record-actions {
@@ -2212,7 +2638,10 @@
             <h3>今日任务</h3>
             <p id="todayTaskText">今天没有任务，好好休息吧~</p>
           </div>
-          <button class="btn secondary" type="button" id="viewTasksBtn">查看</button>
+          <div class="home-card-actions">
+            <button class="btn secondary" type="button" id="viewTasksBtn">任务</button>
+            <button class="btn secondary" type="button" id="viewAdviceBtn">建议</button>
+          </div>
         </section>
         <section class="home-section-head">
           <h3>植物</h3>
@@ -2230,7 +2659,7 @@
         <input id="detailPhotoInput" type="file" accept="image/*" capture="environment" hidden>
       </section>
 
-      <form class="panel form-panel app-page" id="recordForm" data-page-panel="records">
+      <form class="panel form-panel app-page" id="recordForm" data-page-panel="record-form">
         <h2 class="panel-title" id="formTitle">新增记录</h2>
         <input type="hidden" id="recordId">
 
@@ -2254,8 +2683,7 @@
           </div>
         </div>
 
-        <div class="field record-type-field">
-          <label for="typeInput">记录分类</label>
+        <div class="field record-type-field custom-input">
           <select class="visually-hidden-select" id="typeInput" required aria-label="记录分类">
             <option value="浇水">浇水</option>
             <option value="施肥">施肥</option>
@@ -2267,7 +2695,6 @@
             <option value="笔记">笔记</option>
             <option value="里程碑">里程碑</option>
           </select>
-          <div class="record-type-grid" id="recordTypeGrid"></div>
         </div>
 
         <div class="row">
@@ -2297,17 +2724,7 @@
 
         <div class="field">
           <label for="growthInput">生长情况</label>
-          <select id="growthInput">
-            <option value="正常">正常</option>
-            <option value="长势弱">长势弱</option>
-            <option value="叶片发黄">叶片发黄</option>
-            <option value="徒长">徒长</option>
-            <option value="不开花">不开花</option>
-            <option value="落花落果">落花落果</option>
-            <option value="果实膨大慢">果实膨大慢</option>
-            <option value="叶缘焦枯">叶缘焦枯</option>
-            <option value="病虫害疑似">病虫害疑似</option>
-          </select>
+          <select id="growthInput"></select>
         </div>
 
         <div class="form-advice custom-input" id="formAdviceBox"></div>
@@ -2383,11 +2800,6 @@
               <span class="mine-menu-title">农资管理<small>肥料、药剂库存仓库</small></span>
               <span class="mine-menu-arrow">›</span>
             </button>
-            <button class="mine-menu-item" type="button" id="openCostStatsBtn" style="--item-color:#55b86a">
-              <span class="mine-menu-icon">费</span>
-              <span class="mine-menu-title">花费统计<small>农资数量与状态统计</small></span>
-              <span class="mine-menu-arrow">›</span>
-            </button>
             <button class="mine-menu-item" type="button" id="openPlantTagsBtn" style="--item-color:#8a65d8">
               <span class="mine-menu-icon">签</span>
               <span class="mine-menu-title">植物标签<small>分类、健康状态标签</small></span>
@@ -2401,6 +2813,11 @@
             <button class="mine-menu-item" type="button" id="openToolsBtn" style="--item-color:#3aa7e8">
               <span class="mine-menu-icon">工</span>
               <span class="mine-menu-title">实用工具<small>土量计算器</small></span>
+              <span class="mine-menu-arrow">›</span>
+            </button>
+            <button class="mine-menu-item" type="button" id="openMemorialBtn" style="--item-color:#7f8b88">
+              <span class="mine-menu-icon">碑</span>
+              <span class="mine-menu-title">纪念碑<small>已死亡植物档案</small></span>
               <span class="mine-menu-arrow">›</span>
             </button>
             <button class="mine-menu-item" type="button" id="mineRestoreShortcutBtn" style="--item-color:#3aa7e8">
@@ -2499,80 +2916,75 @@
         </section>
 
         <section class="panel plan-panel app-page" id="page-tasks" data-page-panel="tasks">
-          <div class="panel-heading">
-            <h2 class="panel-title">任务管理</h2>
-            <select class="month-select" id="taskTypeFilter"></select>
+          <div class="task-page-head">
+            <h2 class="task-page-title">任务管理</h2>
+            <button class="task-regen-btn" type="button" id="regenTasksBtn" title="重新生成自动任务">＋</button>
           </div>
-          <form class="task-form" id="taskForm">
-            <input type="hidden" id="taskIdInput">
-            <div class="row">
-              <div class="field">
-                <label for="taskPlantInput">植物</label>
-                <select id="taskPlantInput"></select>
-              </div>
-              <div class="field">
-                <label for="taskTypeInput">任务类型</label>
-                <select id="taskTypeInput"></select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="field">
-                <label for="taskNextDateInput">下次日期</label>
-                <input id="taskNextDateInput" type="date" required>
-              </div>
-              <div class="field">
-                <label for="taskCycleInput">循环天数</label>
-                <input id="taskCycleInput" type="number" min="0" step="1" inputmode="numeric" placeholder="例如：7">
-              </div>
-            </div>
-            <div class="field">
-              <label for="taskNoteInput">备注</label>
-              <textarea id="taskNoteInput" rows="2" placeholder="例如：盆土干透后再浇，避开中午"></textarea>
-            </div>
-            <div class="form-actions">
-              <button class="btn primary" type="submit">保存任务</button>
-              <button class="btn secondary" type="button" id="taskCancelBtn">取消编辑</button>
-            </div>
-          </form>
+          <select class="visually-hidden-select" id="taskTypeFilter" aria-label="任务类型筛选"></select>
+          <div class="task-filter-tabs" id="taskFilterTabs" aria-label="任务类型筛选"></div>
           <div class="task-columns">
-            <section>
-              <h3>今日任务</h3>
+            <section class="task-section">
+              <h3 class="task-section-title"><span class="task-section-dot red"></span>今日任务</h3>
               <div class="task-list" id="todayTaskList"></div>
             </section>
-            <section>
-              <h3>未来任务</h3>
+            <section class="task-section">
+              <h3 class="task-section-title"><span class="task-section-dot blue"></span>未来任务</h3>
               <div class="task-list" id="futureTaskList"></div>
             </section>
-            <section>
-              <h3>已完成任务</h3>
+            <section class="task-section">
+              <div class="task-section-title">
+                <span><span class="task-section-dot green"></span>已完成任务</span>
+                <button class="btn secondary" type="button" id="clearDoneTasksBtn">清空已完成</button>
+              </div>
               <div class="task-list" id="doneTaskList"></div>
             </section>
           </div>
         </section>
 
-        <section class="panel plan-panel app-page" data-page-panel="tasks">
+        <section class="panel plan-panel app-page" data-page-panel="records">
           <div class="panel-heading">
-            <h2 class="panel-title">动态建议</h2>
+            <h2 class="panel-title">养护建议</h2>
             <select class="month-select" id="planMonth"></select>
           </div>
-          <div class="plan-grid" id="planGrid"></div>
+          <div class="field">
+            <label for="advicePlantSelect">已添加植物选择</label>
+            <select id="advicePlantSelect"></select>
+          </div>
+          <details class="advice-collapse" open>
+            <summary>当前阶段建议</summary>
+            <div class="advice-collapse-body">
+              <div class="guidance-box" id="stageAdviceBox"></div>
+            </div>
+          </details>
         </section>
 
-        <section class="panel guidance-panel app-page" data-page-panel="tasks">
-          <div class="panel-heading">
-            <h2 class="panel-title">配料建议与指导</h2>
-          </div>
-          <div class="guidance-box" id="recipeGuidance">
-            <div class="empty">选择一键配料方案后，这里会显示购买建议、底肥指导、灌根和叶喷方案。</div>
-          </div>
+        <section class="panel guidance-panel app-page" data-page-panel="records">
+          <details class="advice-collapse" id="recipeAdviceCollapse">
+            <summary>配料建议与指导</summary>
+            <div class="advice-collapse-body">
+              <div class="guidance-box" id="recipeGuidance">
+                <div class="empty">选择一键配料方案后，这里会显示购买建议、底肥指导、灌根和叶喷方案。</div>
+              </div>
+            </div>
+          </details>
         </section>
 
-        <section class="panel plan-panel app-page" id="costStatsPage" data-page-panel="cost-stats">
-          <div class="panel-heading">
-            <button class="icon-btn" type="button" id="costStatsBackBtn" title="返回">‹</button>
-            <h2 class="panel-title">花费统计</h2>
-          </div>
-          <div class="guidance-box" id="costStatsBox"></div>
+        <section class="panel plan-panel app-page" data-page-panel="records">
+          <details class="advice-collapse">
+            <summary>动态养护建议</summary>
+            <div class="advice-collapse-body">
+              <div class="plan-grid" id="planGrid"></div>
+            </div>
+          </details>
+        </section>
+
+        <section class="panel guidance-panel app-page" data-page-panel="records">
+          <details class="advice-collapse" id="seedlingAdviceCollapse">
+            <summary>幼苗养护建议</summary>
+            <div class="advice-collapse-body">
+              <div class="seedling-grid" id="seedlingGrid"></div>
+            </div>
+          </details>
         </section>
 
         <section class="panel plan-panel app-page" id="plantTagsPage" data-page-panel="plant-tags">
@@ -2601,19 +3013,20 @@
               <h3 class="panel-title">土量计算器</h3>
             </div>
             <form class="task-form" id="soilCalcForm">
+              <div class="field soil-shape-field">
+                <label for="soilShapeInput">盆形</label>
+                <select class="soil-shape-select" id="soilShapeInput" aria-hidden="true" tabindex="-1">
+                  <option value="cylinder">圆柱形</option>
+                  <option value="cone">圆锥形</option>
+                  <option value="frustum">截锥形</option>
+                  <option value="rectangle">长方形</option>
+                  <option value="square">正方形</option>
+                  <option value="hemisphere">半球形</option>
+                  <option value="hexagon">六边形</option>
+                </select>
+                <div class="soil-shape-tabs" id="soilShapeTabs" aria-label="盆形选择"></div>
+              </div>
               <div class="row">
-                <div class="field">
-                  <label for="soilShapeInput">盆形</label>
-                  <select id="soilShapeInput">
-                    <option value="cylinder">圆柱形</option>
-                    <option value="cone">圆锥形</option>
-                    <option value="frustum">截锥形</option>
-                    <option value="rectangle">长方形</option>
-                    <option value="square">正方形</option>
-                    <option value="hemisphere">半球形</option>
-                    <option value="hexagon">六边形</option>
-                  </select>
-                </div>
                 <div class="field">
                   <label for="soilTypeInput">土壤类型</label>
                   <select id="soilTypeInput">
@@ -2622,14 +3035,20 @@
                     <option value="腐叶土">腐叶土</option>
                     <option value="园艺泥炭土">园艺泥炭土</option>
                     <option value="普通园土">普通园土</option>
+                    <option value="葡萄">葡萄</option>
+                    <option value="番茄">番茄</option>
+                    <option value="月季">月季</option>
+                    <option value="无花果">无花果</option>
+                    <option value="蓝莓">蓝莓</option>
+                    <option value="桂花">桂花</option>
                   </select>
                 </div>
-              </div>
-              <div class="row">
                 <div class="field">
                   <label for="soilFillInput">填满程度(%)</label>
                   <input id="soilFillInput" type="number" min="1" max="100" step="1" inputmode="decimal" value="90">
                 </div>
+              </div>
+              <div class="row">
                 <div class="field soil-dim" data-soil-dim="height">
                   <label for="soilHeightInput">高度(cm)</label>
                   <input id="soilHeightInput" type="number" min="0" step="0.1" inputmode="decimal" value="25">
@@ -2670,6 +3089,14 @@
           </div>
         </section>
 
+        <section class="panel plan-panel app-page" id="memorialPage" data-page-panel="memorial">
+          <div class="panel-heading">
+            <button class="icon-btn" type="button" id="memorialBackBtn" title="返回">‹</button>
+            <h2 class="panel-title">纪念碑</h2>
+          </div>
+          <div class="task-list" id="memorialList"></div>
+        </section>
+
         <section class="panel plan-panel app-page" data-page-panel="mine">
           <div class="panel-heading">
             <h2 class="panel-title">数据备份/恢复</h2>
@@ -2708,28 +3135,40 @@
 
         <section class="panel records-panel app-page" data-page-panel="records">
           <div class="records-head">
-            <h2 class="panel-title">记录列表</h2>
+            <h2 class="panel-title">历史养护记录</h2>
             <div class="bulk-actions">
               <span class="bulk-status" id="bulkStatus">已选 0 条</span>
               <button class="btn secondary" id="bulkDeleteBtn" type="button">删除所选</button>
             </div>
           </div>
-          <div class="filters">
-            <input id="searchInput" type="search" placeholder="搜索作物、肥料、备注">
-            <select id="cropFilter">
-              <option value="全部">全部作物</option>
-            </select>
-            <select id="typeFilter">
-              <option value="全部">全部类型</option>
-              <option value="浇水">浇水</option>
-              <option value="施肥">施肥</option>
-              <option value="修剪">修剪</option>
-              <option value="病虫害">病虫害</option>
-              <option value="拍照">拍照</option>
-              <option value="笔记">笔记</option>
-            </select>
-          </div>
-          <div class="table-wrap" id="tableWrap"></div>
+          <details class="advice-collapse">
+            <summary>筛选与记录</summary>
+            <div class="advice-collapse-body">
+              <div class="filters">
+                <input id="searchInput" type="search" placeholder="搜索作物、肥料、备注">
+                <select id="cropFilter">
+                  <option value="全部">全部作物</option>
+                </select>
+                <select id="typeFilter">
+                  <option value="全部">全部类型</option>
+                  <option value="浇水">浇水</option>
+                  <option value="换水">换水</option>
+                  <option value="施肥">施肥</option>
+                  <option value="修剪">修剪</option>
+                  <option value="换盆">换盆</option>
+                  <option value="病虫害">病虫害</option>
+                  <option value="测量">测量</option>
+                  <option value="拍照">拍照</option>
+                  <option value="笔记">笔记</option>
+                  <option value="里程碑">里程碑</option>
+                </select>
+                <select id="recordMonthFilter">
+                  <option value="全部">全部月份</option>
+                </select>
+              </div>
+              <div class="table-wrap" id="tableWrap"></div>
+            </div>
+          </details>
         </section>
       </div>
     </section>
@@ -2737,7 +3176,7 @@
       <button class="active" type="button" data-page="home">首页</button>
       <button type="button" data-page="calendar">日历</button>
       <button type="button" data-page="tasks">任务</button>
-      <button type="button" data-page="records">记录</button>
+      <button type="button" data-page="records">养护建议</button>
       <button type="button" data-page="mine">我的</button>
     </nav>
     <div class="sheet-backdrop" id="plantSheet" hidden>
@@ -2748,9 +3187,10 @@
           <button class="icon-btn" type="button" id="plantSheetCloseBtn" title="关闭">×</button>
         </div>
         <form class="plant-form" id="plantForm">
+          <input type="hidden" id="plantIdInput">
           <div class="field">
             <label for="plantNameInput">植物名称</label>
-            <input id="plantNameInput" type="text" required list="plantNameLibrary" placeholder="例如：蓝莓、月季">
+            <input id="plantNameInput" type="text" list="plantNameLibrary" placeholder="例如：蓝莓、月季">
             <datalist id="plantNameLibrary"></datalist>
           </div>
           <div class="row">
@@ -2765,17 +3205,23 @@
           </div>
           <div class="field">
             <label for="plantHealthInput">健康状态</label>
-            <select id="plantHealthInput">
-              <option value="健康">健康</option>
-              <option value="观察">观察</option>
-              <option value="偏弱">偏弱</option>
-              <option value="病虫害">病虫害</option>
-            </select>
+            <select id="plantHealthInput"></select>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="plantPurchaseDateInput">购买日期</label>
+              <input id="plantPurchaseDateInput" type="date">
+            </div>
+            <div class="field">
+              <label for="plantPurchasePriceInput">购买价格</label>
+              <input id="plantPurchasePriceInput" type="number" min="0" step="0.01" inputmode="decimal" placeholder="可不填">
+            </div>
           </div>
           <div class="field">
             <label for="plantPhotoInput">照片</label>
             <input id="plantPhotoInput" type="file" accept="image/*" capture="environment">
             <div class="plant-photo-preview" id="plantPhotoPreview">照片缩略图</div>
+            <button class="btn secondary" type="button" id="plantPhotoClearBtn">删除图片，使用默认图</button>
           </div>
           <div class="field">
             <label for="plantNoteInput">备注</label>
@@ -2838,6 +3284,24 @@
         "牡丹", "芍药", "菊花", "大丽花", "百合", "郁金香", "风信子", "水仙", "朱顶红", "鸢尾",
         "荷花", "睡莲", "太阳花", "向日葵", "康乃馨", "满天星", "薰衣草", "迷迭香", "薄荷", "罗勒",
         "紫罗兰", "报春花", "仙客来", "倒挂金钟", "蟹爪兰", "令箭荷花", "多肉", "仙人球", "文竹", "绿萝"
+      ],
+      "葡萄品种": [
+        "妮娜皇后", "阳光玫瑰", "巨峰", "夏黑", "玫瑰香", "醉金香", "美人指", "蓝宝石", "红提", "克伦生"
+      ],
+      "蓝莓品种": [
+        "Duke", "Bluecrop", "Legacy", "O'Neal", "Misty", "Sharpblue", "Brigitta", "Elliott", "兔眼蓝莓", "南高丛蓝莓"
+      ],
+      "柑橘类": [
+        "柑橘", "橘子", "桔子", "橙子", "柚子", "金桔", "沃柑", "砂糖橘", "脐橙", "香水柠檬"
+      ],
+      "核果类": [
+        "桃", "油桃", "蟠桃", "水蜜桃", "黄桃", "李子", "杏", "樱桃", "甜樱桃", "梅"
+      ],
+      "浆果类": [
+        "草莓", "蓝莓", "树莓", "黑莓", "蔓越莓", "桑葚", "醋栗", "沙棘", "杨梅", "覆盆子"
+      ],
+      "香草类": [
+        "薄荷", "罗勒", "香菜", "紫苏", "迷迭香", "香茅", "百里香", "牛至", "莳萝", "欧芹"
       ]
     };
     const varietyNotes = {
@@ -2876,17 +3340,221 @@
     const deletedPesticideKey = "fruit-care-deleted-pesticides-v1";
     const pesticideImportKey = "fruit-care-pesticides-imported-v1";
     const recordTypes = ["浇水", "施肥", "修剪", "换盆", "病虫害", "测量", "拍照", "笔记", "里程碑"];
-    const recordTypeMeta = {
-      "浇水": { mark: "水", color: "#3aa7e8", amountLabel: "水量", amountPlaceholder: "输入浇水量" },
-      "施肥": { mark: "肥", color: "#b9832f", amountLabel: "用量", amountPlaceholder: "选择或输入用量" },
-      "修剪": { mark: "剪", color: "#55b86a", note: "记录修剪部位、幅度和原因。" },
-      "换盆": { mark: "盆", color: "#33b8c8", note: "记录盆径、介质、根系情况和缓苗安排。" },
-      "病虫害": { mark: "病", color: "#e05757", note: "选择发生部位和严重程度后，会自动给出优先处理方式。" },
-      "测量": { mark: "量", color: "#a45bc4", amountLabel: "株高(cm)", amountPlaceholder: "输入株高，例如 35" },
-      "拍照": { mark: "照", color: "#20a99a", note: "可记录拍照对象、角度和观察重点。" },
-      "笔记": { mark: "记", color: "#6d75c9", note: "记录观察、想法或后续事项。" },
-      "里程碑": { mark: "碑", color: "#e0a72f", note: "记录萌芽、开花、坐果、采收等关键节点。" }
+    const plantStatuses = ["健康", "生病", "旺长", "徒长", "沤根", "烂根", "缺水", "缺肥", "缺铁", "缺镁", "缺钙", "肥害", "药害", "晒伤", "冻伤", "病害", "虫害", "缓苗中", "休眠中", "开花中", "结果中", "长势弱", "死亡"];
+    const growthStageOptions = ["健康", "缓苗中", "休眠中", "萌芽", "展叶", "新梢生长", "花苞", "开花", "开花中", "授粉期", "坐果", "幼果期", "结果中", "膨大期", "转色期", "成熟期", "采收期", "已收获", "生病", "病害", "虫害", "缺水", "缺肥", "缺铁", "缺镁", "缺钙", "旺长", "徒长", "沤根", "烂根", "肥害", "药害", "晒伤", "冻伤", "长势弱", "死亡"];
+    const statusColorMap = {
+      "健康": "#35c676",
+      "开花中": "#8a65d8",
+      "结果中": "#8a65d8",
+      "旺长": "#d7a82f",
+      "徒长": "#d7a82f",
+      "缺水": "#e68a35",
+      "缺肥": "#e68a35",
+      "缺铁": "#e68a35",
+      "缺镁": "#e68a35",
+      "缺钙": "#e68a35",
+      "沤根": "#3aa7e8",
+      "烂根": "#3aa7e8",
+      "生病": "#d95757",
+      "病害": "#d95757",
+      "虫害": "#d95757",
+      "肥害": "#e0643c",
+      "药害": "#e0643c",
+      "晒伤": "#e0643c",
+      "冻伤": "#e0643c",
+      "缓苗中": "#7191a8",
+      "休眠中": "#7191a8",
+      "长势弱": "#e68a35",
+      "死亡": "#8d9692"
     };
+    const recordTypeMeta = {
+      "浇水": { mark: "💧", color: "#2e92f2", amountLabel: "水量", amountPlaceholder: "输入浇水量" },
+      "换水": { mark: "💦", color: "#49b8e8", amountLabel: "水量", amountPlaceholder: "输入换水量" },
+      "施肥": { mark: "🧴", color: "#b47a24", amountLabel: "用量", amountPlaceholder: "选择或输入用量" },
+      "修剪": { mark: "✂️", color: "#35a66b", note: "记录修剪部位、幅度和原因。" },
+      "换盆": { mark: "🪴", color: "#27a6a0", note: "记录盆径、介质、根系情况和缓苗安排。" },
+      "病虫害": { mark: "🐞", color: "#d95757", note: "选择发生部位和严重程度后，会自动给出优先处理方式。" },
+      "测量": { mark: "📏", color: "#8a65d8", amountLabel: "株高(cm)", amountPlaceholder: "输入株高，例如 35" },
+      "拍照": { mark: "📷", color: "#26a69a", note: "可记录拍照对象、角度和观察重点。" },
+      "笔记": { mark: "📝", color: "#5b6fd8", note: "记录观察、想法或后续事项。" },
+      "里程碑": { mark: "🚩", color: "#e0a72f", note: "记录萌芽、开花、坐果、采收等关键节点。" }
+    };
+    const taskFilterTypes = ["全部", "浇水", "换水", "施肥", "修剪", "换盆", "病虫害", "测量", "拍照", "笔记", "里程碑"];
+    const plantPresetImages = {
+      "葡萄": grapeSvg(),
+      "巨峰": grapeSvg(),
+      "妮娜皇后": grapeSvg(),
+      "阳光玫瑰": grapeSvg(),
+      "夏黑": grapeSvg(),
+      "玫瑰香": grapeSvg(),
+      "藤稔": grapeSvg(),
+      "美人指": grapeSvg(),
+      "红提": grapeSvg(),
+      "青提": grapeSvg(),
+      "蓝莓": blueberrySvg(),
+      "Duke": blueberrySvg(),
+      "Bluecrop": blueberrySvg(),
+      "Legacy": blueberrySvg(),
+      "Brigitta": blueberrySvg(),
+      "兔眼蓝莓": blueberrySvg(),
+      "南高丛": blueberrySvg(),
+      "北高丛": blueberrySvg(),
+      "番茄": tomatoSvg(),
+      "小番茄": tomatoSvg(),
+      "圣女果": tomatoSvg(),
+      "辣椒": pepperSvg(),
+      "甜椒": pepperSvg(),
+      "彩椒": pepperSvg(),
+      "茄子": eggplantSvg(),
+      "草莓": strawberrySvg(),
+      "树莓": berrySvg("#d84f68"),
+      "覆盆子": berrySvg("#d84f68"),
+      "黑莓": berrySvg("#44346d"),
+      "桑葚": berrySvg("#59306f"),
+      "蔓越莓": berrySvg("#c94155"),
+      "醋栗": berrySvg("#8fc35b"),
+      "无花果": treeSvg("#8b6ab0"),
+      "西瓜": watermelonSvg(),
+      "甜瓜": melonSvg("#9fcf5a"),
+      "哈密瓜": melonSvg("#e4b852"),
+      "香瓜": melonSvg("#d8d76a"),
+      "南瓜": melonSvg("#ef9a32"),
+      "冬瓜": melonSvg("#8fcf9f"),
+      "丝瓜": cucumberSvg(),
+      "苦瓜": cucumberSvg(),
+      "葫芦": melonSvg("#b8d16b"),
+      "黄瓜": cucumberSvg(),
+      "西葫芦": cucumberSvg(),
+      "节瓜": cucumberSvg(),
+      "佛手瓜": cucumberSvg(),
+      "苹果": appleSvg(),
+      "梨": pearSvg(),
+      "桃": peachSvg(),
+      "李子": treeSvg("#8f59c7"),
+      "杏": treeSvg("#f2a65f"),
+      "樱桃": treeSvg("#c93a4a"),
+      "柿子": treeSvg("#e98732"),
+      "石榴": treeSvg("#c93a4a"),
+      "山楂": treeSvg("#d34b42"),
+      "枣": treeSvg("#9a5a3b"),
+      "柠檬": citrusSvg("#f4d94c"),
+      "橘子": citrusSvg("#f08b2f"),
+      "橙子": citrusSvg("#f08b2f"),
+      "柚子": citrusSvg("#d9c84f"),
+      "金桔": citrusSvg("#f0a33c"),
+      "砂糖橘": citrusSvg("#f08b2f"),
+      "沃柑": citrusSvg("#f08b2f"),
+      "血橙": citrusSvg("#d64b38"),
+      "青柠": citrusSvg("#8fcf57"),
+      "枇杷": citrusSvg("#f0a33c"),
+      "香蕉": genericFruitSvg("#ecc84b"),
+      "芒果": genericFruitSvg("#f0b642"),
+      "菠萝": genericFruitSvg("#d2b84e"),
+      "木瓜": genericFruitSvg("#ef9d45"),
+      "百香果": genericFruitSvg("#8a5c9f"),
+      "火龙果": genericFruitSvg("#e85f91"),
+      "猕猴桃": genericFruitSvg("#89a653"),
+      "牛油果": genericFruitSvg("#78a35a"),
+      "荔枝": genericFruitSvg("#d95858"),
+      "龙眼": genericFruitSvg("#c79a58"),
+      "番石榴": genericFruitSvg("#9fcf75"),
+      "椰子": genericFruitSvg("#9a6a45"),
+      "玉米": cornSvg(),
+      "水稻": genericVegetableSvg("#b7c96a"),
+      "小麦": genericVegetableSvg("#d8b85d"),
+      "大麦": genericVegetableSvg("#d2ad54"),
+      "燕麦": genericVegetableSvg("#cfbc74"),
+      "高粱": genericVegetableSvg("#b85d4d"),
+      "荞麦": genericVegetableSvg("#b79a75"),
+      "土豆": potatoSvg(),
+      "马铃薯": potatoSvg(),
+      "红薯": sweetPotatoSvg(),
+      "地瓜": sweetPotatoSvg(),
+      "山药": rootVegSvg("#d8c39a"),
+      "芋头": rootVegSvg("#b89b84"),
+      "萝卜": rootVegSvg("#ece8dc"),
+      "胡萝卜": rootVegSvg("#e98b3d"),
+      "甜菜": rootVegSvg("#b94c65"),
+      "生姜": rootVegSvg("#d2a85f"),
+      "姜": rootVegSvg("#d2a85f"),
+      "蒜": rootVegSvg("#e8e1d2"),
+      "大蒜": rootVegSvg("#e8e1d2"),
+      "洋葱": rootVegSvg("#c98c5f"),
+      "生菜": leafySvg(),
+      "白菜": leafySvg(),
+      "小白菜": leafySvg(),
+      "油菜": leafySvg(),
+      "青菜": leafySvg(),
+      "菠菜": leafySvg(),
+      "空心菜": leafySvg(),
+      "茼蒿": leafySvg(),
+      "芹菜": leafySvg(),
+      "韭菜": leafySvg(),
+      "甘蓝": leafySvg(),
+      "包菜": leafySvg(),
+      "卷心菜": leafySvg(),
+      "紫甘蓝": leafySvg(),
+      "羽衣甘蓝": leafySvg(),
+      "香菜": herbSvg(),
+      "薄荷": herbSvg(),
+      "罗勒": herbSvg(),
+      "迷迭香": herbSvg(),
+      "百里香": herbSvg(),
+      "牛至": herbSvg(),
+      "欧芹": herbSvg(),
+      "莳萝": herbSvg(),
+      "葱": herbSvg(),
+      "小葱": herbSvg(),
+      "韭葱": herbSvg(),
+      "月季": roseSvg(),
+      "玫瑰": roseSvg(),
+      "绣球": flowerSvg("#7aa8e8"),
+      "茉莉": flowerSvg("#f7f4de"),
+      "栀子": flowerSvg("#f7f4de"),
+      "茶花": flowerSvg("#d84c78"),
+      "菊花": flowerSvg("#e7b94b"),
+      "向日葵": flowerSvg("#e5b63f"),
+      "百合": flowerSvg("#f3e7d8"),
+      "郁金香": flowerSvg("#d95757"),
+      "兰花": flowerSvg("#9a68d8"),
+      "三角梅": flowerSvg("#d84fa1"),
+      "天竺葵": flowerSvg("#d95772"),
+      "多肉": pottedPlantSvg(),
+      "仙人掌": pottedPlantSvg(),
+      "豌豆": genericVegetableSvg("#76b85d"),
+      "蚕豆": genericVegetableSvg("#6aa95d"),
+      "四季豆": genericVegetableSvg("#5fa75c"),
+      "芸豆": genericVegetableSvg("#70aa5e"),
+      "毛豆": genericVegetableSvg("#72b75c"),
+      "黄豆": genericVegetableSvg("#d5c26d"),
+      "绿豆": genericVegetableSvg("#74a65a"),
+      "红豆": genericVegetableSvg("#b54e4e"),
+      "扁豆": genericVegetableSvg("#7aa05d"),
+      "无": pottedPlantSvg(),
+      "默认": pottedPlantSvg()
+    };
+    const plantImageAliases = [
+      { preset: "葡萄", keywords: ["葡萄", "妮娜皇后", "阳光玫瑰", "巨峰", "夏黑", "玫瑰香", "提子"] },
+      { preset: "蓝莓", keywords: ["蓝莓", "Duke", "Bluecrop", "兔眼蓝莓", "北高丛", "南高丛"] },
+      { preset: "柠檬", keywords: ["柠檬", "香水柠檬"] },
+      { preset: "橘子", keywords: ["柑橘", "橘子", "桔子", "橙子", "柚子", "金桔", "沃柑", "砂糖橘", "枇杷"] },
+      { preset: "桃", keywords: ["桃", "油桃", "蟠桃", "水蜜桃", "黄桃", "李子", "杏", "樱桃", "甜樱桃"] },
+      { preset: "草莓", keywords: ["草莓", "树莓", "黑莓", "蔓越莓", "桑葚", "浆果"] },
+      { preset: "番茄", keywords: ["番茄", "小番茄", "圣女果", "西红柿"] },
+      { preset: "辣椒", keywords: ["辣椒", "甜椒", "彩椒"] },
+      { preset: "黄瓜", keywords: ["黄瓜", "青瓜"] },
+      { preset: "茄子", keywords: ["茄子"] },
+      { preset: "玉米", keywords: ["玉米", "玉米笋"] },
+      { preset: "土豆", keywords: ["土豆", "马铃薯"] },
+      { preset: "红薯", keywords: ["红薯", "甘薯", "地瓜"] },
+      { preset: "白菜", keywords: ["白菜", "小白菜", "上海青", "青菜", "油菜"] },
+      { preset: "生菜", keywords: ["生菜", "油麦菜", "菠菜", "空心菜", "苋菜"] },
+      { preset: "薄荷", keywords: ["薄荷", "罗勒", "香菜", "紫苏", "迷迭香", "香草", "香茅"] },
+      { preset: "月季", keywords: ["月季", "玫瑰", "蔷薇"] },
+      { preset: "苹果", keywords: ["苹果"] },
+      { preset: "梨", keywords: ["梨", "香梨", "雪梨"] },
+      { preset: "西瓜", keywords: ["西瓜", "麒麟西瓜"] }
+    ];
     const soilTypeProfiles = {
       "通用型培养土": {
         density: 0.45,
@@ -2907,9 +3575,42 @@
       "普通园土": {
         density: 1.20,
         ratio: "园土 70% + 腐熟有机质 20% + 河沙/珍珠岩 10%"
+      },
+      "葡萄": {
+        density: 0.75,
+        ratio: "园土 45% + 腐熟有机质 25% + 粗颗粒/河沙 20% + 珍珠岩 10%，重排水、稳肥力"
+      },
+      "番茄": {
+        density: 0.65,
+        ratio: "泥炭/椰糠 40% + 腐熟堆肥 30% + 园土 20% + 珍珠岩 10%，保水透气并补足有机质"
+      },
+      "月季": {
+        density: 0.70,
+        ratio: "园土 35% + 泥炭/椰糠 25% + 腐熟有机质 25% + 颗粒/珍珠岩 15%，兼顾保肥和透气"
+      },
+      "无花果": {
+        density: 0.78,
+        ratio: "园土 50% + 腐熟有机质 25% + 粗颗粒/河沙 15% + 珍珠岩 10%，偏疏松、排水快"
+      },
+      "蓝莓": {
+        density: 0.38,
+        ratio: "酸性泥炭 60% + 松鳞/腐熟松针 25% + 珍珠岩 15%，保持酸性和高透气"
+      },
+      "桂花": {
+        density: 0.72,
+        ratio: "园土 40% + 腐叶土 30% + 河沙/珍珠岩 20% + 腐熟有机质 10%，微酸、疏松、不积水"
       }
     };
-    const taskTypes = ["浇水", "换水", "施肥", "修剪", "换盆", "病虫害", "测量", "里程碑", "拍照", "笔记"];
+    const soilShapeOptions = [
+      { value: "cylinder", label: "圆柱形", svg: `<svg class="soil-shape-drawing" viewBox="0 0 64 48" aria-hidden="true"><ellipse cx="32" cy="10" rx="20" ry="7" fill="#dff8e8" stroke="#24a85b" stroke-width="2"/><path d="M12 10v25c0 4 9 7 20 7s20-3 20-7V10" fill="none" stroke="#24a85b" stroke-width="2"/><path d="M12 35c0 4 9 7 20 7s20-3 20-7" fill="none" stroke="#24a85b" stroke-width="2"/></svg>` },
+      { value: "cone", label: "圆锥形", svg: `<svg class="soil-shape-drawing" viewBox="0 0 64 48" aria-hidden="true"><ellipse cx="32" cy="12" rx="20" ry="7" fill="#dff8e8" stroke="#24a85b" stroke-width="2"/><path d="M12 12l20 30 20-30" fill="#f5fff7" stroke="#24a85b" stroke-width="2"/><path d="M22 27h20" stroke="#9eddb5" stroke-width="2"/></svg>` },
+      { value: "frustum", label: "截锥形", svg: `<svg class="soil-shape-drawing" viewBox="0 0 64 48" aria-hidden="true"><ellipse cx="32" cy="10" rx="21" ry="7" fill="#dff8e8" stroke="#24a85b" stroke-width="2"/><path d="M11 10l9 28c2 4 22 4 24 0l9-28" fill="#f5fff7" stroke="#24a85b" stroke-width="2"/><ellipse cx="32" cy="38" rx="12" ry="4" fill="none" stroke="#24a85b" stroke-width="2"/></svg>` },
+      { value: "rectangle", label: "长方形", svg: `<svg class="soil-shape-drawing" viewBox="0 0 64 48" aria-hidden="true"><path d="M14 14h32l8 8H22z" fill="#dff8e8" stroke="#24a85b" stroke-width="2"/><path d="M22 22h32v16H22zM14 14v16l8 8V22" fill="#f5fff7" stroke="#24a85b" stroke-width="2"/></svg>` },
+      { value: "square", label: "正方形", svg: `<svg class="soil-shape-drawing" viewBox="0 0 64 48" aria-hidden="true"><path d="M18 14h26l6 6H24z" fill="#dff8e8" stroke="#24a85b" stroke-width="2"/><path d="M24 20h26v20H24zM18 14v20l6 6V20" fill="#f5fff7" stroke="#24a85b" stroke-width="2"/></svg>` },
+      { value: "hemisphere", label: "半球形", svg: `<svg class="soil-shape-drawing" viewBox="0 0 64 48" aria-hidden="true"><path d="M10 24a22 18 0 0 0 44 0" fill="#f5fff7" stroke="#24a85b" stroke-width="2"/><ellipse cx="32" cy="24" rx="22" ry="7" fill="#dff8e8" stroke="#24a85b" stroke-width="2"/><path d="M20 32c6 5 18 5 24 0" fill="none" stroke="#9eddb5" stroke-width="2"/></svg>` },
+      { value: "hexagon", label: "六边形", svg: `<svg class="soil-shape-drawing" viewBox="0 0 64 48" aria-hidden="true"><path d="M32 7l18 10v14L32 41 14 31V17z" fill="#f5fff7" stroke="#24a85b" stroke-width="2"/><path d="M32 7v14M50 17L32 27 14 17M32 41V27" fill="none" stroke="#9eddb5" stroke-width="2"/></svg>` }
+    ];
+    const taskTypes = ["浇水", "施肥", "病虫害检查", "拍照记录", "修剪提醒", "pH检测"];
     const taskTemplates = [
       {
         id: "template-water",
@@ -3286,9 +3987,12 @@
     let selectedPesticidesToDelete = new Set();
     let lastRecipeGuidance = "";
     let activePage = "home";
+    let currentTaskFilter = "全部";
+    let selectedAdvicePlantId = "全部";
     let selectedPlantId = "";
     let formPlantId = "";
     let plantPhotoBase64 = "";
+    let plantPhotoCleared = false;
     let calendarCursor = today().slice(0, 7);
     let selectedCalendarDate = today();
     let visibleRecordCount = 20;
@@ -3303,7 +4007,6 @@
       planting: document.getElementById("plantingInput"),
       date: document.getElementById("dateInput"),
       type: document.getElementById("typeInput"),
-      recordTypeGrid: document.getElementById("recordTypeGrid"),
       amountField: document.getElementById("amountField"),
       amount: document.getElementById("amountInput"),
       measurementHeight: document.getElementById("measurementHeightInput"),
@@ -3330,6 +4033,7 @@
       todayTaskText: document.getElementById("todayTaskText"),
       homeAddRecord: document.getElementById("homeAddRecordBtn"),
       viewTasks: document.getElementById("viewTasksBtn"),
+      viewAdvice: document.getElementById("viewAdviceBtn"),
       plantDetailBack: document.getElementById("plantDetailBackBtn"),
       plantDetailTitle: document.getElementById("plantDetailTitle"),
       plantDetailContent: document.getElementById("plantDetailContent"),
@@ -3342,34 +4046,34 @@
       plantForm: document.getElementById("plantForm"),
       plantSheetClose: document.getElementById("plantSheetCloseBtn"),
       plantCancel: document.getElementById("plantCancelBtn"),
+      plantId: document.getElementById("plantIdInput"),
       plantName: document.getElementById("plantNameInput"),
       plantVariety: document.getElementById("plantVarietyInput"),
       plantCategory: document.getElementById("plantCategoryInput"),
       plantHealth: document.getElementById("plantHealthInput"),
+      plantPurchaseDate: document.getElementById("plantPurchaseDateInput"),
+      plantPurchasePrice: document.getElementById("plantPurchasePriceInput"),
       plantPhoto: document.getElementById("plantPhotoInput"),
       plantPhotoPreview: document.getElementById("plantPhotoPreview"),
+      plantPhotoClear: document.getElementById("plantPhotoClearBtn"),
       plantNote: document.getElementById("plantNoteInput"),
       cancel: document.getElementById("cancelBtn"),
       summary: document.getElementById("summary"),
       planMonth: document.getElementById("planMonth"),
+      advicePlantSelect: document.getElementById("advicePlantSelect"),
+      stageAdvice: document.getElementById("stageAdviceBox"),
       planGrid: document.getElementById("planGrid"),
       recipeGuidance: document.getElementById("recipeGuidance"),
       seedlingGrid: document.getElementById("seedlingGrid"),
       taskTemplateList: document.getElementById("taskTemplateList"),
-      costStatsBox: document.getElementById("costStatsBox"),
       plantTagList: document.getElementById("plantTagList"),
-      taskForm: document.getElementById("taskForm"),
-      taskId: document.getElementById("taskIdInput"),
-      taskPlant: document.getElementById("taskPlantInput"),
-      taskType: document.getElementById("taskTypeInput"),
-      taskNextDate: document.getElementById("taskNextDateInput"),
-      taskCycle: document.getElementById("taskCycleInput"),
-      taskNote: document.getElementById("taskNoteInput"),
-      taskCancel: document.getElementById("taskCancelBtn"),
+      regenTasksBtn: document.getElementById("regenTasksBtn"),
       taskTypeFilter: document.getElementById("taskTypeFilter"),
+      taskFilterTabs: document.getElementById("taskFilterTabs"),
       todayTaskList: document.getElementById("todayTaskList"),
       futureTaskList: document.getElementById("futureTaskList"),
       doneTaskList: document.getElementById("doneTaskList"),
+      clearDoneTasks: document.getElementById("clearDoneTasksBtn"),
       materialForm: document.getElementById("materialForm"),
       materialId: document.getElementById("materialIdInput"),
       materialName: document.getElementById("materialNameInput"),
@@ -3383,14 +4087,15 @@
       materialCancel: document.getElementById("materialCancelBtn"),
       materialsBack: document.getElementById("materialsBackBtn"),
       openMaterials: document.getElementById("openMaterialsBtn"),
-      openCostStats: document.getElementById("openCostStatsBtn"),
-      costStatsBack: document.getElementById("costStatsBackBtn"),
       openPlantTags: document.getElementById("openPlantTagsBtn"),
       plantTagsBack: document.getElementById("plantTagsBackBtn"),
       openTaskTemplates: document.getElementById("openTaskTemplatesBtn"),
       taskTemplatesBack: document.getElementById("taskTemplatesBackBtn"),
       openTools: document.getElementById("openToolsBtn"),
       toolsBack: document.getElementById("toolsBackBtn"),
+      openMemorial: document.getElementById("openMemorialBtn"),
+      memorialBack: document.getElementById("memorialBackBtn"),
+      memorialList: document.getElementById("memorialList"),
       mineRestoreShortcut: document.getElementById("mineRestoreShortcutBtn"),
       materialTabs: document.querySelectorAll("[data-material-kind]"),
       mineScrollButtons: document.querySelectorAll("[data-mine-scroll]"),
@@ -3399,6 +4104,7 @@
       materialExpiryAlert: document.getElementById("materialExpiryAlert"),
       materialList: document.getElementById("materialList"),
       soilShape: document.getElementById("soilShapeInput"),
+      soilShapeTabs: document.getElementById("soilShapeTabs"),
       soilType: document.getElementById("soilTypeInput"),
       soilFill: document.getElementById("soilFillInput"),
       soilHeight: document.getElementById("soilHeightInput"),
@@ -3421,6 +4127,7 @@
       search: document.getElementById("searchInput"),
       cropFilter: document.getElementById("cropFilter"),
       typeFilter: document.getElementById("typeFilter"),
+      recordMonthFilter: document.getElementById("recordMonthFilter"),
       export: document.getElementById("exportBtn"),
       backup: document.getElementById("backupBtn"),
       restore: document.getElementById("restoreBtn"),
@@ -3437,8 +4144,8 @@
       els.pagePanels.forEach(panel => {
         panel.classList.toggle("active", panel.dataset.pagePanel === page);
       });
-      const mineSubPages = ["materials", "cost-stats", "plant-tags", "task-templates", "tools"];
-      const navPage = page === "plant-detail" ? "home" : mineSubPages.includes(page) ? "mine" : page;
+      const mineSubPages = ["materials", "plant-tags", "task-templates", "tools", "memorial"];
+      const navPage = page === "plant-detail" ? "home" : page === "record-form" ? "records" : mineSubPages.includes(page) ? "mine" : page;
       els.pageButtons.forEach(button => {
         button.classList.toggle("active", button.dataset.page === navPage);
       });
@@ -3483,6 +4190,13 @@
         category: crop.name,
         photo: "",
         health: "健康",
+        status: "健康",
+        stage: "健康",
+        isDead: false,
+        deathDate: "",
+        deathReason: "",
+        purchaseDate: "",
+        purchasePrice: "",
         createdAt: new Date().toISOString(),
         note: note || crop.hint || ""
       };
@@ -3490,13 +4204,23 @@
 
     function normalizePlant(plant) {
       const fallback = plantFromCrop(plant?.name || "蓝莓", plant?.variety || "");
+      const rawStatus = plant?.status || plant?.health || "健康";
+      const status = plantStatuses.includes(rawStatus) ? rawStatus : rawStatus === "病虫害" ? "病害" : rawStatus === "偏弱" ? "长势弱" : "健康";
+      const isDead = plant?.isDead === true || status === "死亡";
       return {
         id: plant?.id || fallback.id,
         name: plant?.name || fallback.name,
         variety: plant?.variety || fallback.variety,
         category: plant?.category || plant?.name || fallback.category,
         photo: plant?.photo || "",
-        health: plant?.health || "健康",
+        health: status,
+        status,
+        stage: plant?.stage || status,
+        isDead,
+        deathDate: plant?.deathDate || (isDead ? today() : ""),
+        deathReason: plant?.deathReason || "",
+        purchaseDate: plant?.purchaseDate || String(plant?.createdAt || "").slice(0, 10) || "",
+        purchasePrice: plant?.purchasePrice ?? "",
         createdAt: plant?.createdAt || fallback.createdAt,
         note: plant?.note || ""
       };
@@ -3525,14 +4249,18 @@
     }
 
     function normalizeTask(task, plants = appData.plants || []) {
+      const done = task?.done === true || task?.enabled === false;
+      const allowedTaskTypes = [...taskTypes, ...Object.keys(recordTypeMeta)];
       return {
         id: task?.id || makeId("task"),
         plantId: task?.plantId || plants[0]?.id || "",
-        type: taskTypes.includes(task?.type) ? task.type : "浇水",
+        type: allowedTaskTypes.includes(task?.type) ? task.type : "浇水",
         nextDate: task?.nextDate || today(),
         cycleDays: Number(task?.cycleDays) || 0,
-        enabled: task?.enabled !== false,
-        completedAt: task?.completedAt || "",
+        enabled: !done,
+        done,
+        doneDate: task?.doneDate || task?.completedAt || "",
+        completedAt: task?.doneDate || task?.completedAt || "",
         note: task?.note || ""
       };
     }
@@ -3560,22 +4288,30 @@
     }
 
     function healthAdjust(type, health = "健康") {
-      if (health === "观察") {
-        if (type === "施肥") return 4;
-        if (type === "病虫害") return -2;
+      if (/缺水|开花中|结果中/.test(health)) {
+        if (type === "浇水") return -1;
       }
-      if (health === "偏弱") {
+      if (/缺肥|缺铁|缺镁|缺钙/.test(health)) {
+        if (type === "施肥") return -2;
+        if (type === "拍照") return -2;
+      }
+      if (/长势弱|缓苗中|休眠中|沤根|烂根|肥害|药害|晒伤|冻伤/.test(health)) {
         if (type === "浇水") return 1;
         if (type === "施肥") return 7;
         if (type === "病虫害") return -3;
         if (type === "拍照") return -3;
       }
-      if (health === "病虫害") {
+      if (/生病|病害|虫害/.test(health)) {
         if (type === "浇水") return 1;
         if (type === "施肥") return 10;
         if (type === "病虫害") return -4;
         if (type === "拍照") return -5;
       }
+      if (/旺长|徒长/.test(health)) {
+        if (type === "施肥") return 5;
+        if (type === "修剪") return -4;
+      }
+      if (health === "死亡") return 120;
       return 0;
     }
 
@@ -3587,6 +4323,100 @@
       if (type === "修剪") return [14, 45];
       if (type === "换盆") return [45, 180];
       return [1, 120];
+    }
+
+    function baseAutoTaskRules(plant) {
+      const category = plant?.category || plant?.name || "";
+      const key = /葡萄/.test(category) ? "葡萄"
+        : /蓝莓/.test(category) ? "蓝莓"
+        : /番茄/.test(category) ? "番茄"
+        : /月季/.test(category) ? "月季"
+        : "默认";
+      const rules = {
+        "葡萄": [
+          ["浇水", 5], ["施肥", 10], ["病虫害检查", 7], ["拍照记录", 7], ["修剪提醒", 30]
+        ],
+        "蓝莓": [
+          ["浇水", 3], ["施肥", 14], ["病虫害检查", 10], ["拍照记录", 7], ["pH检测", 30]
+        ],
+        "番茄": [
+          ["浇水", 2], ["施肥", 7], ["病虫害检查", 7], ["拍照记录", 5]
+        ],
+        "月季": [
+          ["浇水", 2], ["施肥", 10], ["病虫害检查", 5], ["修剪提醒", 15], ["拍照记录", 7]
+        ],
+        "默认": [
+          ["浇水", 5], ["施肥", 14], ["病虫害检查", 10], ["拍照记录", 7]
+        ]
+      };
+      return rules[key].map(([type, cycleDays]) => ({ type, cycleDays, note: `${key}自动任务：${type}，建议 ${cycleDays} 天一次。` }));
+    }
+
+    function stageAutoOverrides(plant) {
+      const stage = plant?.stage || plant?.status || plant?.health || "健康";
+      if (stage === "死亡" || plant?.isDead) return { removeAll: true };
+      if (/休眠中/.test(stage)) return { set: { "浇水": 20, "病虫害检查": 30 }, pause: ["施肥"], note: "休眠中：少水、暂停施肥。" };
+      if (/缓苗中/.test(stage)) return { set: { "浇水": 4, "施肥": 14, "病虫害检查": 7 }, note: "缓苗中：先稳根，施肥延后。" };
+      if (/萌芽|展叶|新梢生长|旺长/.test(stage)) return { set: { "浇水": 4, "施肥": 10, "病虫害检查": 7 }, note: "生长期：稳水薄肥，注意新梢病虫害。" };
+      if (/花苞|开花|授粉期|开花中/.test(stage)) return { set: { "浇水": 4, "施肥": 14, "病虫害检查": 5 }, note: "花期：水分稳定，施肥放缓。" };
+      if (/坐果|幼果期|结果中/.test(stage)) return { set: { "浇水": 3, "施肥": 10, "病虫害检查": 5 }, note: "坐果幼果期：稳水、补磷钾钙镁。" };
+      if (/膨大期/.test(stage)) return { set: { "浇水": 3, "施肥": 7, "病虫害检查": 5 }, note: "膨大期：需水肥较高，避免忽干忽湿。" };
+      if (/转色期|成熟期/.test(stage)) return { set: { "浇水": 5, "施肥": 10, "病虫害检查": 7 }, note: "转色成熟期：控水稳糖，少氮。" };
+      if (/采收期|已收获/.test(stage)) return { set: { "浇水": 5, "施肥": 7, "病虫害检查": 10 }, note: "采后恢复：适当恢复施肥。" };
+      if (/沤根|烂根|肥害|药害/.test(stage)) return { set: { "病虫害检查": 3 }, pause: ["施肥", "浇水"], note: "根区或药肥害：暂停施肥，浇水改为观察。" };
+      if (/病害|虫害|生病/.test(stage)) return { set: { "病虫害检查": 3 }, pause: ["施肥"], note: "病虫害处理中：暂停施肥，缩短检查间隔。" };
+      return { set: {}, pause: [], note: "" };
+    }
+
+    function generateAutoTasksForPlant(plant) {
+      if (!plant?.id) return [];
+      const normalized = normalizePlant(plant);
+      const override = stageAutoOverrides(normalized);
+      if (override.removeAll) {
+        appData.tasks = (appData.tasks || []).filter(task => task.plantId !== normalized.id || task.done === true || task.enabled === false);
+        return [];
+      }
+      const pause = new Set(override.pause || []);
+      const activeByType = new Map((appData.tasks || [])
+        .map(task => Object.assign(task, normalizeTask(task, appData.plants)))
+        .filter(task => task.plantId === normalized.id && task.done !== true && task.enabled !== false)
+        .map(task => [task.type, task]));
+      const nextTasks = [];
+      baseAutoTaskRules(normalized).forEach(rule => {
+        if (pause.has(rule.type)) {
+          appData.tasks = (appData.tasks || []).filter(task => !(task.plantId === normalized.id && task.type === rule.type && task.done !== true && task.enabled !== false));
+          return;
+        }
+        const cycleDays = Number(override.set?.[rule.type] || rule.cycleDays);
+        const existing = activeByType.get(rule.type);
+        const last = latestPlantOperation(normalized, rule.type);
+        const nextDate = last?.date ? addDays(last.date, cycleDays) : addDays(today(), cycleDays);
+        const note = `${rule.note}${override.note ? ` ${override.note}` : ""} 状态：${normalized.status || "健康"}。`;
+        if (existing) {
+          existing.nextDate = nextDate;
+          existing.cycleDays = cycleDays;
+          existing.note = note;
+          nextTasks.push(existing);
+        } else {
+          const task = normalizeTask({
+            id: makeId("task", `${normalized.id}:${rule.type}`),
+            plantId: normalized.id,
+            type: rule.type,
+            nextDate,
+            cycleDays,
+            done: false,
+            enabled: true,
+            note
+          }, appData.plants);
+          appData.tasks = [...(appData.tasks || []), task];
+          nextTasks.push(task);
+        }
+      });
+      return nextTasks;
+    }
+
+    function generateAutoTasksForAllPlants() {
+      (appData.plants || []).map(normalizePlant).forEach(plant => generateAutoTasksForPlant(plant));
     }
 
     function clampDays(value, type) {
@@ -3648,18 +4478,7 @@
 
     function refreshDynamicTasksForPlant(plant) {
       if (!plant?.id) return;
-      appData.tasks = (appData.tasks || []).map(task => {
-        if (task.plantId !== plant.id || task.enabled === false) return task;
-        const template = taskTemplateForType(plant, task.type);
-        if (!template) return task;
-        const schedule = dynamicTaskSchedule(plant, template);
-        return {
-          ...task,
-          nextDate: schedule.nextDate,
-          cycleDays: schedule.cycleDays,
-          note: `${template.name}：${template.note || ""} ${schedule.reason}`
-        };
-      });
+      generateAutoTasksForPlant(plant);
     }
 
     function materialFromName(name, kind, active = true, status = "有效", existing = {}) {
@@ -3899,6 +4718,376 @@
       return new Date().toISOString().slice(0, 10);
     }
 
+    function svgDataUrl(svg) {
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    function blueberrySvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#eef3ff"/>
+    <circle cx="210" cy="145" r="100" fill="#dce7ff"/>
+    <ellipse cx="150" cy="90" rx="32" ry="18" fill="#69b77d" transform="rotate(-25 150 90)"/>
+    <ellipse cx="270" cy="85" rx="32" ry="18" fill="#69b77d" transform="rotate(25 270 85)"/>
+    <circle cx="165" cy="145" r="38" fill="#4f6fe8"/>
+    <circle cx="235" cy="135" r="40" fill="#5b7cff"/>
+    <circle cx="210" cy="195" r="42" fill="#395ed8"/>
+    <circle cx="152" cy="132" r="9" fill="#9db4ff" opacity=".75"/>
+    <circle cx="222" cy="120" r="10" fill="#b8c8ff" opacity=".75"/>
+    <circle cx="196" cy="178" r="9" fill="#9db4ff" opacity=".75"/>
+    <path d="M155 145 l10 -8 l10 8 l-5 13 h-10z" fill="#263f9e"/>
+    <path d="M225 135 l10 -8 l10 8 l-5 13 h-10z" fill="#263f9e"/>
+    <path d="M200 195 l10 -8 l10 8 l-5 13 h-10z" fill="#223889"/>
+  </svg>`);
+    }
+
+    function grapeSvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#f1f8ec"/>
+    <circle cx="210" cy="145" r="100" fill="#ddf1d2"/>
+    <path d="M210 70 C195 105 185 130 185 165" fill="none" stroke="#4f8d43" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="175" cy="75" rx="34" ry="20" fill="#6fbd63" transform="rotate(-25 175 75)"/>
+    <ellipse cx="240" cy="72" rx="34" ry="20" fill="#6fbd63" transform="rotate(25 240 72)"/>
+    <circle cx="190" cy="130" r="26" fill="#7cc66c"/>
+    <circle cx="230" cy="130" r="26" fill="#6fbd63"/>
+    <circle cx="170" cy="165" r="26" fill="#68b75d"/>
+    <circle cx="210" cy="165" r="26" fill="#72c263"/>
+    <circle cx="250" cy="165" r="26" fill="#61ad56"/>
+    <circle cx="190" cy="205" r="26" fill="#5da953"/>
+    <circle cx="230" cy="205" r="26" fill="#6fbd63"/>
+  </svg>`);
+    }
+
+    function tomatoSvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#fff0ec"/>
+    <circle cx="210" cy="155" r="96" fill="#ffe1d8"/>
+    <circle cx="210" cy="170" r="68" fill="#e74e3c"/>
+    <circle cx="185" cy="145" r="13" fill="#ff9c8e" opacity=".8"/>
+    <path d="M210 96 l14 32 l34 -8 l-24 24 l18 32 l-42 -18 l-42 18 l18 -32 l-24 -24 l34 8z" fill="#4b9a45"/>
+  </svg>`);
+    }
+
+    function watermelonSvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#eefaf0"/>
+    <circle cx="210" cy="155" r="96" fill="#d7f3da"/>
+    <ellipse cx="210" cy="165" rx="92" ry="64" fill="#3fae58"/>
+    <path d="M145 130 q65 35 130 0" stroke="#1f7e3c" stroke-width="12" fill="none"/>
+    <path d="M130 165 q80 40 160 0" stroke="#1f7e3c" stroke-width="12" fill="none"/>
+    <path d="M145 200 q65 -35 130 0" stroke="#1f7e3c" stroke-width="12" fill="none"/>
+  </svg>`);
+    }
+
+    function strawberrySvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#fff0f4"/>
+    <circle cx="210" cy="150" r="98" fill="#ffe0e9"/>
+    <path d="M210 98 C285 108 284 190 210 240 C136 190 135 108 210 98z" fill="#e84f68"/>
+    <path d="M210 85 l14 30 l32 -10 l-22 26 l14 32 l-38 -18 l-38 18 l14 -32 l-22 -26 l32 10z" fill="#51a653"/>
+    <circle cx="180" cy="145" r="5" fill="#ffd7a3"/>
+    <circle cx="220" cy="140" r="5" fill="#ffd7a3"/>
+    <circle cx="200" cy="180" r="5" fill="#ffd7a3"/>
+    <circle cx="236" cy="185" r="5" fill="#ffd7a3"/>
+  </svg>`);
+    }
+
+    function flowerSvg(color = "#e86aa0") {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#fff0f6"/>
+    <circle cx="210" cy="145" r="100" fill="#ffe0ec"/>
+    <path d="M210 210 C210 170 210 140 210 110" stroke="#4c9a55" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <ellipse cx="175" cy="185" rx="34" ry="18" fill="#69b77d" transform="rotate(-25 175 185)"/>
+    <ellipse cx="245" cy="165" rx="34" ry="18" fill="#69b77d" transform="rotate(25 245 165)"/>
+    <circle cx="210" cy="100" r="20" fill="${color}"/>
+    <circle cx="180" cy="120" r="24" fill="${color}"/>
+    <circle cx="240" cy="120" r="24" fill="${color}"/>
+    <circle cx="195" cy="150" r="24" fill="${color}"/>
+    <circle cx="225" cy="150" r="24" fill="${color}"/>
+    <circle cx="210" cy="130" r="18" fill="#f8c85a"/>
+  </svg>`);
+    }
+
+    function appleSvg() {
+      return fruitSvg("#e6503f", "#fff4ed", "#ffd8c8");
+    }
+
+    function pearSvg() {
+      return fruitSvg("#b6d953", "#f5fff0", "#e1f4b7", true);
+    }
+
+    function peachSvg() {
+      return fruitSvg("#f39a78", "#fff1ef", "#ffd8ce");
+    }
+
+    function citrusSvg(color = "#f08b2f") {
+      return fruitSvg(color, "#fff6e7", "#ffe1b6");
+    }
+
+    function fruitSvg(color, bg, halo, pear = false) {
+      const body = pear
+        ? `<path d="M210 100 C245 118 260 150 250 190 C240 235 180 235 170 190 C160 150 175 118 210 100z" fill="${color}"/>`
+        : `<circle cx="210" cy="165" r="72" fill="${color}"/>`;
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="${bg}"/>
+    <circle cx="210" cy="155" r="96" fill="${halo}"/>
+    <path d="M210 95 C205 78 215 65 232 58" fill="none" stroke="#5f8f45" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="245" cy="75" rx="30" ry="16" fill="#66b15d" transform="rotate(25 245 75)"/>
+    ${body}
+    <circle cx="185" cy="138" r="13" fill="#ffffff" opacity=".4"/>
+  </svg>`);
+    }
+
+    function pepperSvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#fff0ed"/>
+    <circle cx="210" cy="150" r="96" fill="#ffe0d9"/>
+    <path d="M200 92 C210 75 232 80 235 102" fill="none" stroke="#4c9647" stroke-width="10" stroke-linecap="round"/>
+    <path d="M215 108 C270 135 255 235 180 242 C205 205 174 163 215 108z" fill="#d93b32"/>
+    <path d="M214 132 C234 164 225 205 190 229" fill="none" stroke="#f38372" stroke-width="10" stroke-linecap="round" opacity=".55"/>
+  </svg>`);
+    }
+
+    function eggplantSvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#f4efff"/>
+    <circle cx="210" cy="150" r="96" fill="#e7dcff"/>
+    <path d="M180 96 l24 26 l32 -16 l-8 34 l-36 8z" fill="#56a45a"/>
+    <path d="M205 120 C280 135 275 230 200 245 C145 232 145 150 205 120z" fill="#7149b8"/>
+    <path d="M205 145 C235 165 235 205 205 226" fill="none" stroke="#a88be1" stroke-width="10" stroke-linecap="round" opacity=".6"/>
+  </svg>`);
+    }
+
+    function cucumberSvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#effbf2"/>
+    <circle cx="210" cy="150" r="96" fill="#d8f3df"/>
+    <rect x="130" y="120" width="165" height="70" rx="35" fill="#49a85b" transform="rotate(-18 212 155)"/>
+    <path d="M155 150 h120" stroke="#b8e2b8" stroke-width="8" stroke-linecap="round" transform="rotate(-18 212 155)"/>
+    <circle cx="176" cy="132" r="5" fill="#d7f4d6"/>
+    <circle cx="230" cy="162" r="5" fill="#d7f4d6"/>
+  </svg>`);
+    }
+
+    function cornSvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#fff9e9"/>
+    <circle cx="210" cy="150" r="96" fill="#fff0bb"/>
+    <path d="M210 82 C250 115 250 205 210 240 C170 205 170 115 210 82z" fill="#f2c84b"/>
+    <path d="M175 170 C155 190 155 225 188 248" fill="none" stroke="#63aa62" stroke-width="18" stroke-linecap="round"/>
+    <path d="M245 170 C265 190 265 225 232 248" fill="none" stroke="#63aa62" stroke-width="18" stroke-linecap="round"/>
+    <path d="M190 115 h40 M185 145 h50 M185 175 h50 M195 205 h30" stroke="#ffe68f" stroke-width="8" stroke-linecap="round"/>
+  </svg>`);
+    }
+
+    function rootSvg(color = "#c69a63", bg = "#f7f0e8") {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="${bg}"/>
+    <circle cx="210" cy="150" r="96" fill="#ead7bd"/>
+    <ellipse cx="210" cy="170" rx="82" ry="55" fill="${color}" transform="rotate(-12 210 170)"/>
+    <circle cx="180" cy="145" r="7" fill="#9b7145" opacity=".55"/>
+    <circle cx="225" cy="182" r="8" fill="#9b7145" opacity=".55"/>
+    <path d="M185 100 C176 85 166 77 150 72" fill="none" stroke="#61a25f" stroke-width="8" stroke-linecap="round"/>
+    <path d="M210 100 C210 80 220 68 238 62" fill="none" stroke="#61a25f" stroke-width="8" stroke-linecap="round"/>
+  </svg>`);
+    }
+
+    function potatoSvg() {
+      return rootVegSvg("#c69a63");
+    }
+
+    function sweetPotatoSvg() {
+      return rootVegSvg("#c76f4d");
+    }
+
+    function rootVegSvg(color = "#c69a63") {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#f7f0e8"/>
+    <circle cx="210" cy="150" r="96" fill="#ead7bd"/>
+    <ellipse cx="210" cy="172" rx="82" ry="52" fill="${color}" transform="rotate(-12 210 172)"/>
+    <ellipse cx="170" cy="155" rx="9" ry="7" fill="#8f6844" opacity=".35"/>
+    <ellipse cx="225" cy="185" rx="10" ry="7" fill="#8f6844" opacity=".35"/>
+    <path d="M180 105 C165 90 150 82 130 78" fill="none" stroke="#62a55e" stroke-width="9" stroke-linecap="round"/>
+    <path d="M210 100 C212 78 226 65 248 58" fill="none" stroke="#62a55e" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="126" cy="75" rx="20" ry="10" fill="#78bf70" transform="rotate(-18 126 75)"/>
+    <ellipse cx="252" cy="56" rx="22" ry="11" fill="#78bf70" transform="rotate(18 252 56)"/>
+  </svg>`);
+    }
+
+    function leafySvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#f0faef"/>
+    <circle cx="210" cy="150" r="96" fill="#ddf2d7"/>
+    <path d="M210 235 C210 180 210 135 210 95" stroke="#4d9d57" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <ellipse cx="165" cy="150" rx="56" ry="30" fill="#72bf68" transform="rotate(-35 165 150)"/>
+    <ellipse cx="255" cy="145" rx="56" ry="30" fill="#72bf68" transform="rotate(35 255 145)"/>
+    <ellipse cx="190" cy="95" rx="46" ry="26" fill="#83cb76" transform="rotate(-15 190 95)"/>
+    <ellipse cx="232" cy="95" rx="46" ry="26" fill="#83cb76" transform="rotate(15 232 95)"/>
+  </svg>`);
+    }
+
+    function herbSvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#effaf1"/>
+    <circle cx="210" cy="150" r="96" fill="#dcf1de"/>
+    <path d="M210 235 C210 170 205 125 198 82" stroke="#4d9d57" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <ellipse cx="178" cy="135" rx="36" ry="17" fill="#65b86b" transform="rotate(-35 178 135)"/>
+    <ellipse cx="238" cy="128" rx="36" ry="17" fill="#65b86b" transform="rotate(35 238 128)"/>
+    <ellipse cx="185" cy="95" rx="30" ry="15" fill="#78c878" transform="rotate(-28 185 95)"/>
+    <ellipse cx="226" cy="88" rx="30" ry="15" fill="#78c878" transform="rotate(28 226 88)"/>
+    <ellipse cx="165" cy="178" rx="30" ry="15" fill="#78c878" transform="rotate(-28 165 178)"/>
+    <ellipse cx="248" cy="175" rx="30" ry="15" fill="#78c878" transform="rotate(28 248 175)"/>
+  </svg>`);
+    }
+
+    function roseSvg() {
+      return flowerSvg("#e86aa0");
+    }
+
+    function treeSvg(fruitColor = "#e6503f") {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#eef8ef"/>
+    <circle cx="210" cy="142" r="100" fill="#dff2df"/>
+    <path d="M210 230 C210 178 210 135 210 88" stroke="#7b5a35" stroke-width="16" fill="none" stroke-linecap="round"/>
+    <path d="M210 150 C180 120 158 105 132 96" stroke="#7b5a35" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M210 145 C240 115 266 100 292 92" stroke="#7b5a35" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <circle cx="160" cy="105" r="42" fill="#6fbd63"/>
+    <circle cx="230" cy="90" r="48" fill="#78c76d"/>
+    <circle cx="265" cy="130" r="42" fill="#6fbd63"/>
+    <circle cx="138" cy="128" r="18" fill="${fruitColor}"/>
+    <circle cx="236" cy="130" r="18" fill="${fruitColor}"/>
+    <circle cx="282" cy="158" r="16" fill="${fruitColor}"/>
+  </svg>`);
+    }
+
+    function berrySvg(color = "#d84f68") {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#fff0f4"/>
+    <circle cx="210" cy="150" r="98" fill="#ffe0ea"/>
+    <path d="M210 88 C200 120 190 150 178 188" fill="none" stroke="#58a75f" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="175" cy="88" rx="30" ry="16" fill="#6fbd68" transform="rotate(-25 175 88)"/>
+    <ellipse cx="245" cy="88" rx="30" ry="16" fill="#6fbd68" transform="rotate(25 245 88)"/>
+    <circle cx="170" cy="145" r="24" fill="${color}"/>
+    <circle cx="210" cy="135" r="25" fill="${color}"/>
+    <circle cx="248" cy="155" r="24" fill="${color}"/>
+    <circle cx="190" cy="185" r="25" fill="${color}"/>
+    <circle cx="230" cy="200" r="24" fill="${color}"/>
+    <circle cx="162" cy="136" r="6" fill="#fff" opacity=".35"/>
+  </svg>`);
+    }
+
+    function melonSvg(color = "#9fcf5a") {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#f3faee"/>
+    <circle cx="210" cy="155" r="96" fill="#e2f2d7"/>
+    <ellipse cx="210" cy="168" rx="92" ry="64" fill="${color}"/>
+    <path d="M145 130 q65 35 130 0" stroke="#6fa558" stroke-width="10" fill="none" opacity=".75"/>
+    <path d="M130 165 q80 40 160 0" stroke="#6fa558" stroke-width="10" fill="none" opacity=".75"/>
+    <path d="M145 200 q65 -35 130 0" stroke="#6fa558" stroke-width="10" fill="none" opacity=".75"/>
+    <path d="M210 102 C210 82 225 70 248 66" fill="none" stroke="#4f8d43" stroke-width="8" stroke-linecap="round"/>
+  </svg>`);
+    }
+
+    function genericFruitSvg(color = "#e6503f") {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#fff4ed"/>
+    <circle cx="210" cy="155" r="96" fill="#ffe0c8"/>
+    <path d="M210 95 C205 78 218 62 238 58" fill="none" stroke="#5f8f45" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="246" cy="72" rx="30" ry="16" fill="#66b15d" transform="rotate(24 246 72)"/>
+    <ellipse cx="210" cy="168" rx="74" ry="64" fill="${color}"/>
+    <circle cx="185" cy="140" r="13" fill="#fff" opacity=".38"/>
+  </svg>`);
+    }
+
+    function genericVegetableSvg(color = "#6baa58") {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#effaf1"/>
+    <circle cx="210" cy="150" r="96" fill="#dff2df"/>
+    <path d="M210 230 C210 180 210 135 210 92" stroke="#4d9d57" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <ellipse cx="170" cy="145" rx="48" ry="24" fill="${color}" transform="rotate(-32 170 145)"/>
+    <ellipse cx="250" cy="142" rx="48" ry="24" fill="${color}" transform="rotate(32 250 142)"/>
+    <circle cx="210" cy="110" r="30" fill="${color}"/>
+    <path d="M172 210 h76" stroke="#8b6b3f" stroke-width="16" stroke-linecap="round"/>
+  </svg>`);
+    }
+
+    function pottedPlantSvg() {
+      return svgDataUrl(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="420" height="320" viewBox="0 0 420 320">
+    <rect width="420" height="320" rx="38" fill="#eef8ef"/>
+    <circle cx="210" cy="145" r="100" fill="#dff2df"/>
+    <path d="M210 210 C210 165 210 125 210 85" stroke="#4d9d57" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <ellipse cx="170" cy="120" rx="42" ry="24" fill="#69bd72" transform="rotate(-30 170 120)"/>
+    <ellipse cx="250" cy="115" rx="42" ry="24" fill="#69bd72" transform="rotate(30 250 115)"/>
+    <ellipse cx="185" cy="75" rx="34" ry="20" fill="#7ccd7c" transform="rotate(-10 185 75)"/>
+    <ellipse cx="235" cy="75" rx="34" ry="20" fill="#7ccd7c" transform="rotate(10 235 75)"/>
+    <path d="M155 210 h110 l-16 60 h-78z" fill="#c47a3a"/>
+    <rect x="145" y="205" width="130" height="24" rx="10" fill="#df9248"/>
+  </svg>`);
+    }
+
+    function defaultPlantImage(plant) {
+      const text = `${plant?.name || ""}${plant?.category || ""}${plant?.variety || ""}`;
+      for (const key of Object.keys(plantPresetImages)) {
+        if (key !== "默认" && text.includes(key)) return plantPresetImages[key];
+      }
+      return plantPresetImages["默认"];
+    }
+
+    function plantImageUrl(plant) {
+      return plant?.photo || defaultPlantImage(plant);
+    }
+
+    function inferPlantCategory(text) {
+      const source = String(text || "");
+      if (!source.trim()) return "无";
+      const rules = [
+        { category: "葡萄", keys: ["葡萄", "巨峰", "妮娜皇后", "阳光玫瑰", "夏黑", "玫瑰香", "藤稔", "美人指", "红提", "青提"] },
+        { category: "蓝莓", keys: ["蓝莓", "Duke", "Bluecrop", "Legacy", "Brigitta", "兔眼蓝莓", "南高丛", "北高丛"] },
+        { category: "番茄", keys: ["番茄", "小番茄", "圣女果"] },
+        { category: "草莓", keys: ["草莓"] },
+        { category: "西瓜", keys: ["西瓜"] },
+        { category: "月季", keys: ["月季", "玫瑰"] },
+        { category: "柠檬", keys: ["柠檬", "青柠"] },
+        { category: "橘子", keys: ["橘子", "橙子", "柚子", "金桔", "砂糖橘", "沃柑", "血橙"] },
+        { category: "苹果", keys: ["苹果"] },
+        { category: "梨", keys: ["梨"] },
+        { category: "桃", keys: ["桃", "李子", "杏", "樱桃"] },
+        { category: "辣椒", keys: ["辣椒", "甜椒", "彩椒"] },
+        { category: "黄瓜", keys: ["黄瓜", "西葫芦", "丝瓜", "苦瓜"] },
+        { category: "茄子", keys: ["茄子"] },
+        { category: "玉米", keys: ["玉米"] },
+        { category: "土豆", keys: ["土豆", "马铃薯"] },
+        { category: "红薯", keys: ["红薯", "地瓜"] },
+        { category: "生菜", keys: ["生菜", "白菜", "青菜", "菠菜", "油菜", "空心菜", "甘蓝"] },
+        { category: "香菜", keys: ["香菜", "薄荷", "罗勒", "迷迭香", "百里香", "欧芹", "莳萝", "葱"] }
+      ];
+      const normalizedSource = source.toLowerCase();
+      const matched = rules.find(rule =>
+        rule.keys.some(key => normalizedSource.includes(String(key).toLowerCase()))
+      );
+      return matched ? matched.category : "无";
+    }
+
     function cropMeta(name) {
       return crops.find(crop => crop.name === name) || crops[0];
     }
@@ -3942,7 +5131,8 @@
 
     function plantLibraryCategoryHtml(selected = "") {
       const existing = [...new Set((appData.plants || []).map(plant => plant.category || plant.name).filter(Boolean))]
-        .filter(name => !plantLibraryNames().includes(name) && !crops.some(crop => crop.name === name));
+        .filter(name => name !== "无" && !plantLibraryNames().includes(name) && !crops.some(crop => crop.name === name));
+      const noneHtml = `<option value="无" ${selected === "无" ? "selected" : ""}>无</option>`;
       const groupHtml = Object.entries(plantLibrary).map(([group, names]) => `
         <optgroup label="${escapeHtml(group)}">
           ${names.map(name => `<option value="${escapeHtml(name)}" ${name === selected ? "selected" : ""}>${escapeHtml(name)}</option>`).join("")}
@@ -3953,22 +5143,31 @@
           ${existing.map(name => `<option value="${escapeHtml(name)}" ${name === selected ? "selected" : ""}>${escapeHtml(name)}</option>`).join("")}
         </optgroup>
       ` : "";
-      return groupHtml + customHtml;
+      return noneHtml + groupHtml + customHtml;
     }
 
     function renderPlantLibraryOptions() {
       const datalist = document.getElementById("plantNameLibrary");
       if (!datalist) return;
-      datalist.innerHTML = Object.entries(plantLibrary).flatMap(([group, names]) =>
+      const libraryOptions = Object.entries(plantLibrary).flatMap(([group, names]) =>
         names.map(name => `<option value="${escapeHtml(name)}" label="${escapeHtml(group)}"></option>`)
-      ).join("");
+      );
+      const aliasOptions = plantImageAliases.flatMap(group =>
+        group.keywords.map(keyword => `<option value="${escapeHtml(keyword)}" label="${escapeHtml(group.preset)}"></option>`)
+      );
+      datalist.innerHTML = [...new Set([...libraryOptions, ...aliasOptions])].join("");
     }
 
     function matchPlantLibraryName(value) {
       const text = String(value || "").trim();
       if (!text) return null;
+      const lowerText = text.toLowerCase();
       const entries = Object.entries(plantLibrary).flatMap(([group, names]) => names.map(name => ({ group, name })));
-      return entries.find(item => item.name === text)
+      const aliasMatch = plantImageAliases
+        .map(group => ({ group: "自动归类", name: group.preset, keywords: group.keywords }))
+        .find(group => group.keywords.some(keyword => lowerText.includes(String(keyword).toLowerCase())));
+      return aliasMatch
+        || entries.find(item => item.name === text)
         || entries.find(item => item.name.startsWith(text))
         || entries.find(item => item.name.includes(text));
     }
@@ -3981,7 +5180,7 @@
     }
 
     function syncPlantNameFromCategory() {
-      if (!els.plantName.value.trim() && els.plantCategory?.value) {
+      if (!els.plantName.value.trim() && els.plantCategory?.value && els.plantCategory.value !== "无") {
         els.plantName.value = els.plantCategory.value;
       }
     }
@@ -3994,32 +5193,130 @@
       els.crop.innerHTML = names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
       els.crop.value = selectedCrop;
       if (els.plantCategory) {
-        const current = els.plantCategory.value || selectedCrop || crops[0].name;
+        const current = els.plantCategory.value || "无";
         els.plantCategory.innerHTML = plantLibraryCategoryHtml(current);
-        els.plantCategory.value = plantLibraryNames().includes(current) || names.includes(current) ? current : crops[0].name;
+        els.plantCategory.value = current === "无" || plantLibraryNames().includes(current) || names.includes(current) ? current : "无";
       }
       renderPlantLibraryOptions();
     }
 
+    function renderStatusOptions(select, selected = "健康") {
+      if (!select) return;
+      const formStatuses = plantStatuses.filter(status => status !== "死亡");
+      const value = formStatuses.includes(selected) ? selected : "健康";
+      select.innerHTML = formStatuses.map(status => `<option value="${escapeHtml(status)}">${escapeHtml(status)}</option>`).join("");
+      select.value = value;
+    }
+
+    function renderGrowthOptions(select, selected = "健康") {
+      if (!select) return;
+      const formGrowthOptions = growthStageOptions.filter(status => status !== "死亡");
+      const value = formGrowthOptions.includes(selected) ? selected : plantStatuses.includes(selected) && selected !== "死亡" ? selected : "健康";
+      select.innerHTML = formGrowthOptions.map(status => `<option value="${escapeHtml(status)}">${escapeHtml(status)}</option>`).join("");
+      select.value = value;
+    }
+
+    function statusColor(status) {
+      return statusColorMap[status] || "#35c676";
+    }
+
+    function applyPlantStatus(plant, status, date = today(), reason = "") {
+      if (!plant) return plant;
+      const value = growthStageOptions.includes(status) || plantStatuses.includes(status) ? status : "健康";
+      const isStatusValue = plantStatuses.includes(value);
+      const isStageOnly = growthStageOptions.includes(value) && !isStatusValue;
+      if (isStatusValue) {
+        plant.status = value;
+        plant.health = value;
+      }
+      plant.stage = isStageOnly ? value : (value === "死亡" ? "死亡" : value || plant.stage || plant.status || "健康");
+      if (value === "死亡") {
+        plant.status = "死亡";
+        plant.health = "死亡";
+        plant.isDead = true;
+        plant.deathDate = date || today();
+        plant.deathReason = reason || plant.deathReason || "";
+        if (plant.id) {
+          appData.tasks = (appData.tasks || []).filter(task => task.plantId !== plant.id || task.done === true || task.enabled === false);
+        }
+      } else {
+        plant.isDead = false;
+        plant.deathDate = "";
+        plant.deathReason = "";
+        if (!plant.status) plant.status = "健康";
+        if (!plant.health) plant.health = plant.status;
+      }
+      return plant;
+    }
+
+    function togglePlantDeathFields() {
+      const isDead = els.plantHealth?.value === "死亡";
+      els.plantDeathFields?.classList.toggle("show", isDead);
+      if (isDead && els.plantDeathDate && !els.plantDeathDate.value) {
+        els.plantDeathDate.value = today();
+      }
+      if (!isDead) {
+        if (els.plantDeathDate) els.plantDeathDate.value = "";
+        if (els.plantDeathReason) els.plantDeathReason.value = "";
+      }
+    }
+
     function resetPlantForm() {
       plantPhotoBase64 = "";
+      plantPhotoCleared = false;
       els.plantForm.reset();
+      els.plantId.value = "";
+      renderStatusOptions(els.plantHealth, "健康");
       if (els.plantCategory) {
-        els.plantCategory.value = selectedCrop || crops[0].name;
+        els.plantCategory.value = "无";
       }
+      if (els.plantPurchaseDate) els.plantPurchaseDate.value = today();
+      if (els.plantPurchasePrice) els.plantPurchasePrice.value = "";
       els.plantPhotoPreview.classList.remove("has-photo");
       els.plantPhotoPreview.style.backgroundImage = "";
       els.plantPhotoPreview.textContent = "照片缩略图";
     }
 
-    function openPlantModal() {
+    function openPlantModal(plantId = "") {
       resetPlantForm();
+      const plant = plantId ? appData.plants.find(item => item.id === plantId) : null;
+      if (plant) {
+        const normalized = normalizePlant(plant);
+        plantPhotoBase64 = normalized.photo || "";
+        plantPhotoCleared = false;
+        els.plantId.value = normalized.id;
+        document.getElementById("plantSheetTitle").textContent = "编辑植物";
+        els.plantName.value = normalized.name || "";
+        els.plantVariety.value = normalized.variety || "";
+        els.plantCategory.value = normalized.category || inferPlantCategory(`${normalized.name || ""} ${normalized.variety || ""}`);
+        renderStatusOptions(els.plantHealth, normalized.status || "健康");
+        els.plantPurchaseDate.value = normalized.purchaseDate || "";
+        els.plantPurchasePrice.value = normalized.purchasePrice ?? "";
+        els.plantNote.value = normalized.note || "";
+        previewPlantPhoto(plantPhotoBase64);
+      } else {
+        document.getElementById("plantSheetTitle").textContent = "添加植物";
+      }
       els.plantSheet.hidden = false;
       requestAnimationFrame(() => els.plantName.focus());
     }
 
     function closePlantModal() {
       els.plantSheet.hidden = true;
+    }
+
+    function deletePlant(plantId) {
+      const plant = appData.plants.find(item => item.id === plantId);
+      if (!plant) return;
+      const ok = confirm("确定要永久删除这株植物吗？这会同时删除它的任务和记录。");
+      if (!ok) return;
+      appData.plants = appData.plants.filter(item => item.id !== plantId);
+      appData.tasks = (appData.tasks || []).filter(task => task.plantId !== plantId);
+      records = records.filter(record => record.plantId !== plantId);
+      saveData();
+      selectedPlantId = "";
+      renderAll();
+      switchPage("home");
     }
 
     function compressImageToBase64(file) {
@@ -4078,10 +5375,20 @@
         .map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`)
         .join("");
       const currentType = els.typeFilter.value || "全部";
-      els.typeFilter.innerHTML = `<option value="全部">全部类型</option>` + recordTypes
+      const filterTypes = Object.keys(recordTypeMeta);
+      els.typeFilter.innerHTML = `<option value="全部">全部类型</option>` + filterTypes
         .map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`)
         .join("");
-      els.typeFilter.value = ["全部", ...recordTypes].includes(currentType) ? currentType : "全部";
+      els.typeFilter.value = ["全部", ...filterTypes].includes(currentType) ? currentType : "全部";
+      const currentMonthFilter = els.recordMonthFilter?.value || "全部";
+      const months = [...new Set(records.map(record => String(record.date || "").slice(0, 7)).filter(Boolean))]
+        .sort((a, b) => b.localeCompare(a));
+      if (els.recordMonthFilter) {
+        els.recordMonthFilter.innerHTML = `<option value="全部">全部月份</option>` + months
+          .map(month => `<option value="${escapeHtml(month)}">${escapeHtml(month)}</option>`)
+          .join("");
+        els.recordMonthFilter.value = ["全部", ...months].includes(currentMonthFilter) ? currentMonthFilter : "全部";
+      }
     }
 
     function renderMonthOptions() {
@@ -4093,32 +5400,13 @@
       }).join("");
     }
 
-    function renderRecordTypePicker() {
-      if (!els.recordTypeGrid) return;
-      const current = recordTypes.includes(els.type.value) ? els.type.value : recordTypes[0];
-      els.type.value = current;
-      els.recordTypeGrid.innerHTML = recordTypes.map(type => {
-        const meta = recordTypeMeta[type] || {};
-        const active = type === current;
-        return `
-          <button class="record-type-card ${active ? "active" : ""}" type="button" data-record-type="${escapeHtml(type)}" style="--type-color:${meta.color || "#35c676"}" aria-pressed="${active ? "true" : "false"}">
-            <span class="type-mark">${escapeHtml(meta.mark || type.slice(0, 1))}</span>
-            ${escapeHtml(type)}
-          </button>
-        `;
-      }).join("");
-      els.recordTypeGrid.querySelectorAll("[data-record-type]").forEach(button => {
-        button.addEventListener("click", () => setRecordType(button.dataset.recordType));
-      });
-    }
-
     function setRecordType(type) {
       if (!recordTypes.includes(type)) return;
       els.type.value = type;
       if (type === "病虫害") {
-        els.growth.value = "病虫害疑似";
-      } else if (els.growth.value === "病虫害疑似") {
-        els.growth.value = "正常";
+        els.growth.value = "病害";
+      } else if (els.growth.value === "病害") {
+        els.growth.value = "健康";
       }
       renderAmountOptions();
       renderDilutionOptions();
@@ -4128,7 +5416,6 @@
       renderRecipeOptions();
       renderFormAdvice();
       renderPlans();
-      renderRecordTypePicker();
     }
 
     function amountOptions() {
@@ -4428,8 +5715,8 @@
 
     function currentRecipeContext() {
       const rule = ruleForMonth(selectedCrop, currentMonth());
-      const growth = analyzeGrowthStatus(els.growth.value || "正常", els.note.value || "");
-      growth.status = els.growth.value || "正常";
+      const growth = analyzeGrowthStatus(els.growth.value || "健康", els.note.value || "");
+      growth.status = els.growth.value || "健康";
       const cropRecords = records.filter(record => record.crop === selectedCrop);
       const feed = latest(cropRecords, "施肥");
       const water = latest(cropRecords, "浇水");
@@ -4466,6 +5753,31 @@
     function renderRecipeGuidance(text = "") {
       lastRecipeGuidance = text;
       if (!text) {
+        const plants = getSelectedAdvicePlants();
+        if (plants.length) {
+          els.recipeGuidance.innerHTML = plants.map(plant => {
+            const crop = cropMeta(plant.category || plant.name);
+            const rule = ruleForMonth(crop.name, currentMonth());
+            const growth = analyzeGrowthStatus(plant.stage || plant.status || "健康", plant.note || "");
+            growth.status = plant.stage || plant.status || "健康";
+            const recipes = recipesForRule(rule, growth);
+            const primary = recipes[0];
+            const stockAnalysis = analyzeFertilizerStockForRule(rule);
+            const openAttr = selectedAdvicePlantId === "全部" ? "" : " open";
+            return `
+              <details class="plant-advice-item"${openAttr} style="--crop:${crop.color}">
+                <summary><span>${escapeHtml(plantDisplayName(plant))}</span><span class="month-badge">${escapeHtml(primary?.name || "本轮不配肥")}</span></summary>
+                <div class="plant-advice-content">
+                  <p class="recipe-detail"><strong>阶段：</strong>${escapeHtml(rule.stage)}；${escapeHtml(growth.text)}</p>
+                  <p class="recipe-detail"><strong>需求：</strong>${escapeHtml(rule.need.join("、"))}</p>
+                  <p class="recipe-detail"><strong>库存匹配：</strong>${escapeHtml(stockAnalysis.text)}</p>
+                  <p class="recipe-detail"><strong>建议：</strong>${escapeHtml(primary ? recipeComponents(primary).map(item => item.name).join(" + ") || "先补齐主要材料" : "当前先观察，不建议强行配肥。")}</p>
+                </div>
+              </details>
+            `;
+          }).join("");
+          return;
+        }
         els.recipeGuidance.innerHTML = `<div class="empty">选择一键配料方案后，这里会显示购买建议、底肥指导、灌根和叶喷方案。</div>`;
         return;
       }
@@ -4777,7 +6089,8 @@
     function plantAgeText(plant) {
       if (!plant?.createdAt) return "第1天";
       const date = String(plant.createdAt).slice(0, 10);
-      const days = daysBetween(date);
+      const end = plant.isDead && plant.deathDate ? plant.deathDate : today();
+      const days = Math.max(0, Math.round((new Date(end + "T00:00:00") - new Date(date + "T00:00:00")) / 86400000));
       return `第${Number.isFinite(days) ? days + 1 : 1}天`;
     }
 
@@ -4792,29 +6105,62 @@
       return latest(records.filter(record => record.plantId === plantId), record => true);
     }
 
+    function recordTypeButtonHtml(type, extraClass = "record-type-card") {
+      const meta = recordTypeMeta[type] || {};
+      return `
+        <button class="${extraClass}" type="button" data-quick-record="${escapeHtml(type)}" style="--type-color:${meta.color || "#35c676"}">
+          <span class="type-mark">${escapeHtml(meta.mark || type.slice(0, 1))}</span>
+          ${escapeHtml(type)}
+        </button>
+      `;
+    }
+
+    function recordTypeForTask(type) {
+      const map = {
+        "病虫害检查": "病虫害",
+        "拍照记录": "拍照",
+        "修剪提醒": "修剪",
+        "pH检测": "测量"
+      };
+      return map[type] || type;
+    }
+
     function plantCardHtml(plant) {
       const crop = cropMeta(plant.category || plant.name);
       const latestRecord = latestPlantRecord(plant.id);
-      const photoStyle = plant.photo ? `background-image:url('${escapeHtml(plant.photo)}')` : "";
+      const photoStyle = `background-image:url('${escapeHtml(plantImageUrl(plant))}')`;
+      const status = plant.status || plant.health || "健康";
       return `
-        <button class="plant-card" type="button" data-plant-detail="${escapeHtml(plant.id)}" style="--crop:${crop.color}">
-          <div class="plant-photo" style="${photoStyle}">
-            <span class="health-pill">${escapeHtml(plant.health || "健康")}</span>
-            <span class="day-pill">${escapeHtml(plantAgeText(plant))}</span>
+        <article class="plant-card" style="--crop:${crop.color}">
+          <button class="plant-card-main" type="button" data-plant-detail="${escapeHtml(plant.id)}">
+            <div class="plant-photo" style="${photoStyle}">
+              <span class="health-pill" style="background:${statusColor(status)}">${escapeHtml(status)}</span>
+              <span class="day-pill">${escapeHtml(plantAgeText(plant))}</span>
+            </div>
+            <div class="plant-card-body">
+              <strong>${escapeHtml(plant.name)}</strong>
+              <span>品种：${escapeHtml(plant.variety || "未填写")}</span>
+              <span>阶段：${escapeHtml(plant.stage || status)} · 状态：${escapeHtml(status)}</span>
+              <span>购买日期：${escapeHtml(plant.purchaseDate || "未记录")} · ${escapeHtml(plantAgeText(plant))}</span>
+              <span>最近养护：${latestRecord?.date ? escapeHtml(latestRecord.date) : "暂无记录"}</span>
+            </div>
+          </button>
+          <div class="plant-card-actions">
+            ${["浇水", "施肥", "拍照"].map(type => {
+              const meta = recordTypeMeta[type] || {};
+              return `<button class="plant-card-action" type="button" data-home-quick-record="${escapeHtml(type)}" data-plant-id="${escapeHtml(plant.id)}" style="--type-color:${meta.color || "#35c676"}">${escapeHtml(meta.mark || type.slice(0, 1))} ${escapeHtml(type)}</button>`;
+            }).join("")}
           </div>
-          <div class="plant-card-body">
-            <strong>${escapeHtml(plant.name)}</strong>
-            <span>最近养护：${latestRecord?.date ? escapeHtml(latestRecord.date) : "暂无记录"}</span>
-          </div>
-        </button>
+        </article>
       `;
     }
 
     function renderHome() {
       if (!els.plantGrid) return;
       syncDataFromGlobals();
-      const plants = appData.plants.map(normalizePlant);
-      const dueTasks = (appData.tasks || []).filter(task => task.enabled !== false && task.nextDate && task.nextDate <= today());
+      appData.plants = appData.plants.map(normalizePlant);
+      const plants = appData.plants.filter(plant => plant.isDead !== true);
+      const dueTasks = (appData.tasks || []).filter(task => task.done !== true && task.enabled !== false && task.nextDate && task.nextDate <= today());
       els.plantCount.textContent = `${plants.length} 株`;
       els.todayTaskText.textContent = dueTasks.length
         ? `今天有 ${dueTasks.length} 个任务待处理`
@@ -4823,6 +6169,75 @@
       els.plantGrid.querySelectorAll("[data-plant-detail]").forEach(button => {
         button.addEventListener("click", () => renderPlantDetail(button.dataset.plantDetail));
       });
+      els.plantGrid.querySelectorAll("[data-home-quick-record]").forEach(button => {
+        button.addEventListener("click", () => handleQuickRecord(button.dataset.plantId, button.dataset.homeQuickRecord));
+      });
+    }
+
+    function renderAdvicePlantSelect() {
+      const plants = (appData.plants || []).map(normalizePlant).filter(plant => plant.isDead !== true && plant.status !== "死亡");
+      if (!els.advicePlantSelect) return;
+      els.advicePlantSelect.innerHTML = `<option value="全部">全部植物</option>` + plants.map(plant => {
+        const label = [plant.name, plant.variety].filter(Boolean).join("·") || plant.name || "未命名植物";
+        return `<option value="${escapeHtml(plant.id)}">${escapeHtml(label)}</option>`;
+      }).join("");
+      if (selectedAdvicePlantId !== "全部" && !plants.some(plant => plant.id === selectedAdvicePlantId)) {
+        selectedAdvicePlantId = "全部";
+      }
+      els.advicePlantSelect.value = selectedAdvicePlantId;
+    }
+
+    function getSelectedAdvicePlants() {
+      const plants = (appData.plants || []).map(normalizePlant).filter(plant => plant.isDead !== true && plant.status !== "死亡");
+      if (!selectedAdvicePlantId || selectedAdvicePlantId === "全部") return plants;
+      return plants.filter(plant => plant.id === selectedAdvicePlantId);
+    }
+
+    function plantDisplayName(plant) {
+      return [plant.name, plant.variety].filter(Boolean).join("·") || plant.name || "未命名植物";
+    }
+
+    function stageAdviceCardHtml(plant) {
+      const crop = cropMeta(plant.category || plant.name);
+      const rule = ruleForMonth(crop.name, currentMonth());
+      const plantRecords = records.filter(record => record.plantId === plant.id || (!record.plantId && record.crop === (plant.category || plant.name)));
+      const water = latest(plantRecords, "浇水");
+      const feed = latest(plantRecords, "施肥");
+      const waterTemplate = taskTemplateForType(plant, "浇水");
+      const feedTemplate = taskTemplateForType(plant, "施肥");
+      const waterSchedule = waterTemplate ? dynamicTaskSchedule(plant, waterTemplate) : null;
+      const feedSchedule = feedTemplate ? dynamicTaskSchedule(plant, feedTemplate) : null;
+      const growth = analyzeGrowthStatus(plant.stage || plant.status || "健康", plant.note || "");
+      growth.status = plant.stage || plant.status || "健康";
+      const plantingText = plantRecords.find(record => record.planting)?.planting || "盆栽/地栽";
+      const decision = fertilizerDecision(crop, rule, daysBetween(feed?.date), daysBetween(water?.date), plantingText, matchedFertilizer(rule), growth, safeFertilizerInterval(rule, growth, plantingText));
+      const recipe = recipesForRule(rule, growth)[0];
+      const risk = pestControlAdvice(growth, plant.note || "", null);
+      const openAttr = selectedAdvicePlantId !== "全部" ? " open" : "";
+      return `
+        <details class="plant-advice-item"${openAttr} style="--crop:${crop.color}">
+          <summary><span>${escapeHtml(plantDisplayName(plant))}</span><span class="month-badge">${escapeHtml(plant.stage || plant.status || "健康")}</span></summary>
+          <div class="plant-advice-content">
+            <div class="brief-grid">
+              <div class="brief-item"><strong>当前状态</strong>${escapeHtml(plant.status || "健康")}</div>
+              <div class="brief-item"><strong>最近浇水</strong>${water?.date ? escapeHtml(water.date) : "暂无记录"}</div>
+              <div class="brief-item"><strong>最近施肥</strong>${feed?.date ? escapeHtml(feed.date) : "暂无记录"}</div>
+              <div class="brief-item"><strong>浇水频率</strong>${waterSchedule ? escapeHtml(`${waterSchedule.cycleDays}天；${waterSchedule.nextDate}`) : "按土壤干湿观察"}</div>
+              <div class="brief-item"><strong>施肥频率</strong>${feedSchedule ? escapeHtml(`${feedSchedule.cycleDays}天；${feedSchedule.nextDate}`) : "当前阶段可暂停或观察"}</div>
+              <div class="brief-item"><strong>推荐配方</strong>${escapeHtml(recipe?.name || decision.label || "本轮不配肥")}</div>
+              <div class="brief-item full"><strong>风险提醒</strong>${escapeHtml(risk || decision.text || "保持通风、稳水，避免连续大水大肥。")}</div>
+            </div>
+          </div>
+        </details>
+      `;
+    }
+
+    function renderStageAdvice() {
+      if (!els.stageAdvice) return;
+      const plants = getSelectedAdvicePlants();
+      els.stageAdvice.innerHTML = plants.length
+        ? plants.map(stageAdviceCardHtml).join("")
+        : `<div class="empty">暂无可建议的植物。先在首页添加植物。</div>`;
     }
 
     function addDays(dateString, days) {
@@ -4844,40 +6259,78 @@
     }
 
     function taskTypeAllowed(task) {
-      return !els.taskTypeFilter?.value || els.taskTypeFilter.value === "全部" || task.type === els.taskTypeFilter.value;
+      const filter = currentTaskFilter || "全部";
+      const displayType = recordTypeForTask(task.type);
+      return filter === "全部" || displayType === filter || task.type === filter;
     }
 
     function renderTaskControls() {
-      if (!els.taskType || !els.taskPlant || !els.taskTypeFilter) return;
-      const currentPlant = els.taskPlant.value;
-      const currentType = els.taskType.value;
-      const currentFilter = els.taskTypeFilter.value || "全部";
-      const plants = appData.plants.map(normalizePlant);
-      els.taskPlant.innerHTML = plants.map(plant => `<option value="${escapeHtml(plant.id)}">${escapeHtml(plant.name)}</option>`).join("");
-      els.taskType.innerHTML = taskTypes.map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`).join("");
-      els.taskTypeFilter.innerHTML = `<option value="全部">全部类型</option>` + taskTypes.map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`).join("");
-      els.taskPlant.value = plants.some(plant => plant.id === currentPlant) ? currentPlant : plants[0]?.id || "";
-      els.taskType.value = taskTypes.includes(currentType) ? currentType : taskTypes[0];
-      els.taskTypeFilter.value = ["全部", ...taskTypes].includes(currentFilter) ? currentFilter : "全部";
+      if (!taskFilterTypes.includes(currentTaskFilter)) currentTaskFilter = "全部";
+      if (els.taskTypeFilter) {
+        els.taskTypeFilter.innerHTML = taskFilterTypes.map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`).join("");
+        els.taskTypeFilter.value = currentTaskFilter;
+      }
+      if (!els.taskFilterTabs) return;
+      els.taskFilterTabs.innerHTML = taskFilterTypes.map(type => `
+        <button class="task-filter-tab ${type === currentTaskFilter ? "active" : ""}" type="button" data-task-filter="${escapeHtml(type)}">${escapeHtml(type)}</button>
+      `).join("");
+      els.taskFilterTabs.querySelectorAll("[data-task-filter]").forEach(button => {
+        button.addEventListener("click", () => {
+          currentTaskFilter = button.dataset.taskFilter || "全部";
+          if (els.taskTypeFilter) els.taskTypeFilter.value = currentTaskFilter;
+          renderTasks();
+        });
+      });
+    }
+
+    function taskDisplayType(task) {
+      return recordTypeForTask(task.type);
+    }
+
+    function taskTitleText(task, plant) {
+      const plantName = [plant.name, plant.variety].filter(Boolean).join("·") || "植物";
+      const type = taskDisplayType(task);
+      const titleMap = {
+        "浇水": `给 ${plantName} 浇水`,
+        "换水": `给 ${plantName} 换水`,
+        "施肥": `给 ${plantName} 施肥`,
+        "修剪": `给 ${plantName} 修剪`,
+        "换盆": `给 ${plantName} 换盆`,
+        "病虫害": `检查 ${plantName} 病虫害`,
+        "测量": `测量 ${plantName}`,
+        "拍照": `给 ${plantName} 拍照`,
+        "笔记": `记录 ${plantName} 笔记`,
+        "里程碑": `记录 ${plantName} 里程碑`
+      };
+      return titleMap[type] || `给 ${plantName} ${task.type}`;
+    }
+
+    function taskDateText(task, done = false) {
+      if (done) return `已完成 · ${task.doneDate || task.completedAt || task.nextDate || today()}`;
+      const target = new Date((task.nextDate || today()) + "T00:00:00");
+      const current = new Date(today() + "T00:00:00");
+      const diffDays = Math.ceil((target - current) / 86400000);
+      return diffDays <= 0 ? "今天" : `${diffDays}天后`;
     }
 
     function taskCardHtml(task, done = false) {
       const plant = taskPlant(task);
-      const crop = cropMeta(plant.category || plant.name);
-      const cycleText = Number(task.cycleDays) > 0 ? `${task.cycleDays} 天循环` : "不循环";
+      const displayType = taskDisplayType(task);
+      const meta = recordTypeMeta[displayType] || recordTypeMeta[task.type] || { mark: "•", color: "#35c676" };
+      const thumbStyle = `background-image:url('${escapeHtml(plantImageUrl(plant))}')`;
       return `
-        <article class="task-card ${done ? "done" : ""}" style="--crop:${crop.color}">
-          <div class="task-card-head">
-            <div class="task-card-title">
-              <strong>${escapeHtml(plant.name)} · ${escapeHtml(task.type)}</strong>
-              <span>${done ? "完成于" : "计划"}：${escapeHtml(done ? task.completedAt || task.nextDate : task.nextDate || today())}</span>
-            </div>
-            <span class="tag" style="--crop:${crop.color}">${escapeHtml(task.type)}</span>
+        <article class="task-card-row" style="--task-color:${escapeHtml(meta.color)}">
+          <div class="task-thumb-wrap">
+            <div class="task-thumb" style="${thumbStyle}"></div>
+            <span class="task-type-badge">${escapeHtml(meta.mark)}</span>
           </div>
-          <div class="task-card-meta">${escapeHtml(cycleText)}${task.note ? ` · ${escapeHtml(task.note)}` : ""}</div>
-          <div class="task-actions">
+          <div class="task-main">
+            <div class="task-title">${escapeHtml(taskTitleText(task, plant))}</div>
+            <div class="task-date">${escapeHtml(taskDateText(task, done))}</div>
+          </div>
+          <div class="task-row-actions">
             ${done ? "" : `<button class="btn primary" type="button" data-complete-task="${escapeHtml(task.id)}">完成</button>`}
-            <button class="btn secondary" type="button" data-edit-task="${escapeHtml(task.id)}">编辑</button>
+            <button class="btn secondary danger" type="button" data-delete-task="${escapeHtml(task.id)}">删除</button>
           </div>
         </article>
       `;
@@ -4889,41 +6342,32 @@
         id: "__template-preview",
         name: selectedCrop || crops[0].name,
         category: selectedCrop || crops[0].name,
-        health: "健康",
+        status: els.growth?.value || "健康",
+        health: els.growth?.value || "健康",
         createdAt: new Date().toISOString()
       });
-      els.taskTemplateList.innerHTML = taskTemplates.map(template => {
-        const categoryText = template.categories.includes("*") ? "全部植物" : template.categories.join("、");
-        const firstText = Number(template.firstAfterDays) > 0 ? `${template.firstAfterDays} 天后首次执行` : "当天执行";
-        const cycleText = Number(template.cycleDays) > 0 ? `${template.cycleDays} 天循环` : "不循环";
-        const schedule = dynamicTaskSchedule(previewPlant, template);
+      const override = stageAutoOverrides(previewPlant);
+      const pause = new Set(override.pause || []);
+      const rules = baseAutoTaskRules(previewPlant)
+        .filter(rule => !pause.has(rule.type))
+        .map(rule => ({ ...rule, cycleDays: Number(override.set?.[rule.type] || rule.cycleDays) }));
+      els.taskTemplateList.innerHTML = rules.map(rule => {
         return `
           <article class="task-card" style="--crop:#35c676">
             <div class="task-card-head">
               <div class="task-card-title">
-                <strong>${escapeHtml(template.name)}</strong>
-                <span>${escapeHtml(categoryText)} · 基础：${escapeHtml(firstText)} / ${escapeHtml(cycleText)}</span>
+                <strong>${escapeHtml(rule.type)}</strong>
+                <span>${escapeHtml(previewPlant.category || previewPlant.name)} · ${escapeHtml(previewPlant.status || "健康")}</span>
               </div>
-              <span class="tag" style="--crop:#35c676">${escapeHtml(template.type)}</span>
+              <span class="tag" style="--crop:#35c676">${escapeHtml(`${rule.cycleDays}天`)}</span>
             </div>
-            <div class="task-card-meta">当前季节参考：${escapeHtml(schedule.cycleDays)} 天一次；下次 ${escapeHtml(schedule.nextDate)}。${escapeHtml(template.note || "")}</div>
+            <div class="task-card-meta">${escapeHtml(rule.note)}${override.note ? ` ${escapeHtml(override.note)}` : ""}</div>
           </article>
         `;
-      }).join("");
+      }).join("") || `<div class="empty">当前阶段暂停自动任务。</div>`;
     }
 
     function renderMinePanels() {
-      if (els.costStatsBox) {
-        const materials = (appData.materials || []).filter(item => item.status !== "已删除");
-        const countByStatus = status => materials.filter(item => materialDisplayStatus(item) === status).length;
-        const fertilizerCount = materials.filter(item => item.kind === "肥料").length;
-        const pesticideCount = materials.filter(item => item.kind === "药剂").length;
-        els.costStatsBox.innerHTML = `
-          <p><strong>农资数量：</strong>${materials.length} 个，肥料 ${fertilizerCount} 个，药剂 ${pesticideCount} 个。</p>
-          <p><strong>状态：</strong>有效 ${countByStatus("有效")} 个，过期 ${countByStatus("过期")} 个，已用完 ${countByStatus("已用完")} 个。</p>
-          <p><strong>说明：</strong>当前版本先统计库存状态；后续可在农资里增加单价/金额后计算真实花费。</p>
-        `;
-      }
       if (els.plantTagList) {
         const plants = (appData.plants || []).map(normalizePlant);
         const categoryCounts = [...plants.reduce((map, plant) => {
@@ -4948,6 +6392,83 @@
         `;
         els.plantTagList.innerHTML = tagHtml(categoryCounts, "分类标签") + tagHtml(healthCounts, "健康标签");
       }
+    }
+
+    function renderMemorial() {
+      if (!els.memorialList) return;
+      const deadPlants = (appData.plants || [])
+        .map(normalizePlant)
+        .filter(plant => plant.isDead === true)
+        .sort((a, b) => (b.deathDate || "").localeCompare(a.deathDate || ""));
+      els.memorialList.innerHTML = deadPlants.map(plant => {
+        const crop = cropMeta(plant.category || plant.name);
+        const plantRecords = records.filter(record => record.plantId === plant.id);
+        const photoStyle = `background-image:url('${escapeHtml(plantImageUrl(plant))}')`;
+        const purchasePriceText = plant.purchasePrice === "" || plant.purchasePrice === undefined || plant.purchasePrice === null
+          ? "未记录"
+          : `${Number(plant.purchasePrice).toFixed(2)} 元`;
+        return `
+          <article class="memorial-card" style="--crop:${crop.color}">
+            <div class="memorial-photo" style="${photoStyle}"></div>
+            <div class="memorial-body">
+              <strong>${escapeHtml(plant.name)}</strong>
+              <div class="memorial-meta">
+                <span>品种：${escapeHtml(plant.variety || "未填写")}</span>
+                <span>购买日期：${escapeHtml(plant.purchaseDate || "未记录")}</span>
+                <span>购买价格：${escapeHtml(purchasePriceText)}</span>
+                <span>养护天数：${escapeHtml(plantAgeText(plant))}</span>
+                <span>创建日期：${escapeHtml(String(plant.createdAt || "").slice(0, 10) || "未记录")}</span>
+                <span>死亡日期：${escapeHtml(plant.deathDate || "未记录")}</span>
+                <span>死亡原因：${escapeHtml(plant.deathReason || plant.note || "未填写")}</span>
+                <span>历史记录：${plantRecords.length} 条</span>
+              </div>
+              <div class="material-actions">
+                <button class="btn secondary" type="button" data-memorial-detail="${escapeHtml(plant.id)}">查看详情</button>
+                <button class="btn primary" type="button" data-restore-plant="${escapeHtml(plant.id)}">恢复植物</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("") || `<div class="empty">暂无已进入纪念碑的植物。</div>`;
+      els.memorialList.querySelectorAll("[data-memorial-detail]").forEach(button => {
+        button.addEventListener("click", () => renderPlantDetail(button.dataset.memorialDetail));
+      });
+      els.memorialList.querySelectorAll("[data-restore-plant]").forEach(button => {
+        button.addEventListener("click", () => restorePlant(button.dataset.restorePlant));
+      });
+    }
+
+    function restorePlant(plantId) {
+      const plant = appData.plants.find(item => item.id === plantId);
+      if (!plant) return;
+      applyPlantStatus(plant, "健康");
+      generateAutoTasksForPlant(plant);
+      saveData();
+      renderAll();
+      switchPage("home");
+    }
+
+    function markPlantDead(plantId) {
+      const plant = appData.plants.find(item => item.id === plantId);
+      if (!plant) return;
+      const dateInput = [...els.plantDetailContent.querySelectorAll("[data-death-date]")]
+        .find(input => input.dataset.deathDate === plantId);
+      const reasonInput = [...els.plantDetailContent.querySelectorAll("[data-death-reason]")]
+        .find(input => input.dataset.deathReason === plantId);
+      const deathDate = dateInput?.value || today();
+      const deathReason = reasonInput?.value.trim() || "";
+      const ok = confirm("确定将这株植物标记为死亡并移入纪念碑吗？");
+      if (!ok) return;
+      plant.isDead = true;
+      plant.status = "死亡";
+      plant.health = "死亡";
+      plant.stage = "死亡";
+      plant.deathDate = deathDate;
+      plant.deathReason = deathReason;
+      appData.tasks = (appData.tasks || []).filter(task => task.plantId !== plantId || task.done === true);
+      saveData();
+      renderAll();
+      switchPage("memorial");
     }
 
     function numberInputValue(input) {
@@ -4976,6 +6497,23 @@
       return Math.PI * radius * radius * height;
     }
 
+    function renderSoilShapeTabs() {
+      if (!els.soilShapeTabs || !els.soilShape) return;
+      const currentShape = els.soilShape.value || "cylinder";
+      els.soilShapeTabs.innerHTML = soilShapeOptions.map(shape => `
+        <button class="soil-shape-card ${shape.value === currentShape ? "active" : ""}" type="button" data-soil-shape="${escapeHtml(shape.value)}">
+          ${shape.svg}
+          <span>${escapeHtml(shape.label)}</span>
+        </button>
+      `).join("");
+      els.soilShapeTabs.querySelectorAll("[data-soil-shape]").forEach(button => {
+        button.addEventListener("click", () => {
+          els.soilShape.value = button.dataset.soilShape || "cylinder";
+          renderSoilCalculator();
+        });
+      });
+    }
+
     function toggleSoilFields() {
       if (!els.soilDimFields?.length) return;
       const visibleByShape = {
@@ -4995,6 +6533,7 @@
 
     function renderSoilCalculator() {
       if (!els.soilCalcResult) return;
+      renderSoilShapeTabs();
       toggleSoilFields();
       const profile = soilTypeProfiles[els.soilType?.value] || soilTypeProfiles["通用型培养土"];
       const fillRate = Math.min(100, Math.max(1, Number(els.soilFill?.value) || 100)) / 100;
@@ -5017,13 +6556,15 @@
       if (!els.todayTaskList) return;
       renderTaskControls();
       const now = today();
-      const tasks = (appData.tasks || []).filter(taskTypeAllowed);
-      const active = tasks.filter(task => task.enabled !== false);
+      const maxVisibleTaskDate = addDays(now, 10);
+      appData.tasks = (appData.tasks || []).map(task => normalizeTask(task, appData.plants));
+      const tasks = appData.tasks.filter(taskTypeAllowed);
+      const active = tasks.filter(task => task.done !== true && task.enabled !== false && (task.nextDate || now) <= maxVisibleTaskDate);
       const todayTasks = active.filter(task => (task.nextDate || now) <= now).sort((a, b) => (a.nextDate || "").localeCompare(b.nextDate || ""));
       const futureTasks = active.filter(task => (task.nextDate || now) > now).sort((a, b) => (a.nextDate || "").localeCompare(b.nextDate || ""));
       const doneTasks = tasks
-        .filter(task => task.enabled === false)
-        .sort((a, b) => (b.completedAt || b.nextDate || "").localeCompare(a.completedAt || a.nextDate || ""))
+        .filter(task => task.done === true || task.enabled === false)
+        .sort((a, b) => (b.doneDate || b.completedAt || b.nextDate || "").localeCompare(a.doneDate || a.completedAt || a.nextDate || ""))
         .slice(0, 30);
       els.todayTaskList.innerHTML = todayTasks.map(task => taskCardHtml(task)).join("") || `<div class="empty">今天没有任务。</div>`;
       els.futureTaskList.innerHTML = futureTasks.map(task => taskCardHtml(task)).join("") || `<div class="empty">暂无未来任务。</div>`;
@@ -5032,60 +6573,68 @@
         list.querySelectorAll("[data-complete-task]").forEach(button => {
           button.addEventListener("click", () => completeTask(button.dataset.completeTask));
         });
-        list.querySelectorAll("[data-edit-task]").forEach(button => {
-          button.addEventListener("click", () => editTask(button.dataset.editTask));
+        list.querySelectorAll("[data-delete-task]").forEach(button => {
+          button.addEventListener("click", () => deleteTask(button.dataset.deleteTask));
         });
       });
     }
 
-    function resetTaskForm() {
-      if (!els.taskForm) return;
-      els.taskForm.reset();
-      els.taskId.value = "";
-      renderTaskControls();
-      els.taskNextDate.value = today();
-      els.taskCycle.value = "7";
-      els.taskNote.value = "";
-    }
-
-    function editTask(id) {
-      const task = appData.tasks.find(item => item.id === id);
-      if (!task) return;
-      renderTaskControls();
-      els.taskId.value = task.id;
-      els.taskPlant.value = task.plantId || appData.plants[0]?.id || "";
-      els.taskType.value = task.type || "浇水";
-      els.taskNextDate.value = task.nextDate || today();
-      els.taskCycle.value = Number(task.cycleDays) || 0;
-      els.taskNote.value = task.note || "";
-      switchPage("tasks");
-    }
-
     function completeTask(id) {
       const task = appData.tasks.find(item => item.id === id);
-      if (!task || task.enabled === false) return;
+      if (!task || task.done === true || task.enabled === false) return;
       const plant = taskPlant(task);
-      const template = taskTemplateForType(plant, task.type);
+      records.push(normalizeRecord({
+        id: makeId("record"),
+        plantId: task.plantId,
+        crop: plant.category || plant.name,
+        variety: plant.variety || defaultVariety(plant.category || plant.name),
+        planting: "盆栽",
+        date: today(),
+        type: recordTypeForTask(task.type),
+        amount: "",
+        fertilizer: "",
+        dilution: "",
+        growth: plant.status || plant.health || "健康",
+        note: task.note || "",
+        createdAt: Date.now()
+      }, new Map(appData.plants.map(item => [item.id, item]))));
       task.enabled = false;
+      task.done = true;
+      task.doneDate = today();
       task.completedAt = today();
-      const schedule = template ? dynamicTaskSchedule(plant, template, today()) : null;
-      const cycleDays = schedule?.cycleDays || Number(task.cycleDays) || 0;
-      if (cycleDays > 0) {
-        appData.tasks.push({
-          id: makeId("task"),
-          plantId: task.plantId,
-          type: task.type,
-          nextDate: addDays(today(), cycleDays),
-          cycleDays,
-          enabled: true,
-          completedAt: "",
-          note: schedule && template
-            ? `${template.name}：${template.note || ""} ${schedule.reason}`
-            : task.note || ""
-        });
+      const cycleDays = Number(task.cycleDays) || 0;
+      if (cycleDays > 0 && plant?.isDead !== true && (plant.status || plant.health) !== "死亡") {
+        generateAutoTasksForPlant(plant);
       }
       saveData();
       renderAll();
+    }
+
+    function deleteTask(id) {
+      const task = appData.tasks.find(item => item.id === id);
+      if (!task) return;
+      if (!confirm("确定删除这个任务吗？")) return;
+      appData.tasks = appData.tasks.filter(item => item.id !== id);
+      saveData();
+      renderAll();
+    }
+
+    function clearDoneTasks() {
+      const doneCount = (appData.tasks || []).filter(task => task.done === true || task.enabled === false).length;
+      if (!doneCount) return;
+      if (!confirm("确定清空所有已完成任务吗？")) return;
+      appData.tasks = (appData.tasks || []).filter(task => !(task.done === true || task.enabled === false));
+      saveData();
+      renderAll();
+    }
+
+    function regenAutoTasks() {
+      (appData.plants || [])
+        .filter(plant => plant && plant.isDead !== true && plant.status !== "死亡")
+        .forEach(plant => generateAutoTasksForPlant(plant));
+      saveData();
+      renderAll();
+      alert("已根据植物状态刷新任务");
     }
 
     function openPhotoLightbox(record, plant) {
@@ -5107,8 +6656,9 @@
     }
 
     function renderPlantDetail(plantId) {
-      const plant = appData.plants.find(item => item.id === plantId);
-      if (!plant) return;
+      const storedPlant = appData.plants.find(item => item.id === plantId);
+      if (!storedPlant) return;
+      const plant = normalizePlant(storedPlant);
       selectedPlantId = plantId;
       const crop = cropMeta(plant.category || plant.name);
       const plantRecords = records
@@ -5125,7 +6675,12 @@
         .filter(record => record.photo)
         .sort((a, b) => b.date.localeCompare(a.date) || (b.createdAt || 0) - (a.createdAt || 0));
       const countByType = type => plantRecords.filter(record => record.type === type).length;
-      const photoStyle = plant.photo ? `background-image:url('${escapeHtml(plant.photo)}')` : "";
+      const photoStyle = `background-image:url('${escapeHtml(plantImageUrl(plant))}')`;
+      const status = plant.status || plant.health || "健康";
+      const isDead = plant.isDead === true || status === "死亡";
+      const purchasePriceText = plant.purchasePrice === "" || plant.purchasePrice === undefined || plant.purchasePrice === null
+        ? "未记录"
+        : `${Number(plant.purchasePrice).toFixed(2)} 元`;
       els.plantDetailTitle.textContent = plant.name;
       const timelineHtml = (items, emptyText) => items.map(record => `
         <article class="timeline-item">
@@ -5141,13 +6696,13 @@
       els.plantDetailContent.innerHTML = `
         <article class="plant-detail-hero detail-full" style="--crop:${crop.color}">
           <div class="plant-photo" style="${photoStyle}">
-            <span class="health-pill">${escapeHtml(plant.health || "健康")}</span>
+            <span class="health-pill" style="background:${statusColor(status)}">${escapeHtml(status)}</span>
             <span class="day-pill">${escapeHtml(plantAgeText(plant))}</span>
           </div>
           <div class="plant-detail-body">
             <div class="plant-detail-name">
               <h3>${escapeHtml(plant.name)}</h3>
-              <span class="health-pill">${escapeHtml(plant.health || "健康")}</span>
+              <span class="health-pill" style="background:${statusColor(status)}">${escapeHtml(status)}</span>
             </div>
             <div class="detail-stats">
               <div class="detail-stat"><span>养护天数</span><strong>${escapeHtml(plantAgeText(plant))}</strong></div>
@@ -5156,14 +6711,42 @@
             </div>
             <p class="plan-line"><strong>最近记录：</strong>${latestRecord ? escapeHtml(`${latestRecord.date} ${latestRecord.type} ${recordDetailText(latestRecord)}`) : "暂无养护记录"}</p>
             <p class="plan-line"><strong>品种/分类：</strong>${escapeHtml([plant.variety, plant.category || plant.name].filter(Boolean).join(" · ") || "未填写")}</p>
+            <p class="plan-line"><strong>购买信息：</strong>${escapeHtml(plant.purchaseDate || "未记录")} · ${escapeHtml(purchasePriceText)}</p>
             <p class="plan-line"><strong>备注：</strong>${escapeHtml(plant.note || "暂无备注")}</p>
           </div>
         </article>
-        <div class="quick-actions" style="--crop:${crop.color}">
-          ${["浇水", "施肥", "修剪", "病虫害", "拍照", "笔记"].map(type => `
-            <button class="btn ${type === "施肥" ? "primary" : "secondary"}" type="button" data-quick-record="${type}">${escapeHtml(type)}</button>
-          `).join("")}
-        </div>
+        <section class="guidance-box plant-status-panel">
+          <p><strong>植物状态管理：</strong>当前状态 ${escapeHtml(status)}；购买日期 ${escapeHtml(plant.purchaseDate || "未记录")}；购买价格 ${escapeHtml(purchasePriceText)}。</p>
+          ${isDead ? `
+            <p><strong>已进入纪念碑：</strong>死亡日期 ${escapeHtml(plant.deathDate || "未记录")}；死亡原因 ${escapeHtml(plant.deathReason || "未填写")}。</p>
+            <div class="form-actions">
+              <button class="btn primary" type="button" data-detail-restore-plant="${escapeHtml(plant.id)}">恢复植物</button>
+              <button class="btn secondary danger" type="button" data-delete-plant="${escapeHtml(plant.id)}">删除植物</button>
+            </div>
+          ` : `
+            <details class="compact-details">
+              <summary>标记为死亡</summary>
+              <div class="row">
+                <div class="field">
+                  <label for="deathDate-${escapeHtml(plant.id)}">死亡日期</label>
+                  <input id="deathDate-${escapeHtml(plant.id)}" data-death-date="${escapeHtml(plant.id)}" type="date" value="${escapeHtml(today())}">
+                </div>
+                <div class="field">
+                  <label for="deathReason-${escapeHtml(plant.id)}">死亡原因/备注</label>
+                  <input id="deathReason-${escapeHtml(plant.id)}" data-death-reason="${escapeHtml(plant.id)}" type="text" placeholder="例如：烂根、冻伤、移栽失败">
+                </div>
+              </div>
+              <button class="btn secondary danger" type="button" data-mark-dead="${escapeHtml(plant.id)}">确认死亡</button>
+            </details>
+          `}
+        </section>
+        ${isDead ? "" : `<div class="quick-actions plant-manage-actions" style="--crop:${crop.color}">
+          ${isDead ? "" : `<button class="btn secondary" type="button" data-edit-plant="${escapeHtml(plant.id)}">编辑植物</button>`}
+          <button class="btn secondary danger" type="button" data-delete-plant="${escapeHtml(plant.id)}">删除植物</button>
+        </div>`}
+        ${isDead ? "" : `<div class="record-type-grid detail-record-actions" aria-label="快捷新增记录">
+          ${recordTypes.map(type => recordTypeButtonHtml(type)).join("")}
+        </div>`}
         <nav class="detail-tabs" style="--crop:${crop.color}" aria-label="植物详情分类" role="tablist">
           <button class="detail-tab active" type="button" role="tab" aria-selected="true" data-detail-tab="growth">生长记录</button>
           <button class="detail-tab" type="button" role="tab" aria-selected="false" data-detail-tab="care">养护记录</button>
@@ -5222,6 +6805,18 @@
       `;
       els.plantDetailContent.querySelectorAll("[data-quick-record]").forEach(button => {
         button.addEventListener("click", () => handleQuickRecord(plant.id, button.dataset.quickRecord));
+      });
+      els.plantDetailContent.querySelectorAll("[data-edit-plant]").forEach(button => {
+        button.addEventListener("click", () => openPlantModal(button.dataset.editPlant));
+      });
+      els.plantDetailContent.querySelectorAll("[data-delete-plant]").forEach(button => {
+        button.addEventListener("click", () => deletePlant(button.dataset.deletePlant));
+      });
+      els.plantDetailContent.querySelectorAll("[data-mark-dead]").forEach(button => {
+        button.addEventListener("click", () => markPlantDead(button.dataset.markDead));
+      });
+      els.plantDetailContent.querySelectorAll("[data-detail-restore-plant]").forEach(button => {
+        button.addEventListener("click", () => restorePlant(button.dataset.detailRestorePlant));
       });
       els.plantDetailContent.querySelectorAll("[data-edit-plant-record]").forEach(button => {
         button.addEventListener("click", () => editRecord(button.dataset.editPlantRecord));
@@ -5287,7 +6882,7 @@
         dilution: extra.dilution || "",
         fertilizer: extra.fertilizer || "",
         fertilizerItems: extra.fertilizerItems || [],
-        growth: extra.growth || "正常",
+        growth: extra.growth || "健康",
         pestDiagnosis: extra.pestDiagnosis,
         temperature: extra.temperature ?? "",
         note: extra.note || "",
@@ -5304,74 +6899,60 @@
       resetForm();
       formPlantId = plant.id;
       selectedCrop = plant.category || plant.name;
-      els.formTitle.textContent = `${plant.name} · ${type}`;
+      els.formTitle.textContent = `给「${plant.name}」添加「${type}」记录`;
       renderCropChoices();
       els.crop.value = selectedCrop;
       els.type.value = type;
       els.date.value = today();
       els.note.value = type === "病虫害" ? `${plant.name} 病虫害观察` : `${plant.name} ${type}`;
       if (type === "病虫害") {
-        els.growth.value = "病虫害疑似";
+        els.growth.value = "病害";
       }
-      renderRecordTypePicker();
       renderAmountOptions();
       renderDilutionOptions();
       renderRecordFertilizerOptions(type === "施肥" ? selectedFertilizerValue() : "");
       togglePestPanel(false);
       renderFormAdvice();
-      switchPage("records");
+      switchPage("record-form");
     }
 
     function handleQuickRecord(plantId, type) {
       const plant = appData.plants.find(item => item.id === plantId);
       if (!plant) return;
-      if (type === "拍照") {
-        formPlantId = plant.id;
-        els.detailPhoto.value = "";
-        els.detailPhoto.click();
-        return;
-      }
-      if (type === "笔记") {
-        const note = prompt(`给 ${plant.name} 添加笔记`, "");
-        if (note === null) return;
-        createPlantRecord(plant, "笔记", { note: note.trim() || "快速笔记" });
-        return;
-      }
       prepareQuickRecordForm(plant, type);
     }
 
     function seedlingCard(crop, compact = false) {
       const plan = seedlingCarePlans[crop.name];
       if (!plan) return "";
+      const openAttr = selectedAdvicePlantId === "全部" ? "" : " open";
       return `
-        <article class="plan-card" style="--crop:${crop.color}">
-          <div class="plan-head">
-            <h3>${escapeHtml(crop.name)}</h3>
-            <span class="month-badge">${escapeHtml(plan.stage)}</span>
-          </div>
-          <div class="seedling-list">
+        <details class="plant-advice-item"${openAttr} style="--crop:${crop.color}">
+          <summary><span>${escapeHtml(crop.name)}</span><span class="month-badge">${escapeHtml(plan.stage)}</span></summary>
+          <div class="plant-advice-content seedling-list">
             <p><strong>浇水：</strong>${escapeHtml(plan.water)}</p>
             <p><strong>施肥：</strong>${escapeHtml(plan.fertilizer)}</p>
             <p><strong>叶喷：</strong>${escapeHtml(plan.foliar)}</p>
             ${compact ? "" : `<p><strong>光照：</strong>${escapeHtml(plan.light)}</p>`}
             ${compact ? "" : `<p><strong>修剪：</strong>${escapeHtml(plan.prune)}</p>`}
           </div>
-        </article>
+        </details>
       `;
     }
 
     function renderSeedlingPlans() {
       if (!els.seedlingGrid) return;
-      const current = cropMeta(selectedCrop);
-      const others = crops.filter(crop => crop.name !== current.name);
+      const plants = getSelectedAdvicePlants();
+      const selectedCrops = plants.length
+        ? [...new Map(plants.map(plant => {
+          const crop = cropMeta(plant.category || plant.name);
+          return [crop.name, crop];
+        })).values()]
+        : [cropMeta(selectedCrop)];
       els.seedlingGrid.innerHTML = `
-        ${seedlingCard(current)}
-        <details class="compact-details">
-          <summary>其他作物幼苗方案</summary>
-          <div class="plan-grid">
-            ${others.map(crop => seedlingCard(crop, true)).join("")}
-          </div>
-        </details>
+        <div class="plan-grid">
+          ${selectedCrops.map(crop => seedlingCard(crop)).join("") || `<div class="empty">暂无幼苗养护建议。</div>`}
+        </div>
       `;
     }
 
@@ -5389,7 +6970,7 @@
         date.setDate(start.getDate() + index);
         const iso = localDateString(date);
         const dayRecords = records.filter(record => record.date === iso);
-        const dayTasks = (appData.tasks || []).filter(task => task.enabled !== false && task.nextDate === iso);
+        const dayTasks = (appData.tasks || []).filter(task => task.done !== true && task.enabled !== false && task.nextDate === iso);
         const inMonth = date.getMonth() === month - 1;
         return `
           <button class="calendar-day ${inMonth ? "" : "muted"} ${iso === today() ? "today" : ""} ${iso === selectedCalendarDate ? "selected" : ""}" type="button" data-calendar-date="${iso}">
@@ -5417,25 +6998,28 @@
         .filter(record => record.date === date)
         .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
       const dayTasks = (appData.tasks || [])
-        .filter(task => task.nextDate === date)
+        .filter(task => task.done !== true && task.enabled !== false && task.nextDate === date)
         .sort((a, b) => String(a.type).localeCompare(String(b.type)));
       els.calendarDayDetail.innerHTML = `
         <h3>${escapeHtml(date)}</h3>
         ${dayRecords.map(record => {
           const plant = appData.plants.find(item => item.id === record.plantId);
+          const meta = recordTypeMeta[record.type] || {};
           return `
             <article class="calendar-detail-card">
-              <strong>记录 · ${escapeHtml(record.type)}</strong>
+              <strong><span style="color:${escapeHtml(meta.color || "#35c676")}">${escapeHtml(meta.mark || "")}</span> 记录 · ${escapeHtml(record.type)}</strong>
               <span>${escapeHtml(plant?.name || record.crop || "植物")} ${escapeHtml(recordDetailText(record) || "")}</span>
             </article>
           `;
         }).join("")}
         ${dayTasks.map(task => {
           const plant = taskPlant(task);
+          const type = recordTypeForTask(task.type);
+          const meta = recordTypeMeta[type] || {};
           return `
             <article class="calendar-detail-card">
-              <strong>任务 · ${escapeHtml(task.type)}</strong>
-              <span>${escapeHtml(plant.name)} ${escapeHtml(task.note || "")}${task.enabled === false ? " · 已完成" : ""}</span>
+              <strong><span style="color:${escapeHtml(meta.color || "#35c676")}">${escapeHtml(meta.mark || "")}</span> 任务 · ${escapeHtml(task.type)}</strong>
+              <span>${escapeHtml(plant.name)} ${escapeHtml(task.note || "")}</span>
             </article>
           `;
         }).join("")}
@@ -5626,7 +7210,7 @@
     }
 
     function currentPestDiagnosis() {
-      if (els.type.value !== "病虫害" && els.growth.value !== "病虫害疑似") return null;
+      if (els.type.value !== "病虫害" && els.growth.value !== "病害") return null;
       return {
         problem: els.pestProblem.value,
         part: els.pestPart.value,
@@ -5656,12 +7240,12 @@
     }
 
     function syncPestAction() {
-      if (els.type.value !== "病虫害" && els.growth.value !== "病虫害疑似") return;
+      if (els.type.value !== "病虫害" && els.growth.value !== "病害") return;
       els.pestAction.value = recommendedPestAction(els.pestProblem.value, els.pestPart.value, els.pestSeverity.value);
     }
 
     function togglePestPanel(clear = true) {
-      const active = els.type.value === "病虫害" || els.growth.value === "病虫害疑似";
+      const active = els.type.value === "病虫害" || els.growth.value === "病害";
       els.pestPanel.classList.toggle("active", active);
       if (!active && clear) {
         els.pestProblem.value = "未确认";
@@ -5732,7 +7316,7 @@
       const care = varietyCareText(cropMeta(selectedCrop).varieties) || cropHabitProfiles[selectedCrop] || "保持水肥稳定，避免大水大肥。";
       const temp = els.temperature.value === "" ? "" : Number(els.temperature.value);
       const trim = temperatureAdvice(temp, selectedCrop, rule?.stage || "");
-      const pestAdvice = status === "病虫害疑似"
+      const pestAdvice = status === "病害" || status === "虫害"
         ? pestControlAdvice(growth, note, currentPestDiagnosis())
         : "";
       const show = status !== "正常" || note.trim() || els.temperature.value !== "";
@@ -5889,7 +7473,7 @@
       }
 
       const group = matched || {
-        label: "病虫害疑似",
+        label: "病害/虫害疑似",
         names: ["苦楝油", "阿维菌素", "啶虫脒", "代森锰锌", "苯醚甲环唑"]
       };
       const inStock = group.names.filter(name => pesticideStock.includes(name));
@@ -5924,29 +7508,33 @@
 
     function renderPlans() {
       const month = currentMonth();
-      els.planGrid.innerHTML = [cropMeta(selectedCrop)].map(crop => {
+      const selectedPlants = getSelectedAdvicePlants();
+      const targets = selectedPlants.length
+        ? selectedPlants
+        : [{ id: "", name: selectedCrop, category: selectedCrop, variety: defaultVariety(selectedCrop), stage: els.growth.value || "健康", status: els.growth.value || "健康", note: els.note.value || "" }];
+      els.planGrid.innerHTML = targets.map(plant => {
+        const crop = cropMeta(plant.category || plant.name || selectedCrop);
         const rule = ruleForMonth(crop.name, month);
         const varieties = crop.varieties.join("、");
         const noteText = crop.varieties.map(variety => varietyNotes[variety]).filter(Boolean).join(" ");
-        const plantingRecords = records.filter(record => record.crop === crop.name && record.planting);
+        const plantingRecords = records.filter(record => plant.id ? record.plantId === plant.id : record.crop === crop.name).filter(record => record.planting);
         const plantingText = plantingRecords[0]?.planting || "盆栽/地栽";
         const plantingAdvice = plantingText === "地栽"
           ? "地栽以根区改土、深浇和少次稳施为主，颗粒肥沿滴水线外圈浅埋。"
           : plantingText === "盆栽"
             ? "盆栽肥量按地栽思路减半或更低，优先低浓度水溶肥，避免盐分累积。"
             : "盆栽按低浓度多次，地栽按根区范围少次稳施。";
-        const cropRecords = records.filter(record => record.crop === crop.name);
+        const cropRecords = records.filter(record => plant.id ? record.plantId === plant.id : record.crop === crop.name);
         const feed = latest(cropRecords, "施肥");
         const water = latest(cropRecords, "浇水");
         const observation = latest(cropRecords.filter(record => record.growth || record.note || record.temperature !== undefined), record => true);
         const feedDays = daysBetween(feed?.date);
         const waterDays = daysBetween(water?.date);
         const available = matchedFertilizer(rule);
-        const stockText = fertilizerStock.length ? fertilizerStock.join("、") : "未勾选肥料";
-        const currentGrowth = crop.name === selectedCrop ? els.growth.value : observation?.growth || "正常";
-        const currentNote = crop.name === selectedCrop ? els.note.value : observation?.note || "";
-        const currentPest = crop.name === selectedCrop ? currentPestDiagnosis() : observation?.pestDiagnosis || null;
-        const currentTemp = crop.name === selectedCrop && els.temperature.value !== "" ? Number(els.temperature.value) : observation?.temperature ?? "";
+        const currentGrowth = plant.stage || plant.status || observation?.growth || (plant.id ? "健康" : els.growth.value || "健康");
+        const currentNote = plant.note || observation?.note || "";
+        const currentPest = observation?.pestDiagnosis || null;
+        const currentTemp = observation?.temperature ?? "";
         const growth = analyzeGrowthStatus(currentGrowth || "正常", currentNote || "");
         growth.status = currentGrowth || "正常";
         const interval = safeFertilizerInterval(rule, growth, plantingText, currentTemp);
@@ -5966,29 +7554,29 @@
           : feedDays < interval
             ? `距离上次施肥 ${feedDays} 天，建议再等 ${interval - feedDays} 天左右。`
             : `距离上次施肥 ${feedDays} 天，可以安排下一次薄施。`;
+        const openAttr = selectedAdvicePlantId !== "全部" ? " open" : "";
         return `
-          <article class="plan-card" style="--crop:${crop.color}">
-            <div class="plan-head">
-              <h3>${crop.name}</h3>
-              <span class="month-badge">${month}月 · ${rule.stage}</span>
+          <details class="plant-advice-item"${openAttr} style="--crop:${crop.color}">
+            <summary><span>${escapeHtml(plant.id ? plantDisplayName(plant) : crop.name)}</span><span class="month-badge">${month}月 · ${rule.stage}</span></summary>
+            <div class="plant-advice-content">
+              <p class="plan-line"><span class="decision ${decision.type === "feed" ? "" : decision.type}">${escapeHtml(decision.label)}</span> ${escapeHtml(decision.text)}</p>
+              <div class="brief-grid">
+                <div class="brief-item"><strong>种植</strong>${escapeHtml(plantingText)} · ${escapeHtml(plantingAdvice)}</div>
+                <div class="brief-item"><strong>肥料</strong>${escapeHtml(fertilizerText)}</div>
+                <div class="brief-item"><strong>下次</strong>${escapeHtml(nextFeedText(feed, interval))}</div>
+                <div class="brief-item full"><strong>病虫害</strong>${escapeHtml(pestAdvice)}</div>
+              </div>
+              <div class="recipe-list">${recipeHtml}</div>
+              <details class="advice-details">
+                <summary>养护 / 修剪 / 生长分析</summary>
+                <p class="plan-line"><strong>生长：</strong>${escapeHtml(currentGrowth || "健康")}；${escapeHtml(growth.text)}</p>
+                <p class="plan-line"><strong>养护：</strong>${escapeHtml(varietyCareText(crop.varieties))}</p>
+                <p class="plan-line"><strong>修剪：</strong>${escapeHtml(temperatureAdvice(currentTemp, crop.name, rule.stage))}</p>
+                <p class="plan-line"><strong>施用：</strong>${escapeHtml(appAdvice)}</p>
+                <p class="plan-line"><strong>病虫害：</strong>${escapeHtml(pestAdvice)}</p>
+              </details>
             </div>
-            <p class="plan-line"><span class="decision ${decision.type === "feed" ? "" : decision.type}">${escapeHtml(decision.label)}</span> ${escapeHtml(decision.text)}</p>
-            <div class="brief-grid">
-              <div class="brief-item"><strong>种植</strong>${escapeHtml(plantingText)} · ${escapeHtml(plantingAdvice)}</div>
-              <div class="brief-item"><strong>肥料</strong>${escapeHtml(fertilizerText)}</div>
-              <div class="brief-item"><strong>下次</strong>${escapeHtml(nextFeedText(feed, interval))}</div>
-              <div class="brief-item full"><strong>病虫害</strong>${escapeHtml(pestAdvice)}</div>
-            </div>
-            <div class="recipe-list">${recipeHtml}</div>
-            <details class="advice-details">
-              <summary>养护 / 修剪 / 生长分析</summary>
-              <p class="plan-line"><strong>生长：</strong>${escapeHtml(currentGrowth || "正常")}；${escapeHtml(growth.text)}</p>
-              <p class="plan-line"><strong>养护：</strong>${escapeHtml(varietyCareText(crop.varieties))}</p>
-              <p class="plan-line"><strong>修剪：</strong>${escapeHtml(temperatureAdvice(currentTemp, crop.name, rule.stage))}</p>
-              <p class="plan-line"><strong>施用：</strong>${escapeHtml(appAdvice)}</p>
-              <p class="plan-line"><strong>病虫害：</strong>${escapeHtml(pestAdvice)}</p>
-            </details>
-          </article>
+          </details>
         `;
       }).join("");
     }
@@ -6002,8 +7590,10 @@
     function getFilteredRecords() {
       const keyword = els.search.value.trim().toLowerCase();
       return [...records]
-        .filter(record => els.cropFilter.value === "全部" || record.crop === els.cropFilter.value)
+        .filter(record => selectedAdvicePlantId === "全部" || !selectedAdvicePlantId || record.plantId === selectedAdvicePlantId)
+        .filter(record => selectedAdvicePlantId !== "全部" || els.cropFilter.value === "全部" || record.crop === els.cropFilter.value)
         .filter(record => els.typeFilter.value === "全部" || record.type === els.typeFilter.value)
+        .filter(record => !els.recordMonthFilter || els.recordMonthFilter.value === "全部" || String(record.date || "").slice(0, 7) === els.recordMonthFilter.value)
         .filter(record => {
           const text = `${record.crop} ${record.variety || ""} ${record.planting || ""} ${record.type} ${record.amount} ${record.fertilizer} ${record.growth || ""} ${pestDiagnosisText(record.pestDiagnosis)} ${record.temperature || ""} ${record.note}`.toLowerCase();
           const textWithDilution = `${text} ${record.dilution || ""}`.toLowerCase();
@@ -6018,7 +7608,7 @@
       selectedRecordIds = new Set([...selectedRecordIds].filter(id => visibleIds.has(id)));
       updateBulkStatus();
       if (!visible.length) {
-        els.tableWrap.innerHTML = `<div class="empty">暂无记录。先在“新增”里添加一次浇水或施肥。</div>`;
+        els.tableWrap.innerHTML = `<div class="empty">暂无记录。可从首页植物卡片或植物详情快捷按钮添加浇水、施肥、拍照等记录。</div>`;
         return;
       }
       const pageVisible = visible.slice(0, visibleRecordCount);
@@ -6028,6 +7618,7 @@
         <div class="record-list">
           ${pageVisible.map(record => {
             const crop = cropMeta(record.crop);
+            const meta = recordTypeMeta[record.type] || {};
             const tempText = record.temperature === "" || record.temperature === undefined ? "-" : `${escapeHtml(record.temperature)}°C`;
             return `
               <article class="record-card">
@@ -6035,7 +7626,7 @@
                   <label class="record-title">
                     <input class="row-check record-check" type="checkbox" value="${record.id}" ${selectedRecordIds.has(record.id) ? "checked" : ""}>
                     <span class="tag" style="--crop:${crop.color}">${escapeHtml(record.crop)}</span>
-                    <span class="type ${record.type === "施肥" ? "feed" : ""}">${escapeHtml(record.type)}</span>
+                    <span class="type ${record.type === "施肥" ? "feed" : ""}" style="--type-color:${escapeHtml(meta.color || crop.color)}">${escapeHtml(meta.mark || "")} ${escapeHtml(record.type)}</span>
                   </label>
                   <span class="record-date">${escapeHtml(record.date)}</span>
                 </div>
@@ -6044,7 +7635,7 @@
                   <span><strong>用量</strong> ${escapeHtml(record.amount || "-")}</span>
                   <span><strong>稀释</strong> ${escapeHtml(record.dilution || "-")}</span>
                   <span><strong>肥料</strong> ${escapeHtml(record.fertilizer || "-")}</span>
-                  <span><strong>状态</strong> ${escapeHtml(record.growth || "正常")}${record.pestDiagnosis ? `<span class="record-subtext">${escapeHtml(pestDiagnosisText(record.pestDiagnosis))}</span>` : ""}</span>
+                  <span><strong>状态</strong> ${escapeHtml(record.growth || "健康")}${record.pestDiagnosis ? `<span class="record-subtext">${escapeHtml(pestDiagnosisText(record.pestDiagnosis))}</span>` : ""}</span>
                   <span><strong>气温</strong> ${tempText}</span>
                 </div>
                 ${record.note ? `<div class="record-note">${escapeHtml(record.note)}</div>` : ""}
@@ -6122,11 +7713,11 @@
       els.planting.value = "盆栽";
       els.type.value = "浇水";
       renderVarietyOptions();
-      renderRecordTypePicker();
       renderAmountOptions();
       renderDilutionOptions();
       renderRecordFertilizerOptions();
-      els.growth.value = "正常";
+      renderGrowthOptions(els.growth, "健康");
+      els.growth.value = "健康";
       setPestDiagnosis(null);
       els.temperature.value = "";
       renderRecipeGuidance();
@@ -6144,11 +7735,11 @@
       els.type.value = "浇水";
       els.planting.value = planting;
       renderVarietyOptions();
-      renderRecordTypePicker();
       renderAmountOptions();
       renderDilutionOptions();
       renderRecordFertilizerOptions();
-      els.growth.value = "正常";
+      renderGrowthOptions(els.growth, "健康");
+      els.growth.value = "健康";
       setPestDiagnosis(null);
       els.temperature.value = "";
       els.note.value = "";
@@ -6169,12 +7760,11 @@
       els.planting.value = record.planting || "盆栽";
       els.date.value = record.date;
       els.type.value = record.type;
-      renderRecordTypePicker();
       const amountParts = splitAmountAndDilution(record.amount, record.dilution);
       renderAmountOptions(amountParts.amount);
       renderDilutionOptions(amountParts.dilution);
       renderRecordFertilizerOptions(record.fertilizerItems || record.fertilizer || "");
-      els.growth.value = record.growth || "正常";
+      renderGrowthOptions(els.growth, record.growth || "健康");
       setPestDiagnosis(record.pestDiagnosis);
       els.temperature.value = record.temperature ?? "";
       els.note.value = record.note || "";
@@ -6182,7 +7772,7 @@
       renderFormAdvice();
       els.formTitle.textContent = "编辑记录";
       renderCropChoices();
-      switchPage("records");
+      switchPage("record-form");
     }
 
     function deleteRecord(id) {
@@ -6210,7 +7800,7 @@
     function exportCsv() {
       const rows = [["日期", "作物", "品种", "种植方式", "类型", "用量", "稀释比例", "肥料", "生长情况", "气温", "备注"]];
       getFilteredRecords().forEach(record => {
-        rows.push([record.date, record.crop, record.variety || defaultVariety(record.crop), record.planting || "盆栽", record.type, record.amount || "", record.dilution || "", record.fertilizer || "", record.growth || "正常", record.temperature ?? "", record.note || ""]);
+        rows.push([record.date, record.crop, record.variety || defaultVariety(record.crop), record.planting || "盆栽", record.type, record.amount || "", record.dilution || "", record.fertilizer || "", record.growth || "健康", record.temperature ?? "", record.note || ""]);
       });
       const csv = rows.map(row => row.map(cell => `"${String(cell).replaceAll('"', '""')}"`).join(",")).join("\n");
       const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
@@ -6289,9 +7879,9 @@
 
     function addSampleData() {
       const sample = [
-        { crop: "蓝莓", variety: "Duke", planting: "盆栽", type: "浇水", amount: "1.5 升", fertilizer: "", growth: "正常", temperature: 24, note: "保持土壤微湿" },
-        { crop: "葡萄", variety: "妮娜皇后", planting: "地栽", type: "施肥", amount: "3 克", dilution: "", fertilizer: "有机肥", growth: "正常", temperature: 26, note: "沿盆边浅埋" },
-        { crop: "番茄", variety: "各种小番茄", planting: "盆栽", type: "浇水", amount: "2 升", fertilizer: "", growth: "正常", temperature: 28, note: "避开叶面" },
+        { crop: "蓝莓", variety: "Duke", planting: "盆栽", type: "浇水", amount: "1.5 升", fertilizer: "", growth: "健康", temperature: 24, note: "保持土壤微湿" },
+        { crop: "葡萄", variety: "妮娜皇后", planting: "地栽", type: "施肥", amount: "3 克", dilution: "", fertilizer: "有机肥", growth: "健康", temperature: 26, note: "沿盆边浅埋" },
+        { crop: "番茄", variety: "各种小番茄", planting: "盆栽", type: "浇水", amount: "2 升", fertilizer: "", growth: "健康", temperature: 28, note: "避开叶面" },
         { crop: "西瓜", variety: "麒麟西瓜", planting: "地栽", type: "施肥", amount: "2.5 克", dilution: "1:1000", fertilizer: "高钾肥", growth: "果实膨大慢", temperature: 30, note: "坐果后追加" }
       ];
       const now = Date.now();
@@ -6308,14 +7898,21 @@
 
     function renderAll() {
       renderCropChoices();
+      renderGrowthOptions(els.growth, els.growth?.value || "健康");
+      renderStatusOptions(els.plantHealth, els.plantHealth?.value || "健康");
+      togglePlantDeathFields();
       renderFilters();
       renderHome();
       renderMaterials();
       renderTasks();
       renderTaskTemplates();
       renderMinePanels();
+      renderMemorial();
       renderSoilCalculator();
+      renderAdvicePlantSelect();
+      renderStageAdvice();
       renderPlans();
+      renderRecipeGuidance();
       renderSeedlingPlans();
       renderCalendar();
       renderTable();
@@ -6346,6 +7943,8 @@
         createdAt: id ? records.find(record => record.id === id)?.createdAt || Date.now() : Date.now()
       };
 
+      applyPlantStatus(plant, els.growth.value || "健康", payload.date, payload.note);
+
       if (id) {
         records = records.map(record => record.id === id ? payload : record);
       } else {
@@ -6357,31 +7956,6 @@
       resetForm();
       renderAll();
       switchPage("records");
-    });
-
-    els.taskForm.addEventListener("submit", event => {
-      event.preventDefault();
-      const id = els.taskId.value;
-      const existing = id ? appData.tasks.find(task => task.id === id) : null;
-      const payload = {
-        id: id || makeId("task"),
-        plantId: els.taskPlant.value || appData.plants[0]?.id || "",
-        type: els.taskType.value || "浇水",
-        nextDate: els.taskNextDate.value || today(),
-        cycleDays: Number(els.taskCycle.value) || 0,
-        enabled: existing ? existing.enabled !== false : true,
-        completedAt: existing?.completedAt || "",
-        note: els.taskNote.value.trim()
-      };
-      if (existing) {
-        appData.tasks = appData.tasks.map(task => task.id === id ? payload : task);
-      } else {
-        appData.tasks.push(payload);
-      }
-      saveData();
-      resetTaskForm();
-      renderAll();
-      switchPage("tasks");
     });
 
     els.materialForm.addEventListener("submit", event => {
@@ -6413,9 +7987,16 @@
       switchPage("mine");
     });
 
-    els.cancel.addEventListener("click", resetForm);
-    els.taskCancel.addEventListener("click", resetTaskForm);
-    els.taskTypeFilter.addEventListener("change", renderTasks);
+    els.cancel.addEventListener("click", () => {
+      resetForm();
+      switchPage("records");
+    });
+    els.taskTypeFilter.addEventListener("change", () => {
+      currentTaskFilter = els.taskTypeFilter.value || "全部";
+      renderTasks();
+    });
+    els.regenTasksBtn.addEventListener("click", regenAutoTasks);
+    els.clearDoneTasks.addEventListener("click", clearDoneTasks);
     els.materialCancel.addEventListener("click", resetMaterialForm);
     els.materialKindFilter.addEventListener("change", () => {
       resetMaterialForm();
@@ -6424,14 +8005,14 @@
     els.materialStatusFilter.addEventListener("change", renderMaterials);
     els.openMaterials.addEventListener("click", () => switchPage("materials"));
     els.materialsBack.addEventListener("click", () => switchPage("mine"));
-    els.openCostStats.addEventListener("click", () => switchPage("cost-stats"));
-    els.costStatsBack.addEventListener("click", () => switchPage("mine"));
     els.openPlantTags.addEventListener("click", () => switchPage("plant-tags"));
     els.plantTagsBack.addEventListener("click", () => switchPage("mine"));
     els.openTaskTemplates.addEventListener("click", () => switchPage("task-templates"));
     els.taskTemplatesBack.addEventListener("click", () => switchPage("mine"));
     els.openTools.addEventListener("click", () => switchPage("tools"));
     els.toolsBack.addEventListener("click", () => switchPage("mine"));
+    els.openMemorial.addEventListener("click", () => switchPage("memorial"));
+    els.memorialBack.addEventListener("click", () => switchPage("mine"));
     [
       els.soilShape,
       els.soilType,
@@ -6474,6 +8055,7 @@
     els.plantName.addEventListener("input", syncPlantCategoryFromName);
     els.plantName.addEventListener("change", syncPlantCategoryFromName);
     els.plantCategory.addEventListener("change", syncPlantNameFromCategory);
+    els.plantHealth.addEventListener("change", togglePlantDeathFields);
     els.photoLightboxClose.addEventListener("click", closePhotoLightbox);
     els.photoLightbox.addEventListener("click", event => {
       if (event.target === els.photoLightbox) closePhotoLightbox();
@@ -6488,12 +8070,24 @@
       els.plantPhotoPreview.textContent = "正在压缩...";
       try {
         plantPhotoBase64 = await compressImageToBase64(file);
+        plantPhotoCleared = false;
         previewPlantPhoto(plantPhotoBase64);
       } catch (error) {
         plantPhotoBase64 = "";
         previewPlantPhoto("");
         alert(error.message || "图片处理失败");
       }
+    });
+    els.plantPhotoClear.addEventListener("click", () => {
+      plantPhotoBase64 = "";
+      plantPhotoCleared = true;
+      els.plantPhoto.value = "";
+      previewPlantPhoto(plantImageUrl({
+        name: els.plantName.value.trim(),
+        category: els.plantCategory.value,
+        variety: els.plantVariety.value.trim(),
+        photo: ""
+      }));
     });
     els.detailPhoto.addEventListener("change", async () => {
       const file = els.detailPhoto.files?.[0];
@@ -6509,28 +8103,53 @@
     });
     els.plantForm.addEventListener("submit", event => {
       event.preventDefault();
-      const name = els.plantName.value.trim();
-      if (!name) return;
-      syncPlantCategoryFromName();
-      const category = els.plantCategory.value || name;
+      const rawName = els.plantName.value.trim();
+      const variety = els.plantVariety.value.trim();
+      const categoryInput = els.plantCategory ? els.plantCategory.value.trim() : "";
+      let category = categoryInput;
+      if (!category || category === "请选择" || category === "选择种类" || (category === "无" && `${rawName} ${variety}`.trim())) {
+        category = inferPlantCategory(`${rawName} ${variety}`);
+      }
+      if (!rawName && !variety && !categoryInput) {
+        category = "无";
+      }
+      const name = rawName || "未命名植物";
+      const id = els.plantId.value || makeId("plant", name);
+      const existing = appData.plants.find(item => item.id === id);
+      const photo = plantPhotoCleared ? "" : (plantPhotoBase64 || existing?.photo || "");
+      const status = els.plantHealth.value === "死亡" ? "健康" : (els.plantHealth.value || "健康");
       const plant = normalizePlant({
-        id: makeId("plant", name),
+        id,
         name,
-        variety: els.plantVariety.value.trim(),
+        variety,
         category,
-        photo: plantPhotoBase64,
-        health: els.plantHealth.value,
-        createdAt: new Date().toISOString(),
+        photo,
+        health: status,
+        status,
+        stage: existing?.stage && existing?.stage !== "死亡" ? existing.stage : status,
+        isDead: false,
+        deathDate: "",
+        deathReason: "",
+        purchaseDate: els.plantPurchaseDate.value || today(),
+        purchasePrice: els.plantPurchasePrice.value === "" ? "" : Number(els.plantPurchasePrice.value),
+        createdAt: existing?.createdAt || new Date().toISOString(),
         note: els.plantNote.value.trim()
       });
-      appData.plants.push(plant);
-      createTasksFromTemplates(plant);
+      applyPlantStatus(plant, status);
+      if (existing?.stage && existing.stage !== "死亡") plant.stage = existing.stage;
+      if (existing) {
+        appData.plants = appData.plants.map(item => item.id === id ? plant : item);
+      } else {
+        appData.plants.push(plant);
+      }
+      generateAutoTasksForPlant(plant);
       saveData();
       renderAll();
       closePlantModal();
-      switchPage("home");
+      switchPage(plant.isDead ? "memorial" : "home");
     });
     els.viewTasks.addEventListener("click", () => switchPage("tasks"));
+    els.viewAdvice.addEventListener("click", () => switchPage("records"));
     els.plantDetailBack.addEventListener("click", () => switchPage("home"));
     els.export.addEventListener("click", exportCsv);
     els.backup.addEventListener("click", exportBackup);
@@ -6539,6 +8158,14 @@
     els.mineRestore.addEventListener("click", () => els.restoreInput.click());
     els.restoreInput.addEventListener("change", () => restoreBackupFile(els.restoreInput.files[0]));
     els.sample.addEventListener("click", addSampleData);
+    els.advicePlantSelect.addEventListener("change", () => {
+      selectedAdvicePlantId = els.advicePlantSelect.value || "全部";
+      renderStageAdvice();
+      renderPlans();
+      renderRecipeGuidance();
+      renderSeedlingPlans();
+      renderTable();
+    });
     els.pageButtons.forEach(button => {
       button.addEventListener("click", () => switchPage(button.dataset.page));
     });
@@ -6600,7 +8227,7 @@
       renderFormAdvice();
       renderPlans();
     });
-    [els.search, els.cropFilter, els.typeFilter].forEach(input => {
+    [els.search, els.cropFilter, els.typeFilter, els.recordMonthFilter].forEach(input => {
       input.addEventListener("input", () => {
         visibleRecordCount = recordPageSize;
         renderTable();
@@ -6613,11 +8240,11 @@
 
     renderFilters();
     renderMonthOptions();
-    renderRecordTypePicker();
     syncStockArraysFromMaterials();
     resetForm();
-    resetTaskForm();
     resetMaterialForm();
+    generateAutoTasksForAllPlants();
+    saveData();
     renderAll();
     requestPersistentStorage();
 
