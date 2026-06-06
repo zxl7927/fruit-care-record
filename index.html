@@ -138,6 +138,10 @@
       max-width: 100%;
     }
 
+    .topbar .actions {
+      display: none !important;
+    }
+
     .actions .btn {
       min-height: 40px;
       padding: 0 12px;
@@ -904,6 +908,149 @@
       line-height: 1.65;
     }
 
+    .encyclopedia-profile {
+      overflow: hidden;
+      padding: 0;
+      gap: 0;
+    }
+
+    .encyclopedia-profile-hero {
+      min-height: 126px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .encyclopedia-profile-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, .12), rgba(0, 0, 0, 0));
+    }
+
+    .encyclopedia-profile-body {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .profile-head-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .profile-name {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.05;
+      font-weight: 950;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+
+    .profile-latin {
+      margin-top: 6px;
+      color: #6b7280;
+      font-size: 17px;
+      font-style: italic;
+      line-height: 1.25;
+    }
+
+    .profile-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      min-width: 96px;
+    }
+
+    .profile-chip {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: color-mix(in srgb, var(--green) 12%, #fff);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .profile-chip.secondary {
+      background: #eaf2ff;
+      color: #3d6fb6;
+    }
+
+    .profile-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+    }
+
+    .profile-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-weight: 850;
+      min-width: 0;
+    }
+
+    .profile-meta .knowledge-icon {
+      width: 28px;
+      height: 28px;
+      background: transparent;
+    }
+
+    .profile-score-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .profile-score {
+      display: grid;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .profile-score strong {
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .profile-score-icons {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .profile-score-icons span {
+      width: 17px;
+      height: 9px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--score-color) 24%, #fff);
+    }
+
+    .profile-score-icons span.active {
+      background: var(--score-color);
+    }
+
+    .profile-section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green);
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .profile-description {
+      display: grid;
+      gap: 10px;
+    }
+
     .need-grid,
     .guide-grid {
       display: grid;
@@ -922,6 +1069,164 @@
       display: grid;
       gap: 6px;
       min-width: 0;
+    }
+
+    .encyclopedia-section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      color: var(--green);
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .tip-list,
+    .season-guide-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tip-list-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 12px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .05);
+    }
+
+    .tip-list-card .knowledge-icon {
+      background: color-mix(in srgb, var(--tip-color, var(--green)) 13%, #fff);
+      color: var(--tip-color, var(--green));
+    }
+
+    .tip-list-card strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .season-guide-card {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--season-color, var(--green));
+      border-radius: 18px;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .05);
+    }
+
+    .season-guide-card .season-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .season-guide-card h4 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .season-stage-badge {
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: color-mix(in srgb, var(--season-color, var(--green)) 12%, #fff);
+      color: var(--season-color, var(--green));
+      font-size: 12px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .season-action-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .season-action {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 8px;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .season-action .knowledge-icon {
+      width: 24px;
+      height: 24px;
+      background: transparent;
+    }
+
+    .season-action strong {
+      color: var(--ink);
+    }
+
+    .other-guide-section {
+      background: transparent;
+      border: 0;
+      padding: 0;
+    }
+
+    .other-guide-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #8a35b5;
+      font-size: 22px;
+      font-weight: 950;
+      margin: 0 0 2px;
+    }
+
+    .other-guide-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .other-guide-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .05);
+    }
+
+    .other-guide-card h4 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .other-guide-block {
+      display: grid;
+      gap: 5px;
+    }
+
+    .other-guide-block strong {
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .other-guide-list ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    .other-guide-list li {
+      margin: 0;
     }
 
     .need-icon,
@@ -1053,6 +1358,244 @@
 
     .professional-stage-body p {
       padding: 0;
+    }
+
+    .stage-current-card {
+      border: 1px solid color-mix(in srgb, var(--green) 36%, var(--line));
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--green) 9%, #fff);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    .stage-current-card h3,
+    .stage-current-card h4 {
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .stage-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .stage-card {
+      border-left: 5px solid var(--line);
+      background: #fff;
+    }
+
+    .stage-card.active {
+      border-left-color: var(--green);
+      background: color-mix(in srgb, var(--green) 5%, #fff);
+    }
+
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .lifecycle-guide {
+      border-color: color-mix(in srgb, var(--green) 28%, var(--line));
+      background: linear-gradient(180deg, #ffffff 0%, #f6fbf6 100%);
+    }
+
+    .lifecycle-page {
+      display: grid;
+      gap: 12px;
+    }
+
+    .lifecycle-current {
+      border: 1px solid color-mix(in srgb, var(--green) 35%, var(--line));
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--green) 9%, #fff);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    .lifecycle-current h4 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    .lifecycle-timeline {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 2px 0 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .lifecycle-timeline::-webkit-scrollbar {
+      display: none;
+    }
+
+    .lifecycle-step {
+      min-width: 96px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 8px 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .lifecycle-step.active {
+      border-color: var(--green);
+      background: color-mix(in srgb, var(--green) 10%, #fff);
+      color: var(--green);
+    }
+
+    .lifecycle-stage-card {
+      border-left: 5px solid var(--line);
+      background: #fff;
+    }
+
+    .lifecycle-stage-card.active {
+      border-left-color: var(--green);
+      background: color-mix(in srgb, var(--green) 5%, #fff);
+    }
+
+    .lifecycle-stage-card summary {
+      align-items: center;
+    }
+
+    .lifecycle-stage-body {
+      display: grid;
+      gap: 8px;
+      padding: 0 14px 14px;
+    }
+
+    .lifecycle-field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .lifecycle-warning,
+    .lifecycle-next-step {
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .lifecycle-warning {
+      border-left: 4px solid #e08a24;
+      background: #fff8ed;
+    }
+
+    .lifecycle-next-step {
+      border-left: 4px solid var(--green);
+      background: color-mix(in srgb, var(--green) 8%, #fff);
+    }
+
+    .diagnosis-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .diagnosis-section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      color: #d95757;
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .diagnosis-card,
+    .formula-card {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--card-color, var(--green));
+      border-radius: 16px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .diagnosis-card {
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .05);
+    }
+
+    .diagnosis-card h4,
+    .formula-card h4 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+    }
+
+    .diagnosis-card h4 {
+      color: var(--card-color, #d95757);
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .diagnosis-card h4 .knowledge-icon {
+      background: color-mix(in srgb, var(--card-color, #d95757) 13%, #fff);
+      color: var(--card-color, #d95757);
+    }
+
+    .diagnosis-line {
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    .diagnosis-line strong {
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .risk-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: color-mix(in srgb, var(--badge-color, var(--green)) 12%, #fff);
+      color: var(--badge-color, var(--green));
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .risk-badge.disease {
+      --badge-color: #d95757;
+    }
+
+    .risk-badge.fertilizer {
+      --badge-color: #e08a24;
+    }
+
+    .risk-badge.water {
+      --badge-color: #2e92f2;
+    }
+
+    .formula-items {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      padding-left: 18px;
+      color: var(--ink);
     }
 
     .detail-tabs {
@@ -2875,6 +3418,22 @@
         <input id="detailPhotoInput" type="file" accept="image/*" hidden>
       </section>
 
+      <section class="panel plan-panel app-page" id="plantEncyclopediaPage" data-page-panel="plant-encyclopedia">
+        <div class="panel-heading">
+          <button class="icon-btn" type="button" id="plantEncyclopediaBackBtn" title="返回">‹</button>
+          <h2 class="panel-title" id="plantEncyclopediaTitle">植物百科</h2>
+        </div>
+        <div id="plantEncyclopediaContent"></div>
+      </section>
+
+      <section class="panel plan-panel app-page" id="plantLifecyclePage" data-page-panel="plant-lifecycle">
+        <div class="panel-heading">
+          <button class="icon-btn" type="button" id="plantLifecycleBackBtn" title="返回">‹</button>
+          <h2 class="panel-title" id="plantLifecycleTitle">生长阶段</h2>
+        </div>
+        <div id="plantLifecycleContent"></div>
+      </section>
+
       <form class="panel form-panel app-page" id="recordForm" data-page-panel="record-form">
         <div class="panel-heading">
           <button class="icon-btn" type="button" id="recordFormBackBtn" title="返回">‹</button>
@@ -3664,7 +4223,10 @@
       stage: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V5h10l1 3h3v8h-8l-1-3H7v6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
       fertilizer: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6v4H9zM8 7h8l3 13H5L8 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 13h4M12 11v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
       warning: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 17H3L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-      disease: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 5V3M12 21v-2M5 12H3M21 12h-2M7 7L5.5 5.5M18.5 18.5L17 17M17 7l1.5-1.5M5.5 18.5L7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="10" cy="10" r="1.2" fill="currentColor"/><circle cx="14" cy="13" r="1.2" fill="currentColor"/></svg>`
+      disease: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 5V3M12 21v-2M5 12H3M21 12h-2M7 7L5.5 5.5M18.5 18.5L17 17M17 7l1.5-1.5M5.5 18.5L7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="10" cy="10" r="1.2" fill="currentColor"/><circle cx="14" cy="13" r="1.2" fill="currentColor"/></svg>`,
+      seedling: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 10C8 10 5.5 7.8 5 4c4.5.2 6.5 2.5 7 6zM12 10c4 0 6.5-2.2 7-6-4.5.2-6.5 2.5-7 6z" fill="currentColor"/><path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+      leaf: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4C11 4 5 9 5 17c7 1 13-4 15-13z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M5 17c4-4 7-6 12-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+      winter: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6l14 12M19 6L5 18M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>`
     };
 
     const professionalStage = (name, description, watering, fertilizer, diseaseRisk, management, warning) => ({
@@ -3724,6 +4286,123 @@
         ]
       }
     };
+
+    const guideStage = ({ name, months, goal, watering, fertilizer, pruning, diseaseRisk, nutrientRisk, warning, formula }) => ({
+      name,
+      months,
+      goal,
+      watering,
+      fertilizer,
+      pruning,
+      diseaseRisk,
+      nutrientRisk,
+      warning,
+      formula,
+      description: goal,
+      management: pruning
+    });
+
+    const problemGuide = (name, cause, symptom, treatment, prevention, kind = "disease") => ({
+      name,
+      cause,
+      symptom,
+      treatment,
+      prevention,
+      kind
+    });
+
+    Object.assign(professionalPlantGuides, {
+      grape: {
+        title: "葡萄百科（专业版）",
+        stages: [
+          guideStage({ name: "休眠期", months: [12, 1, 2], goal: "完成冬剪、清园和基肥，降低越冬病虫源。", watering: "少水，土壤不过度干透即可。", fertilizer: "腐熟有机肥或硫酸钾型缓释肥作基肥，避免速效氮。", pruning: "冬剪、清园、刮除老翘皮，保留健壮结果母枝。", diseaseRisk: "越冬病菌、介壳虫、螨卵。", nutrientRisk: "有机质不足、钾储备不足。", warning: "不要催芽，不要重施速效氮。", formula: ["腐熟有机肥/脱脂骨粉作基肥", "硫酸钾型缓释肥少量", "矿源黄腐酸钾改土"] }),
+          guideStage({ name: "伤流期", months: [2, 3], goal: "让根压恢复，避免修剪口持续伤流。", watering: "保持微湿，避免忽干忽湿。", fertilizer: "暂不追速效肥，可少量腐殖酸促根。", pruning: "停止重剪，检查架面和绑缚。", diseaseRisk: "伤口感染、枝蔓病斑。", nutrientRisk: "根系弱、低温吸收差。", warning: "伤流明显时不要再剪大枝。", formula: ["矿源黄腐酸钾 0.3g/L 灌根", "海藻精低浓度促根"] }),
+          guideStage({ name: "萌芽期", months: [3], goal: "促进芽齐、根系恢复和新梢启动。", watering: "4~5天检查一次，见干补水。", fertilizer: "低浓度氮肥配合腐殖酸，弱树少量多次。", pruning: "抹除弱芽、背下芽，保留方向好的芽。", diseaseRisk: "白粉病、黑痘病初发。", nutrientRisk: "缺氮、缺铁。", warning: "不要一次大肥催芽。", formula: ["鱼蛋白 1ml/L", "矿源黄腐酸钾 0.3g/L", "硫酸铵 0.2~0.3g/L 弱树慎用"] }),
+          guideStage({ name: "展叶期", months: [3, 4], goal: "建立健康叶面积，保持节间紧凑。", watering: "4天左右观察，保持土壤微湿。", fertilizer: "平衡营养，少氮配合钙镁微量元素。", pruning: "绑蔓、抹芽、去过密新梢。", diseaseRisk: "白粉病、霜霉病。", nutrientRisk: "缺镁、缺铁。", warning: "阴雨天少喷叶肥，避免嫩叶药害。", formula: ["鱼蛋白 1ml/L", "螯合多微元素肥低浓度叶喷", "海藻精 0.5ml/L"] }),
+          guideStage({ name: "新梢生长期", months: [4], goal: "培养结果枝，控制徒长，形成良好架面。", watering: "4~5天检查，避免忽干忽湿。", fertilizer: "平衡肥为主，控氮，补钙镁。", pruning: "摘心、去副梢、绑蔓，保持通风透光。", diseaseRisk: "白粉病、黑痘病、霜霉病。", nutrientRisk: "缺镁、缺钾。", warning: "徒长时减少氮肥和水量。", formula: ["磷酸二氢钾 0.3g/L 叶喷", "钙镁硼锌铁中量元素水溶肥低浓度"] }),
+          guideStage({ name: "花序分离期", months: [4, 5], goal: "让花序健壮、开花整齐。", watering: "稳定湿润，花序分离前不缺水。", fertilizer: "磷钾、硼、钙镁为主。", pruning: "疏理花序，去弱花序，改善通风。", diseaseRisk: "灰霉病、白粉病。", nutrientRisk: "缺硼、缺钙。", warning: "避免高氮冲梢。", formula: ["磷酸二氢钾 0.3~0.5g/L", "硼肥颗粒少量或硼叶喷", "钙镁硼锌铁中量元素水溶肥"] }),
+          guideStage({ name: "花前期", months: [5], goal: "补充开花坐果所需磷钾、硼、钙镁。", watering: "保持均匀水分，避免花前干旱。", fertilizer: "花前补磷钾、硼、钙镁，停止高氮。", pruning: "花前完成主要疏梢和绑蔓。", diseaseRisk: "灰霉病、白粉病、霜霉病。", nutrientRisk: "缺硼、缺钙、缺镁。", warning: "避免大水大肥，避免刺激性叶喷。", formula: ["磷酸二氢钾 0.5g/L", "钙镁硼锌铁中量元素水溶肥 0.5g/L", "海藻精 0.5ml/L"] }),
+          guideStage({ name: "开花期", months: [5, 6], goal: "稳定授粉受精，减少落花。", watering: "小水维持，不大水冲根。", fertilizer: "少肥或停肥，避免高氮。", pruning: "减少打扰，保持通风和光照。", diseaseRisk: "灰霉病、白粉病。", nutrientRisk: "硼不足、钙不足。", warning: "不要大水大肥，不要频繁移动和强喷施。", formula: ["一般暂停施肥", "必要时海藻精极低浓度叶喷"] }),
+          guideStage({ name: "坐果期", months: [6], goal: "稳定水肥、防落果，确定合理负载。", watering: "3~4天检查，保持水分稳定。", fertilizer: "平衡转高钾，补钙镁，少量多次。", pruning: "疏果、定穗，弱树少留果。", diseaseRisk: "霜霉病、白粉病、灰霉病。", nutrientRisk: "缺钙、缺镁、缺钾。", warning: "忽干忽湿易大小粒和落果。", formula: ["硫酸钾 0.3~0.5g/L", "钙镁硼锌铁中量元素水溶肥 0.5g/L", "黄腐酸钾 0.3g/L"] }),
+          guideStage({ name: "膨果期", months: [6, 7], goal: "快速膨果，提高果粒大小并防裂果。", watering: "3天左右检查，稳定供水，不能干后猛浇。", fertilizer: "高钾 + 钙镁，严格控氮，配合腐殖酸。", pruning: "维持叶果比，摘心，改善果穗通风。", diseaseRisk: "霜霉病、白粉病、炭疽、黑痘病。", nutrientRisk: "缺钾、缺钙、缺镁。", warning: "高氮和水分波动会裂果、转色慢。", formula: ["硫酸钾 0.5g/L", "鱼蛋白 1~2ml/L", "矿源黄腐酸钾 0.3~0.5g/L", "钙镁肥低浓度补充"] }),
+          guideStage({ name: "转色期", months: [8], goal: "促进着色、增糖和风味形成。", watering: "适当控水，但不能萎蔫。", fertilizer: "高钾低氮，补钙镁，停止高氮肥。", pruning: "摘除遮光老叶，改善果穗光照。", diseaseRisk: "白粉病、霜霉病、炭疽。", nutrientRisk: "缺钾、缺镁。", warning: "连续大水会淡味、裂果。", formula: ["磷酸二氢钾 0.5g/L", "硫酸钾 0.3~0.5g/L", "黄腐酸钾 0.3g/L"] }),
+          guideStage({ name: "成熟期", months: [8, 9], goal: "保持糖度和果粉，分批采收。", watering: "少量稳定供水，采前避免大水。", fertilizer: "少肥或停肥，维持钾钙即可。", pruning: "保留功能叶，去病果病叶。", diseaseRisk: "果腐、炭疽、鸟害蜂害。", nutrientRisk: "缺钾导致风味弱。", warning: "采前大水会降糖裂果。", formula: ["一般少肥", "必要时磷酸二氢钾 0.3g/L 低频叶喷"] }),
+          guideStage({ name: "采后恢复期", months: [9, 10], goal: "恢复树势，促进枝条成熟和来年花芽。", watering: "5天左右检查，保持叶片正常工作。", fertilizer: "有机肥/平衡肥恢复树势，补钾。", pruning: "清除病果病叶，控制秋梢过旺。", diseaseRisk: "霜霉病、叶斑、白粉病残留。", nutrientRisk: "氮钾不足、有机质不足。", warning: "采后不能完全放任缺肥缺水。", formula: ["鱼蛋白 1ml/L", "硫酸钾 0.3g/L", "黄腐酸钾 0.3g/L"] })
+        ],
+        diagnosis: [
+          problemGuide("白粉病", "通风差、昼夜温差大", "叶片表面白色粉状物", "摘除重病叶，喷施硫磺悬浮剂等低风险药剂", "控密度、增通风、避免偏氮"),
+          problemGuide("霜霉病", "高湿、雨后叶面长期潮湿", "叶背霉层、叶面黄斑", "清病叶，雨后及时防治", "避雨、通风、降低叶面湿度"),
+          problemGuide("灰霉病", "花期湿度高、残花积累", "花穗和果粒灰色霉层", "清残花病果，降低湿度", "花前改善通风，避免花期大水"),
+          problemGuide("黑痘病", "嫩梢嫩叶期雨水传播", "叶片和果粒黑褐色凹斑", "剪除病梢病叶，雨后防治", "萌芽展叶期提前预防"),
+          problemGuide("裂果", "干旱后猛浇、大雨、缺钙", "果粒开裂、流汁腐烂", "稳定供水，补钙，及时采收裂果", "膨果转色期控水稳水", "water"),
+          problemGuide("缺镁", "钾肥过多或根系弱", "老叶叶脉间黄化", "叶喷硫酸镁或钙镁肥", "钾镁平衡，避免单一高钾", "nutrient"),
+          problemGuide("缺铁", "土壤偏碱或根系吸收差", "新叶黄化、叶脉较绿", "叶喷螯合铁，改善根区pH", "维持疏松微酸根区", "nutrient"),
+          problemGuide("缺钾", "膨果转色期钾供应不足", "叶缘焦枯、糖度低", "补硫酸钾或磷酸二氢钾", "结果期提前补钾", "nutrient"),
+          problemGuide("徒长", "氮肥多、水多、光照弱", "节间长、花芽弱", "控氮控水，摘心增光", "新梢期控旺", "management")
+        ],
+        pruningGuide: "冬剪保留健壮结果母枝；夏季摘心、去副梢、疏果穗，维持通风透光。",
+        fertilizerGuide: "萌芽低氮促梢；花前磷钾硼钙镁；膨果高钾钙镁；转色高钾低氮；采后平衡肥恢复。",
+        annualCalendar: ["休眠冬剪", "伤流停剪", "萌芽抹芽", "展叶绑蔓", "花前补硼钙", "坐果疏果", "膨果高钾", "转色控水", "成熟采收", "采后恢复", "清园改土", "休眠基肥"]
+      },
+      blueberry: {
+        title: "蓝莓百科（专业版）",
+        stages: [
+          guideStage({ name: "休眠期", months: [12, 1, 2], goal: "维持低温休眠，整理枝条和酸性基质。", watering: "少水，介质不完全干透。", fertilizer: "不施速效肥，可补酸性有机质。", pruning: "剪弱枝、病枝、过老枝。", diseaseRisk: "越冬病叶、根腐隐患。", nutrientRisk: "pH偏高导致后续缺铁。", warning: "冬季湿冷积水易根腐。", formula: ["酸性泥炭/松针改土", "黄腐酸钾少量改土"] }),
+          guideStage({ name: "花芽萌动期", months: [3], goal: "促芽整齐，保持酸性浅根活力。", watering: "3~4天检查，保持微湿。", fertilizer: "少量多次硫酸铵，pH 4.5~5.5。", pruning: "轻剪弱枝，保留花芽枝。", diseaseRisk: "根腐、叶斑初发。", nutrientRisk: "缺铁黄化。", warning: "蓝莓怕高盐肥，浓肥烧根。", formula: ["硫酸铵 0.2~0.3g/L", "黄腐酸钾 0.3g/L"] }),
+          guideStage({ name: "展叶期", months: [3, 4], goal: "建立新叶和根系吸收能力。", watering: "浅根不耐干，保持稳定湿润。", fertilizer: "低盐酸性肥，少量多次。", pruning: "去弱小内膛枝，保持通风。", diseaseRisk: "叶斑、蚜虫。", nutrientRisk: "缺铁、缺镁。", warning: "不要用碱性肥和草木灰。", formula: ["硫酸铵 0.2g/L", "硫酸镁 0.2~0.3g/L"] }),
+          guideStage({ name: "开花期", months: [4, 5], goal: "稳定授粉坐果，减少花腐。", watering: "小水稳定，避免花期干旱。", fertilizer: "少肥或停肥，避免高盐刺激。", pruning: "保持通风，减少花序潮湿。", diseaseRisk: "灰霉病。", nutrientRisk: "硼、钙吸收弱。", warning: "花期浓肥会伤根落花。", formula: ["一般暂停施肥", "海藻精极低浓度"] }),
+          guideStage({ name: "坐果期", months: [5], goal: "稳定幼果，避免落果和根系缺氧。", watering: "3天左右观察，不干不涝。", fertilizer: "低浓度酸性肥，适当钾钙镁。", pruning: "疏弱果、去过密枝。", diseaseRisk: "灰霉、叶斑。", nutrientRisk: "缺钾、缺铁。", warning: "盆土过湿会诱发根腐。", formula: ["硫酸钾 0.2~0.3g/L", "硫酸镁 0.2g/L"] }),
+          guideStage({ name: "膨果期", months: [6, 7], goal: "果实膨大，稳定水分和低盐供肥。", watering: "稳定水分，夏季盆栽2~3天观察。", fertilizer: "偏钾、钙镁，低盐少量多次。", pruning: "遮强西晒，保持根区凉爽。", diseaseRisk: "根腐、叶斑、灰霉。", nutrientRisk: "缺钾、缺镁、缺铁。", warning: "水分剧烈波动会果小淡味。", formula: ["硫酸钾 0.3~0.5g/L", "硫酸镁 0.3g/L", "黄腐酸钾 0.3g/L"] }),
+          guideStage({ name: "转蓝期", months: [7], goal: "促进着色和风味积累。", watering: "适度稳定，避免成熟前大水。", fertilizer: "低氮高钾，避免高盐。", pruning: "提升光照和通风。", diseaseRisk: "果蝇、灰霉、果腐。", nutrientRisk: "缺钾影响糖度。", warning: "大水会导致果味变淡。", formula: ["硫酸钾 0.3g/L", "黄腐酸钾 0.3g/L"] }),
+          guideStage({ name: "成熟期", months: [7, 8], goal: "分批采收，保持风味。", watering: "维持微湿，采前不猛浇。", fertilizer: "少肥或停肥。", pruning: "成熟果及时采，病果不留树。", diseaseRisk: "果蝇、灰霉、鸟害。", nutrientRisk: "高盐肥害。", warning: "成熟期追浓肥会影响口感并伤根。", formula: ["一般停肥", "只在弱树采后恢复"] }),
+          guideStage({ name: "采后恢复期", months: [8, 9], goal: "恢复枝叶，促进来年花芽。", watering: "5天左右检查，根区不干透。", fertilizer: "酸性平衡肥少量多次，补有机质。", pruning: "轻剪弱枝，保留健壮新梢。", diseaseRisk: "叶斑、根腐。", nutrientRisk: "缺氮、缺铁。", warning: "采后缺肥会影响来年花芽。", formula: ["硫酸铵 0.2g/L", "黄腐酸钾 0.3g/L", "海藻精低浓度"] }),
+          guideStage({ name: "花芽分化期", months: [9, 10], goal: "促进花芽形成和枝条成熟。", watering: "稳定偏干，避免秋季徒长。", fertilizer: "少氮，补钾镁，控制盐分。", pruning: "不重剪，保留成熟枝。", diseaseRisk: "叶斑病。", nutrientRisk: "缺钾、缺镁。", warning: "秋季高氮会影响休眠和花芽。", formula: ["硫酸钾 0.2~0.3g/L", "硫酸镁 0.2g/L"] }),
+          guideStage({ name: "越冬期", months: [11, 12], goal: "降低消耗，保护浅根。", watering: "少水防冻，盆土微湿。", fertilizer: "停施速效肥。", pruning: "清落叶，检查病枝。", diseaseRisk: "根腐、越冬虫卵。", nutrientRisk: "根系冻害。", warning: "盆栽低温湿冷最易伤根。", formula: ["不施肥", "覆盖松针或酸性介质保根"] })
+        ],
+        diagnosis: [
+          problemGuide("缺铁黄化", "pH偏高或根系弱", "新叶黄化、叶脉保持绿色", "叶喷螯合铁，调整pH到4.5~5.5", "使用酸性介质，避免碱性水肥", "nutrient"),
+          problemGuide("根腐", "积水、介质闷、盆温高", "萎蔫、叶缘焦、根褐烂", "控水、换透气酸性介质，剪烂根", "浅根怕积水，盆底排水要强"),
+          problemGuide("叶斑病", "高湿通风差", "叶片褐斑、提前落叶", "摘病叶，降低湿度", "保持株距和通风"),
+          problemGuide("白粉病", "通风差、昼夜温差大", "叶表粉状白斑", "清病叶并喷低风险药剂", "控密度，不偏氮"),
+          problemGuide("果实变小", "水分不稳、负载过高、根弱", "果小、成熟不齐", "疏果、稳定水分、恢复根系", "膨果期保持微湿", "water"),
+          problemGuide("果味变淡", "成熟期大水或氮肥过多", "甜度低、香味弱", "采前少大水，停止高氮", "转蓝期控氮稳水", "water"),
+          problemGuide("pH偏高", "水质偏碱或介质碱化", "黄叶、长势弱", "换酸性介质或用酸性肥", "定期检测pH", "nutrient"),
+          problemGuide("肥害", "浓肥、高盐肥、施肥过勤", "叶尖焦、根尖褐化", "大量清水淋洗，暂停施肥", "所有肥料低浓度少量多次", "fertilizer")
+        ],
+        pruningGuide: "冬季疏除弱枝、老化枝和交叉枝；采后轻剪，保留健壮一年生枝。",
+        fertilizerGuide: "核心是pH 4.5~5.5、低盐少量多次。硫酸铵适合蓝莓，但浓度必须低。",
+        annualCalendar: ["休眠修剪", "酸化基质", "花芽萌动", "开花授粉", "坐果", "膨果稳水", "转蓝控水", "成熟采收", "采后恢复", "花芽分化", "越冬准备", "保根防寒"]
+      },
+      tomato: {
+        title: "番茄百科（专业版）",
+        stages: [
+          guideStage({ name: "育苗期", months: [2, 3], goal: "培育壮苗，根系白壮、节间短。", watering: "少量多次，基质微湿。", fertilizer: "薄肥，避免高氮徒长。", pruning: "保持光照，及时分苗。", diseaseRisk: "猝倒病、立枯病。", nutrientRisk: "缺磷、徒长。", warning: "苗期低温高湿易烂苗。", formula: ["海藻精低浓度", "鱼蛋白 0.5ml/L"] }),
+          guideStage({ name: "缓苗期", months: [3, 4], goal: "控肥促根，恢复定植伤口。", watering: "小水稳根，保持微湿不闷。", fertilizer: "控肥促根，腐殖酸/海藻精为主。", pruning: "遮强光，缓苗后逐步见光。", diseaseRisk: "根腐、立枯。", nutrientRisk: "根弱吸收差。", warning: "刚定植不要大肥大水。", formula: ["矿源黄腐酸钾 0.3g/L", "海藻精 0.5ml/L"] }),
+          guideStage({ name: "营养生长期", months: [4, 5], goal: "建立茎叶，同时防徒长。", watering: "2~3天观察，见干补水。", fertilizer: "适量氮肥配合磷钾。", pruning: "绑蔓、打底叶、通风。", diseaseRisk: "早疫病、白粉虱、红蜘蛛。", nutrientRisk: "徒长、缺镁。", warning: "氮肥过多会延迟开花。", formula: ["鱼蛋白 1ml/L", "磷酸二氢钾 0.2g/L"] }),
+          guideStage({ name: "现蕾期", months: [5], goal: "促花芽质量，准备坐果。", watering: "保持稳定，不忽干忽湿。", fertilizer: "补磷钾、钙镁硼。", pruning: "控制侧枝，保留目标花序。", diseaseRisk: "早疫病、白粉虱。", nutrientRisk: "缺硼、缺钙。", warning: "花前不要偏氮。", formula: ["磷酸二氢钾 0.5g/L", "钙镁硼锌铁中量元素水溶肥 0.5g/L"] }),
+          guideStage({ name: "开花期", months: [5, 6], goal: "稳定授粉，减少落花。", watering: "稳定供水，避免高温干旱。", fertilizer: "少量平衡肥，避免高氮。", pruning: "轻振花序、通风降温。", diseaseRisk: "灰霉、白粉虱、红蜘蛛。", nutrientRisk: "缺硼缺钙。", warning: "高温、干旱或大水都会落花。", formula: ["海藻精低浓度", "必要时钙镁硼低浓度叶喷"] }),
+          guideStage({ name: "坐果期", months: [6], goal: "补钙防脐腐，稳定幼果。", watering: "2~3天观察，均匀供水。", fertilizer: "补钙防脐腐，配合钾镁，控氮。", pruning: "疏畸形果，打老叶通风。", diseaseRisk: "脐腐病、早疫病、白粉虱。", nutrientRisk: "缺钙、缺钾。", warning: "水分忽干忽湿会脐腐裂果。", formula: ["钙镁硼锌铁中量元素水溶肥 0.5g/L", "硫酸钾 0.3g/L", "黄腐酸钾 0.3g/L"] }),
+          guideStage({ name: "膨果期", months: [6, 7, 8], goal: "提高果个和产量，稳钙防裂。", watering: "稳定供水，避免干后大水。", fertilizer: "高钾 + 钙镁，少量多次。", pruning: "保留功能叶，及时打老叶。", diseaseRisk: "晚疫病、早疫病、红蜘蛛、脐腐病。", nutrientRisk: "缺钾、缺钙、缺镁。", warning: "缺钙和水分波动是脐腐高发组合。", formula: ["硫酸钾 0.5g/L", "钙镁硼锌铁中量元素水溶肥 0.5g/L", "鱼蛋白 1ml/L"] }),
+          guideStage({ name: "转色期", months: [7, 8, 9], goal: "促进着色和风味积累。", watering: "减少大水，保持稳定。", fertilizer: "控氮，高钾低氮，维持钙镁。", pruning: "改善光照，不让果实暴晒。", diseaseRisk: "裂果、晚疫病、红蜘蛛。", nutrientRisk: "缺钾、缺钙。", warning: "猛浇水容易裂果。", formula: ["磷酸二氢钾 0.5g/L", "硫酸钾 0.3g/L"] }),
+          guideStage({ name: "成熟采收期", months: [8, 9, 10], goal: "保持风味并持续采收。", watering: "减少大水，均匀湿度。", fertilizer: "少量维持钾肥或停肥。", pruning: "及时采收，去病果病叶。", diseaseRisk: "裂果、果腐、白粉虱。", nutrientRisk: "高氮导致风味淡。", warning: "采前大水会淡味裂果。", formula: ["一般少肥", "弱树用磷酸二氢钾 0.3g/L"] }),
+          guideStage({ name: "持续结果期", months: [9, 10], goal: "维持树势和后续花果。", watering: "按负载稳定供水。", fertilizer: "平衡肥加钾钙镁，少量多次。", pruning: "清老叶病叶，保留新花序。", diseaseRisk: "晚疫病、白粉虱、红蜘蛛。", nutrientRisk: "缺钾、缺镁。", warning: "过度摘叶会降产。", formula: ["鱼蛋白 1ml/L", "硫酸钾 0.3g/L", "钙镁肥低浓度"] }),
+          guideStage({ name: "清园期", months: [11], goal: "清除病残体，降低连作病害。", watering: "逐步减少浇水。", fertilizer: "停止追肥，处理土壤。", pruning: "拔除残株，清理根系和落叶。", diseaseRisk: "晚疫病、根结线虫、虫卵。", nutrientRisk: "土壤盐分累积。", warning: "病株残体不要混回盆土。", formula: ["清园不施肥", "改土后再种"] })
+        ],
+        diagnosis: [
+          problemGuide("脐腐病", "钙供应不足或水分波动", "果底黑褐色凹陷", "稳定供水，补钙镁，去除重病果", "坐果期提前补钙", "nutrient"),
+          problemGuide("裂果", "干旱后大水、果皮薄", "果肩或果面裂开", "控水稳水，及时采收", "转色期避免猛浇", "water"),
+          problemGuide("晚疫病", "低温高湿、病菌传播", "叶片水渍状褐斑、快速蔓延", "清病叶，降低湿度并防治", "雨季通风避湿"),
+          problemGuide("早疫病", "老叶高湿、通风差", "同心轮纹褐斑", "摘老病叶，改善通风", "底叶不贴土"),
+          problemGuide("白粉虱", "温暖干燥、植株密", "叶背白色小虫、蜜露", "黄板诱杀，喷施低风险药剂", "通风、控密度"),
+          problemGuide("红蜘蛛", "干热环境", "叶背红点、叶片发黄", "增加湿度，喷施阿维菌素等", "高温干燥期早检查"),
+          problemGuide("徒长", "氮肥多、光照弱", "节间长、开花少", "控氮增光，打杈绑蔓", "营养期别偏氮", "management"),
+          problemGuide("落花落果", "高温、缺硼、干旱或授粉差", "花柄发黄脱落", "降温通风，稳水，补硼钙", "花前补磷钾钙镁硼")
+        ],
+        pruningGuide: "单干或双干整枝，及时打杈；下部老叶分批去除，保持通风但不一次摘光。",
+        fertilizerGuide: "缓苗控肥促根；花前磷钾钙镁硼；坐果补钙防脐腐；膨果高钾钙镁；成熟期控氮保风味。",
+        annualCalendar: ["育苗", "缓苗", "营养生长", "现蕾", "开花", "坐果", "膨果", "转色", "成熟采收", "持续结果", "清园", "轮作改土"]
+      }
+    });
 
     const appDataKey = "fruit-care-app-data-v2";
     const storageKey = "fruit-care-records-v1";
@@ -4388,6 +5067,9 @@
     let selectedAdvicePlantId = "全部";
     let selectedPlantId = "";
     let formPlantId = "";
+    let currentEncyclopediaPlantId = "";
+    let currentLifecyclePlantId = "";
+    let activeLifecycleStageName = "";
     let plantPhotoBase64 = "";
     let plantPhotoCleared = false;
     let calendarCursor = today().slice(0, 7);
@@ -4435,6 +5117,12 @@
       plantDetailBack: document.getElementById("plantDetailBackBtn"),
       plantDetailTitle: document.getElementById("plantDetailTitle"),
       plantDetailContent: document.getElementById("plantDetailContent"),
+      plantEncyclopediaBack: document.getElementById("plantEncyclopediaBackBtn"),
+      plantEncyclopediaTitle: document.getElementById("plantEncyclopediaTitle"),
+      plantEncyclopediaContent: document.getElementById("plantEncyclopediaContent"),
+      plantLifecycleBack: document.getElementById("plantLifecycleBackBtn"),
+      plantLifecycleTitle: document.getElementById("plantLifecycleTitle"),
+      plantLifecycleContent: document.getElementById("plantLifecycleContent"),
       detailPhoto: document.getElementById("detailPhotoInput"),
       photoLightbox: document.getElementById("photoLightbox"),
       photoLightboxImage: document.getElementById("photoLightboxImage"),
@@ -4548,7 +5236,7 @@
         panel.classList.toggle("active", panel.dataset.pagePanel === page);
       });
       const mineSubPages = ["materials", "plant-tags", "task-templates", "tools", "memorial"];
-      const navPage = page === "plant-detail" ? "home" : page === "record-form" ? "records" : mineSubPages.includes(page) ? "mine" : page;
+      const navPage = page === "plant-detail" || page === "plant-encyclopedia" || page === "plant-lifecycle" ? "home" : page === "record-form" ? "records" : mineSubPages.includes(page) ? "mine" : page;
       els.pageButtons.forEach(button => {
         button.classList.toggle("active", button.dataset.page === navPage);
       });
@@ -6656,40 +7344,86 @@
 
     function currentProfessionalStage(plant) {
       const stage = `${plant?.stage || ""}${plant?.status || ""}`;
+      const grape = isGrapePlant(plant);
+      const blueberry = isBlueberryPlant(plant);
       const tomato = isTomatoPlant(plant);
+      if (/休眠|落叶|死亡/.test(stage)) return tomato ? "清园期" : blueberry ? "休眠期" : "休眠期";
       if (/缓苗/.test(stage)) return tomato ? "缓苗期" : "萌芽期";
-      if (/萌芽|展叶/.test(stage)) return "萌芽期";
-      if (/新梢|旺长|徒长/.test(stage)) return tomato ? "营养生长期" : "新梢期";
-      if (/花芽分化|花苞/.test(stage)) return tomato ? "花前期" : "花前";
+      if (/萌芽/.test(stage)) return blueberry ? "花芽萌动期" : "萌芽期";
+      if (/展叶/.test(stage)) return "展叶期";
+      if (/新梢|旺长|徒长/.test(stage)) return tomato ? "营养生长期" : grape ? "新梢生长期" : "展叶期";
+      if (/花芽分化/.test(stage)) return blueberry ? "花芽分化期" : tomato ? "现蕾期" : "花序分离期";
+      if (/花苞|现蕾/.test(stage)) return tomato ? "现蕾期" : grape ? "花前期" : "花芽萌动期";
       if (/开花|授粉/.test(stage)) return "开花期";
       if (/坐果|幼果/.test(stage)) return "坐果期";
       if (/膨大|膨果/.test(stage)) return "膨果期";
-      if (/转色/.test(stage)) return "转色期";
+      if (/转色/.test(stage)) return blueberry ? "转蓝期" : "转色期";
       if (/成熟|采收/.test(stage)) return tomato ? "成熟采收期" : "成熟期";
-      if (/已收获|采后/.test(stage)) return tomato ? "采后/持续结果期" : "采后恢复期";
-      if (/休眠|落叶|死亡/.test(stage)) return tomato ? "衰老清园期" : "休眠期";
+      if (/已收获|采后/.test(stage)) return tomato ? "持续结果期" : "采后恢复期";
 
       const month = new Date(`${today()}T00:00:00`).getMonth() + 1;
       if (tomato) {
-        if (month <= 3) return "缓苗期";
-        if (month === 4) return "营养生长期";
-        if (month === 5) return "花前期";
+        if (month <= 3) return "育苗期";
+        if (month === 4) return "缓苗期";
+        if (month === 5) return "现蕾期";
         if (month === 6) return "开花期";
         if (month === 7) return "坐果期";
         if (month === 8) return "膨果期";
         if (month === 9) return "转色期";
         if (month === 10) return "成熟采收期";
-        return "衰老清园期";
+        return "清园期";
+      }
+      if (blueberry) {
+        if (month <= 2) return "休眠期";
+        if (month === 3) return "花芽萌动期";
+        if (month === 4) return "展叶期";
+        if (month === 5) return "坐果期";
+        if (month === 6) return "膨果期";
+        if (month === 7) return "转蓝期";
+        if (month === 8) return "成熟期";
+        if (month === 9) return "采后恢复期";
+        if (month === 10) return "花芽分化期";
+        return "越冬期";
       }
       if (month === 3) return "萌芽期";
-      if (month === 4) return "新梢期";
-      if (month === 5) return "花前";
+      if (month === 4) return "新梢生长期";
+      if (month === 5) return "花前期";
       if (month === 6) return "坐果期";
       if (month === 7) return "膨果期";
       if (month === 8) return "转色期";
       if (month === 9) return "成熟期";
       if (month === 10) return "采后恢复期";
       return "休眠期";
+    }
+
+    function professionalGuideForPlant(plant) {
+      if (isGrapePlant(plant)) return professionalPlantGuides.grape;
+      if (isBlueberryPlant(plant)) return professionalPlantGuides.blueberry;
+      if (isTomatoPlant(plant)) return professionalPlantGuides.tomato;
+      return null;
+    }
+
+    function activeProfessionalStage(plant) {
+      const guide = professionalGuideForPlant(plant);
+      if (!guide?.stages?.length) return null;
+      const currentStage = currentProfessionalStage(plant);
+      const month = new Date(`${today()}T00:00:00`).getMonth() + 1;
+      return guide.stages.find(stage => stage.name === currentStage)
+        || guide.stages.find(stage => Array.isArray(stage.months) && stage.months.includes(month))
+        || guide.stages[0];
+    }
+
+    function genericCurrentStage(plant) {
+      const stage = plant?.stage || plant?.status || "生长期";
+      const badRoot = /沤根|烂根|肥害|药害/.test(stage);
+      const sick = /病害|虫害|生病/.test(stage);
+      if (badRoot) {
+        return guideStage({ name: stage, months: [], goal: "先恢复根系和安全环境，暂停刺激性操作。", watering: "只观察，不催浇；盆土偏湿时加强通风。", fertilizer: "暂停施肥。", pruning: "剪除严重受损叶片，减少蒸腾。", diseaseRisk: "根腐、继发病害。", nutrientRisk: "根系受损导致吸收紊乱。", warning: "不要继续追肥或频繁浇水。", formula: ["暂停配肥", "可低浓度黄腐酸钾促根"] });
+      }
+      if (sick) {
+        return guideStage({ name: stage, months: [], goal: "先控制病虫害，再恢复水肥。", watering: "正常见干见湿，避免叶面长期潮湿。", fertilizer: "暂停或低浓度，病情稳定后再补。", pruning: "清理病叶虫叶，隔离观察。", diseaseRisk: "病害或虫害扩散。", nutrientRisk: "弱株易缺素。", warning: "不要病虫害未控住就大肥催长。", formula: ["暂停重肥", "海藻精低浓度恢复"] });
+      }
+      return guideStage({ name: stage || "生长期", months: [], goal: "维持稳定生长，观察光照、通风、根区水分。", watering: "见干见湿，避免积水。", fertilizer: "低浓度平衡肥，少量多次。", pruning: "清理弱枝病叶，保持通风。", diseaseRisk: "高湿时易病害，干热时易虫害。", nutrientRisk: "常见缺氮、缺镁、缺铁。", warning: "不确定阶段时不要大水大肥。", formula: ["鱼蛋白 0.5~1ml/L", "黄腐酸钾 0.3g/L", "7~14天一次"] });
     }
 
     function professionalFieldHtml(iconKey, title, text) {
@@ -6704,31 +7438,30 @@
     function professionalStageDetailsHtml(stage, currentStage) {
       const isCurrent = stage.name === currentStage;
       return `
-        <details class="encyclopedia-details professional-stage${isCurrent ? " is-current" : ""}"${isCurrent ? " open" : ""}>
+        <details class="encyclopedia-details professional-stage stage-card${isCurrent ? " is-current active" : ""}"${isCurrent ? " open" : ""}>
           <summary><span class="knowledge-icon">${knowledgeIcons.stage}</span>${escapeHtml(stage.name)}</summary>
           <div class="professional-stage-body">
-            <p><strong>阶段说明：</strong>${escapeHtml(stage.description)}</p>
-            <p><strong>浇水频率：</strong>${escapeHtml(stage.watering)}</p>
-            <p><strong>施肥方案：</strong>${escapeHtml(stage.fertilizer)}</p>
-            <p><strong>病害预警：</strong>${escapeHtml(stage.diseaseRisk)}</p>
-            <p><strong>管理要点：</strong>${escapeHtml(stage.management)}</p>
-            <p><strong>风险提醒：</strong>${escapeHtml(stage.warning)}</p>
+            <p><strong>管理重点：</strong>${escapeHtml(stage.goal || stage.description || "")}</p>
+            <p><strong>推荐浇水：</strong>${escapeHtml(stage.watering)}</p>
+            <p><strong>推荐施肥：</strong>${escapeHtml(stage.fertilizer)}</p>
+            <p><strong>推荐配方：</strong>${escapeHtml((stage.formula || []).join("；") || "按库存和植株状态低浓度调整。")}</p>
+            <p><strong>易发病害：</strong>${escapeHtml(stage.diseaseRisk)}</p>
+            <p><strong>易缺元素：</strong>${escapeHtml(stage.nutrientRisk || "观察叶色和新梢状态。")}</p>
+            <p><strong>修剪/管理：</strong>${escapeHtml(stage.pruning || stage.management || "")}</p>
+            <p><strong>禁忌：</strong>${escapeHtml(stage.warning)}</p>
           </div>
         </details>
       `;
     }
 
     function renderProfessionalGuide(plant) {
-      if (isGrapePlant(plant)) return renderProfessionalGuideCard(professionalPlantGuides.grape, plant);
-      if (isBlueberryPlant(plant)) return renderProfessionalGuideCard(professionalPlantGuides.blueberry, plant);
-      if (isTomatoPlant(plant)) return renderProfessionalGuideCard(professionalPlantGuides.tomato, plant);
-      return "";
+      const guide = professionalGuideForPlant(plant);
+      return guide ? renderProfessionalGuideCard(guide, plant) : "";
     }
 
     function renderProfessionalGuideCard(guide, plant) {
       if (!guide?.stages?.length) return "";
-      const currentStage = currentProfessionalStage(plant);
-      const activeStage = guide.stages.find(stage => stage.name === currentStage) || guide.stages[0];
+      const activeStage = activeProfessionalStage(plant) || guide.stages[0];
       return `
         <section class="encyclopedia-card professional-guide">
           <h3>${escapeHtml(guide.title)}</h3>
@@ -6737,17 +7470,765 @@
               <span class="knowledge-icon">${knowledgeIcons.stage}</span>
               当前阶段：${escapeHtml(activeStage.name)}
             </div>
-            <p>${escapeHtml(activeStage.description)}</p>
+            <p>${escapeHtml(activeStage.goal || activeStage.description || "")}</p>
             <div class="professional-field-grid">
-              ${professionalFieldHtml("water", "推荐浇水频率", activeStage.watering)}
-              ${professionalFieldHtml("fertilizer", "推荐施肥方案", activeStage.fertilizer)}
+              ${professionalFieldHtml("water", "推荐浇水", activeStage.watering)}
+              ${professionalFieldHtml("fertilizer", "推荐施肥", activeStage.fertilizer)}
+              ${professionalFieldHtml("feed", "推荐配方", (activeStage.formula || []).join("；"))}
               ${professionalFieldHtml("disease", "病害预警", activeStage.diseaseRisk)}
-              ${professionalFieldHtml("prune", "管理要点", activeStage.management)}
+              ${professionalFieldHtml("prune", "修剪/管理", activeStage.pruning || activeStage.management)}
               ${professionalFieldHtml("warning", "风险提醒", activeStage.warning)}
             </div>
           </div>
           <h4>全阶段管理</h4>
-          ${guide.stages.map(stage => professionalStageDetailsHtml(stage, activeStage.name)).join("")}
+          <div class="stage-list">
+            ${guide.stages.map(stage => professionalStageDetailsHtml(stage, activeStage.name)).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderCurrentStageGuide(plant) {
+      const stage = activeProfessionalStage(plant) || genericCurrentStage(plant);
+      return `
+        <section class="stage-current-card">
+          <h3><span class="knowledge-icon">${knowledgeIcons.stage}</span>当前阶段管理</h3>
+          <div class="professional-current-title">当前阶段：${escapeHtml(stage.name)}</div>
+          <div class="stage-grid">
+            ${professionalFieldHtml("stage", "本阶段目标", stage.goal || stage.description)}
+            ${professionalFieldHtml("water", "本阶段浇水频率", stage.watering)}
+            ${professionalFieldHtml("fertilizer", "本阶段施肥方案", stage.fertilizer)}
+            ${professionalFieldHtml("prune", "本阶段修剪/管理动作", stage.pruning || stage.management)}
+            ${professionalFieldHtml("disease", "本阶段病虫害预警", stage.diseaseRisk)}
+            ${professionalFieldHtml("warning", "本阶段禁忌提醒", stage.warning)}
+          </div>
+        </section>
+      `;
+    }
+
+    const lifecycleStage = ({ name, duration, goal, light, water, fertilizer, soil, pot, pruning, diseaseRisk, warning, nextStep, temp }) => ({
+      name,
+      duration,
+      goal,
+      light,
+      water,
+      fertilizer,
+      soil,
+      pot,
+      pruning,
+      diseaseRisk,
+      warning,
+      nextStep,
+      temp
+    });
+
+    const genericLifecycleGuide = [
+      lifecycleStage({ name: "刚买回/刚移栽", duration: "第1~3天", goal: "先稳定环境，减少运输和换盆造成的应激。", light: "明亮散射光，避开正午直晒。", water: "检查基质干湿，微湿即可，不做大水冲灌。", fertilizer: "不施肥。", soil: "保持原土团稳定，先不打散根系。", pot: "不急换盆，除非原盆严重积水或根系腐烂。", pruning: "只剪除明显枯黄、折断枝叶。", diseaseRisk: "闷根、叶片失水、运输伤口感染。", warning: "不施浓肥、不暴晒、不频繁移动。", nextStep: "观察叶片挺度和新芽状态，准备进入缓苗期。", temp: "保持温差平稳，避免冷风和高温闷晒。" }),
+      lifecycleStage({ name: "缓苗期", duration: "7~14天", goal: "让根系重新吸水，植株恢复挺立和新芽活动。", light: "散射光逐步增加，恢复后再进入正常光照。", water: "保持基质微湿，干到表层再补水。", fertilizer: "不施浓肥，可暂缓所有速效肥。", soil: "疏松透气，避免长期湿闷。", pot: "不急着换盆，不反复翻动土团。", pruning: "不重剪，减少额外伤口。", diseaseRisk: "沤根、烂根、灰霉和缓苗失败。", warning: "缓苗期最忌暴晒、浓肥、积水和频繁移动。", nextStep: "看到新芽、新叶或新根活动后，进入生根恢复期。", temp: "多数植物保持18~28℃更稳。" }),
+      lifecycleStage({ name: "生根恢复期", duration: "2~4周", goal: "恢复吸收根，建立盆土水分节奏。", light: "逐步增加到半日照或适合该植物的光照。", water: "少量多次浇水，避免一次浇太频繁导致积水。", fertilizer: "可用黄腐酸钾或海藻精低浓度促根，禁止高浓度复合肥。", soil: "保持透气，表层板结时轻松土。", pot: "根系恢复前不做大盆换小苗式升级。", pruning: "清理黄叶，保留健康叶片制造养分。", diseaseRisk: "根腐风险高于缺肥风险。", warning: "不要让盆土长期积水，也不要用高浓度肥催长。", nextStep: "根系稳定后进入幼苗期，开始轻肥勤施。", temp: "温度稳定比追肥更重要。" }),
+      lifecycleStage({ name: "幼苗期", duration: "1~3个月", goal: "以根系、枝叶和基础株型建立为主。", light: "逐步增加光照，防徒长但避免突然暴晒。", water: "见干见湿，盆小苗弱时少量多次。", fertilizer: "轻肥勤施，氮肥低浓度，搭配腐殖酸或海藻精。", soil: "保持疏松，避免盐分积累。", pot: "根系布满原盆后再换大一号盆。", pruning: "以定向引导为主，不做重剪。", diseaseRisk: "徒长、猝倒、蚜虫、红蜘蛛。", warning: "幼苗不是成株，不要按成株浓度施肥。", nextStep: "叶片数量和根系明显增加后，进入快速生长期。", temp: "避免低温停长和高温闷根。" }),
+      lifecycleStage({ name: "快速生长期", duration: "2~4个月", goal: "快速扩大叶面积，建立主枝、骨架和健康根系。", light: "按植物需求提供更充足光照。", water: "生长快时浇水频率提高，但仍需排水良好。", fertilizer: "适度追肥，平衡肥为主，旺长时控氮。", soil: "补充有机质或缓释肥时避免贴根。", pot: "根满盆、浇水过快干时可换盆。", pruning: "建立主枝/骨架，记录株高、叶片和枝条变化。", diseaseRisk: "旺长、徒长、蚜虫、白粉、叶斑。", warning: "只追氮会徒长，后期开花结果能力下降。", nextStep: "株型稳定后进入成株营养生长期。", temp: "高温期注意通风降温。" }),
+      lifecycleStage({ name: "成株营养生长期", duration: "成株基础阶段", goal: "保持健康叶片和稳定根系，为开花结果储备。", light: "保证足量光照和通风。", water: "按季节和盆土干湿调整，避免忽干忽湿。", fertilizer: "不能只追氮，注意钙、镁、钾和微量元素。", soil: "定期检查板结和盐分。", pot: "多年生盆栽可按根系拥挤程度换盆。", pruning: "去弱枝、病枝、过密枝。", diseaseRisk: "叶斑、白粉、红蜘蛛、根系老化。", warning: "成株管理要看阶段，不能全年同一种肥水节奏。", nextStep: "出现花芽或花苞后进入开花结果准备期。", temp: "温差适中更利于花芽分化。" }),
+      lifecycleStage({ name: "开花结果准备期", duration: "花前2~4周", goal: "从长枝叶转向花芽、花苞和坐果准备。", light: "提高光照质量，避免过密遮光。", water: "保持稳定水分，不缺水也不大水。", fertilizer: "减少单纯氮肥，补磷钾、钙镁硼。", soil: "保持根区透气，避免花前闷根。", pot: "花前不建议大换盆。", pruning: "疏弱枝、调整通风，减少无效消耗。", diseaseRisk: "灰霉、白粉、蚜虫、蓟马。", warning: "花前大水大肥会推迟开花或导致落花。", nextStep: "花朵开放后进入开花坐果期。", temp: "避免高温、低温或温差骤变。" }),
+      lifecycleStage({ name: "开花坐果期", duration: "开花至幼果", goal: "稳定授粉和坐果，减少落花落果。", light: "保持充足柔和光照和通风。", water: "水分稳定，小水勤看，避免忽干忽湿。", fertilizer: "少肥或低浓度，必要时补钙镁硼。", soil: "不能积水，花期根区缺氧会落花。", pot: "不换盆、不伤根。", pruning: "减少重剪，只做必要疏叶和绑缚。", diseaseRisk: "灰霉、蓟马、白粉、落花落果。", warning: "花期不要大水大肥、重剪或频繁搬动。", nextStep: "坐稳果后进入果实膨大/成熟期。", temp: "高温和低温都会影响授粉。" }),
+      lifecycleStage({ name: "果实膨大/成熟期", duration: "坐果后至采收", goal: "提高果实大小、风味和成熟质量。", light: "保证光照，适度改善果实受光。", water: "稳定供水，成熟前避免突然大水。", fertilizer: "高钾配合钙镁，严格控制氮肥。", soil: "保持排水，防止根系缺氧。", pot: "不做大换盆。", pruning: "保留功能叶，去病叶和过密遮光叶。", diseaseRisk: "裂果、果腐、炭疽、红蜘蛛。", warning: "忽干忽湿、氮肥过多会降低风味并增加裂果。", nextStep: "采收后及时进入采后恢复期。", temp: "高温期防晒伤，成熟期保持通风。" }),
+      lifecycleStage({ name: "采后恢复期", duration: "采后2~6周", goal: "恢复树势，积累下一轮生长或来年花芽。", light: "保留健康叶片继续光合。", water: "按长势恢复正常浇水。", fertilizer: "平衡肥或有机质恢复，少量补钾。", soil: "可轻度改土和补充有机质。", pot: "采后可评估是否换盆。", pruning: "清理病残枝叶，控制过旺新梢。", diseaseRisk: "采后伤口感染、叶斑、残留虫害。", warning: "采后不是结束，放任缺肥会影响下一轮。", nextStep: "多年生植物进入休眠/越冬，短季作物进入清园。", temp: "秋季降温时逐步减少刺激性追肥。" }),
+      lifecycleStage({ name: "休眠/越冬期", duration: "冬季或低温停长期", goal: "安全越冬、清园、修剪和储备养分。", light: "落叶植物光照要求降低，常绿植物仍需明亮光。", water: "减少浇水，保持微干不干死。", fertilizer: "停止速效肥，可在合适时机埋有机肥。", soil: "防冻、防长期积水。", pot: "严寒前做好保温，换盆等到恢复生长前。", pruning: "适合做结构修剪和清园。", diseaseRisk: "越冬虫卵、病枝、冻伤。", warning: "休眠期不要催芽和重施速效氮。", nextStep: "升温后观察萌芽，准备重新进入萌芽/缓苗管理。", temp: "按植物耐寒性防寒。" })
+    ];
+
+    const grapeLifecycleGuide = [
+      lifecycleStage({ name: "新购苗/扦插苗", duration: "第1~3天", goal: "先保命稳苗，保护幼根和芽眼。", light: "散射光，避免暴晒嫩芽。", water: "原土微湿即可，先不大水冲根。", fertilizer: "不施肥。", soil: "保持原土团，检查是否积水。", pot: "根系弱时不急换大盆。", pruning: "只剪断枝和病叶。", diseaseRisk: "伤根、失水、黑腐。", warning: "第一年以养根养蔓为主，不急着结果。", nextStep: "叶片恢复挺立后进入缓苗期。", temp: "18~28℃更利于恢复。" }),
+      lifecycleStage({ name: "缓苗期 7~15天", duration: "7~15天", goal: "让根系重新吸水，减少移栽应激。", light: "半阴到柔和日照。", water: "盆土微湿，不积水。", fertilizer: "伤根苗暂停施肥7~14天。", soil: "疏松透气，防闷根。", pot: "不急换盆和洗根。", pruning: "不重剪。", diseaseRisk: "沤根、黑痘、白粉初发。", warning: "幼苗期少施肥，薄肥勤施。", nextStep: "看到新叶伸展后进入生根恢复期。", temp: "避免低温冷风。" }),
+      lifecycleStage({ name: "生根恢复期 2~4周", duration: "2~4周", goal: "恢复吸收根，建立浇水节奏。", light: "逐步增加光照。", water: "少量多次，见干见湿。", fertilizer: "黄腐酸钾或海藻精低浓度促根。", soil: "保持透气，避免盐分积累。", pot: "根系恢复后再考虑换盆。", pruning: "保留健康叶片。", diseaseRisk: "根腐、叶片萎蔫。", warning: "禁止高浓度复合肥。", nextStep: "新梢稳定后进入幼苗展叶期。", temp: "20~28℃较稳。" }),
+      lifecycleStage({ name: "幼苗展叶期", duration: "1~2个月", goal: "建立叶片和根系，积累基础树势。", light: "逐步全日照。", water: "小苗盆土干得快，勤观察。", fertilizer: "低浓度氮肥配腐殖酸，薄肥勤施。", soil: "疏松排水良好。", pot: "根满盆后换大一号。", pruning: "保留主蔓方向，抹弱芽。", diseaseRisk: "白粉、黑痘、蚜虫。", warning: "不要早挂果。", nextStep: "新梢30~50cm后开始引绑。", temp: "高温时注意盆壁晒根。" }),
+      lifecycleStage({ name: "新梢快速生长期", duration: "春夏", goal: "培养强壮新梢，避免徒长。", light: "全日照，通风好。", water: "稳定供水，不忽干忽湿。", fertilizer: "平衡肥，旺长时减少氮肥。", soil: "补有机质但不贴根。", pot: "盆栽注意支架固定。", pruning: "新梢30~50cm后引绑，及时摘心和去副梢。", diseaseRisk: "白粉、霜霉、黑痘。", warning: "旺长时增加光照和控水。", nextStep: "主蔓确定后进入主蔓培养期。", temp: "炎热期避免闷湿。" }),
+      lifecycleStage({ name: "主蔓培养期", duration: "第一年重点", goal: "培养主蔓，比结果更重要。", light: "全日照。", water: "保持稳定，防止新梢停长。", fertilizer: "低浓度平衡肥，配钙镁。", soil: "保持根区透气。", pot: "支架要稳。", pruning: "保留1~2条主蔓，绑缚上架。", diseaseRisk: "白粉、红蜘蛛。", warning: "不要留太多枝导致主蔓细弱。", nextStep: "枝条成熟、芽眼饱满后培养结果母枝。", temp: "昼夜温差利于枝条成熟。" }),
+      lifecycleStage({ name: "结果母枝培养期", duration: "夏末到秋季", goal: "培养成熟、粗壮、芽眼饱满的结果母枝。", light: "改善架面透光。", water: "减少徒长型大水。", fertilizer: "提高钾肥比例，控制氮肥。", soil: "维持根系活力。", pot: "盆栽防倒伏。", pruning: "保留成熟枝，不留过弱枝。", diseaseRisk: "霜霉、白粉、叶斑。", warning: "结果母枝不成熟会影响来年坐果。", nextStep: "树势足够后进入初结果期。", temp: "秋季注意保叶。" }),
+      lifecycleStage({ name: "初结果期", duration: "第2年起", goal: "少量试果，兼顾树势和果实品质。", light: "果穗见光但避免暴晒。", water: "花果期稳定水分。", fertilizer: "花前补磷钾硼，膨果补高钾钙镁。", soil: "保持排水。", pot: "负载重时加固支架。", pruning: "弱树少留果，合理疏果。", diseaseRisk: "灰霉、霜霉、裂果。", warning: "初结果不贪多，先养树。", nextStep: "稳定结果后进入成龄结果期。", temp: "高温期防日灼。" }),
+      lifecycleStage({ name: "成龄结果期", duration: "稳定结果期", goal: "平衡产量、糖度和树势。", light: "保持架面通风透光。", water: "膨果稳定，转色适当控水。", fertilizer: "高钾加钙镁，采后恢复树势。", soil: "每年补有机质。", pot: "盆栽定期修根换土。", pruning: "夏剪控旺，冬剪定枝。", diseaseRisk: "霜霉、白粉、炭疽、裂果。", warning: "不能全年高氮。", nextStep: "落叶后进入休眠修剪期。", temp: "成熟期保持昼夜温差。" }),
+      lifecycleStage({ name: "休眠修剪期", duration: "落叶后", goal: "冬剪、清园、积累来年基础。", light: "休眠期要求降低。", water: "少水防冻。", fertilizer: "有机肥和缓释肥作基肥。", soil: "改土、防寒。", pot: "北方盆栽防冻。", pruning: "冬剪保留成熟枝，不留过弱枝。", diseaseRisk: "越冬虫卵和病枝。", warning: "不要休眠期催芽。", nextStep: "升温后观察伤流和萌芽。", temp: "按当地低温做防寒。" })
+    ];
+
+    const blueberryLifecycleGuide = [
+      lifecycleStage({ name: "新购苗/换盆苗", duration: "第1~3天", goal: "稳定浅根系统，避免盐害和积水。", light: "明亮散射光。", water: "基质微湿，不能积水。", fertilizer: "不施肥。", soil: "pH 4.5~5.5，疏松透气。", pot: "不急换盆，除非介质明显不适。", pruning: "不重剪。", diseaseRisk: "根腐、叶片失水。", warning: "蓝莓幼苗最怕积水和高盐肥。", nextStep: "叶片稳定后进入缓苗期。", temp: "避免高温闷根。" }),
+      lifecycleStage({ name: "缓苗期", duration: "7~15天", goal: "恢复浅根吸水和叶片蒸腾平衡。", light: "散射光逐步增加。", water: "保持湿润但排水顺畅。", fertilizer: "不施浓肥。", soil: "酸性介质，避免园土板结。", pot: "不频繁移动和换盆。", pruning: "只摘除病弱叶。", diseaseRisk: "根腐风险高。", warning: "根腐风险高于缺肥风险。", nextStep: "新叶稳定后进入根系恢复期。", temp: "18~26℃较稳。" }),
+      lifecycleStage({ name: "根系恢复期", duration: "2~4周", goal: "扩大毛细根，稳定酸性根区。", light: "半日照到柔和全日照。", water: "少量多次，不能干透也不能泡根。", fertilizer: "硫酸铵低浓度少量多次，可配黄腐酸钾。", soil: "pH 4.5~5.5，泥炭、松针、珍珠岩类更适合。", pot: "根系恢复后再换大一号。", pruning: "幼苗期不要重剪。", diseaseRisk: "根腐、缺铁黄化。", warning: "缺铁黄化优先检查pH，不要只猛补铁。", nextStep: "根系稳定后进入幼苗营养生长期。", temp: "夏季注意降温遮阴。" }),
+      lifecycleStage({ name: "幼苗营养生长期", duration: "1~2个月", goal: "扩大根系和树冠。", light: "充足柔和光照。", water: "稳定湿润，浅根不耐干。", fertilizer: "少量多次硫酸铵，避免高盐肥。", soil: "酸性、透气、保水。", pot: "根满盆再换盆。", pruning: "第一年建议少留花或不留果。", diseaseRisk: "叶斑、根腐、红蜘蛛。", warning: "不要为了结果牺牲幼苗树势。", nextStep: "枝条数量增加后进入树冠扩大期。", temp: "高温时防盆土过热。" }),
+      lifecycleStage({ name: "树冠扩大期", duration: "生长旺季", goal: "形成更多健壮枝条。", light: "日照充足但高温可遮午后强光。", water: "保持水分稳定。", fertilizer: "低浓度酸性肥，少量多次。", soil: "定期补酸性覆盖物。", pot: "盆栽保持排水孔通畅。", pruning: "去细弱枝，保留健壮新梢。", diseaseRisk: "叶斑、蚜虫、根腐。", warning: "高盐肥会烧根。", nextStep: "秋季进入花芽形成期。", temp: "避免闷热积水。" }),
+      lifecycleStage({ name: "花芽形成期", duration: "夏末秋季", goal: "形成来年花芽，同时保持树势。", light: "保证光照。", water: "不干旱，不大水。", fertilizer: "降低氮肥，适量钾镁。", soil: "维持pH 4.5~5.5。", pot: "不做大伤根换盆。", pruning: "减少重剪，保留健壮枝。", diseaseRisk: "叶斑、缺铁黄化。", warning: "过量氮肥会影响花芽质量。", nextStep: "低温来临前进入越冬准备。", temp: "秋季温差有利花芽。" }),
+      lifecycleStage({ name: "初结果期", duration: "开始结果", goal: "少量留果，兼顾树冠扩大。", light: "光照充足。", water: "坐果到膨果保持稳定水分。", fertilizer: "低盐高钾适量，避免浓肥。", soil: "酸性和排水仍是核心。", pot: "果期不大换盆。", pruning: "弱枝少留果。", diseaseRisk: "灰霉、果蝇、根腐。", warning: "第一年不要重负载。", nextStep: "树冠强壮后进入成株丰产期。", temp: "成熟期避免持续高温闷湿。" }),
+      lifecycleStage({ name: "成株丰产期", duration: "稳定结果期", goal: "保持果实品质和树势更新。", light: "全日照或充足散射光。", water: "膨果期稳定，成熟期避免大水淡味。", fertilizer: "硫酸铵少量多次，膨果期补钾镁。", soil: "持续维持酸性。", pot: "多年盆栽适时换盆修根。", pruning: "更新老枝，保留年轻结果枝。", diseaseRisk: "根腐、灰霉、叶斑、果蝇。", warning: "不要用高盐复合肥猛催。", nextStep: "采后及时恢复树势。", temp: "夏季防晒根。" }),
+      lifecycleStage({ name: "采后恢复期", duration: "采后1~2个月", goal: "恢复树势并准备花芽。", light: "保持叶片健康光合。", water: "正常湿润但不积水。", fertilizer: "低浓度酸性肥和钾镁，少量多次。", soil: "检查pH和覆盖物。", pot: "可评估换盆。", pruning: "清理病弱枝和过老枝。", diseaseRisk: "叶斑、根腐。", warning: "采后缺肥会影响来年花芽。", nextStep: "低温期进入越冬期。", temp: "逐步减少刺激性追肥。" }),
+      lifecycleStage({ name: "越冬期", duration: "冬季", goal: "安全休眠，保护浅根。", light: "落叶后要求降低，常绿状态保持明亮。", water: "减少浇水，保持微湿。", fertilizer: "停止施肥。", soil: "盆栽防冻、防积水。", pot: "寒冷地区保护盆壁。", pruning: "休眠末期轻剪更新。", diseaseRisk: "冻伤、根部积水。", warning: "冬季不要浓肥催芽。", nextStep: "春季花芽萌动后恢复管理。", temp: "按品种耐寒性保护。" })
+    ];
+
+    const tomatoLifecycleGuide = [
+      lifecycleStage({ name: "播种/育苗期", duration: "播种至出苗", goal: "稳定发芽和根系起步。", light: "出苗前保温，出苗后补光。", water: "基质湿润不积水。", fertilizer: "不施浓肥。", soil: "育苗土疏松洁净。", pot: "用小穴盘或育苗盆。", pruning: "不修剪。", diseaseRisk: "猝倒、立枯。", warning: "低温湿冷容易烂种。", nextStep: "出苗后逐步增加光照。", temp: "25℃左右利于发芽。" }),
+      lifecycleStage({ name: "出苗期", duration: "出苗后1周", goal: "防徒长，建立健壮幼苗。", light: "立即增加光照。", water: "保持微湿，避免倒伏。", fertilizer: "暂不急施肥。", soil: "保持表面通气。", pot: "苗密时准备间苗。", pruning: "不打杈。", diseaseRisk: "猝倒、徒长。", warning: "光照不足会细高倒伏。", nextStep: "长出真叶后进入真叶期。", temp: "白天温暖，夜间略低更壮苗。" }),
+      lifecycleStage({ name: "真叶期", duration: "2~4片真叶", goal: "扩大叶片和根系，准备移栽。", light: "逐渐增加到充足光照。", water: "见干见湿。", fertilizer: "低浓度平衡肥，轻肥勤施。", soil: "不板结。", pot: "根系拥挤时分苗。", pruning: "不打顶。", diseaseRisk: "蚜虫、猝倒、徒长。", warning: "真叶后逐渐见光，不能突然暴晒。", nextStep: "苗壮后定植。", temp: "避免低温僵苗。" }),
+      lifecycleStage({ name: "移栽缓苗期", duration: "移栽后5~7天", goal: "控肥促根，恢复吸收。", light: "前2天避强光，随后逐步增加。", water: "定植水后保持微湿。", fertilizer: "移栽后5~7天控肥促根。", soil: "土壤疏松，有机质充足。", pot: "定植盆要足够深，排水好。", pruning: "不急打杈。", diseaseRisk: "根腐、立枯、缓苗失败。", warning: "缓苗期不急施肥。", nextStep: "恢复生长后进入营养生长期。", temp: "18~30℃。" }),
+      lifecycleStage({ name: "营养生长期", duration: "定植后至现蕾", goal: "形成壮苗，防徒长。", light: "全日照。", water: "2~3天观察，见干补水。", fertilizer: "适量氮肥配磷钾，防徒长。", soil: "保持肥力但不盐化。", pot: "需要支架时及时安装。", pruning: "开始吊蔓、绑蔓准备。", diseaseRisk: "白粉虱、红蜘蛛、早疫。", warning: "氮肥过多会徒长、晚开花。", nextStep: "花序出现后进入现蕾期。", temp: "高温注意通风。" }),
+      lifecycleStage({ name: "吊蔓/整枝期", duration: "营养期到结果期", goal: "建立清晰株型和通风空间。", light: "保持下部通风和顶部光照。", water: "随生长增加浇水。", fertilizer: "平衡肥，避免枝叶疯长。", soil: "根区稳定。", pot: "支架牢固。", pruning: "及时打杈、吊蔓、去老叶。", diseaseRisk: "白粉虱、红蜘蛛、叶霉。", warning: "打杈过晚会消耗养分。", nextStep: "现蕾后转入花前营养。", temp: "高温期避免中午操作造成萎蔫。" }),
+      lifecycleStage({ name: "现蕾期", duration: "花前", goal: "促进花芽质量和坐果基础。", light: "充足光照。", water: "稳定水分。", fertilizer: "补磷钾、钙镁硼。", soil: "不能过湿闷根。", pot: "不换盆。", pruning: "去弱侧枝，保留功能叶。", diseaseRisk: "早疫、白粉虱。", warning: "花前缺硼缺钙会影响坐果。", nextStep: "开花后进入开花坐果期。", temp: "避免高温落花。" }),
+      lifecycleStage({ name: "开花坐果期", duration: "开花至幼果", goal: "稳定坐果，减少落花落果。", light: "全日照通风。", water: "稳定供水，不能忽干忽湿。", fertilizer: "少量平衡肥，补钙防脐腐。", soil: "保持排水。", pot: "不伤根。", pruning: "轻振花序辅助授粉，继续打杈。", diseaseRisk: "灰霉、白粉虱、脐腐早期。", warning: "高温、干旱和大水都会落花。", nextStep: "坐稳后进入膨果期。", temp: "高温时通风降温。" }),
+      lifecycleStage({ name: "膨果期", duration: "果实快速增大", goal: "提高产量，防脐腐和裂果。", light: "保留功能叶，避免果实暴晒。", water: "稳定供水，忌干后猛浇。", fertilizer: "高钾 + 钙镁，少量多次。", soil: "保持根系活力。", pot: "大盆更稳水。", pruning: "去老叶但不裸果。", diseaseRisk: "脐腐、裂果、晚疫、红蜘蛛。", warning: "缺钙和水分波动是脐腐高发组合。", nextStep: "果实转色后进入采收管理。", temp: "高温期防日灼。" }),
+      lifecycleStage({ name: "转色采收期", duration: "转色至采收", goal: "保持风味并持续采收。", light: "改善受光但不暴晒果。", water: "减少大水，保持稳定。", fertilizer: "控氮，高钾低氮。", soil: "不积水。", pot: "不换盆。", pruning: "及时摘老叶病叶，采熟果。", diseaseRisk: "裂果、晚疫、果腐。", warning: "转色期控氮，避免裂果。", nextStep: "采收结束后清园或持续结果。", temp: "保持通风。" }),
+      lifecycleStage({ name: "清园期", duration: "季末", goal: "清理病虫源，准备下一茬。", light: "无特殊要求。", water: "逐步减少。", fertilizer: "停止追肥。", soil: "清理残根，必要时换土或轮作。", pot: "消毒盆器。", pruning: "拔除老株和病株。", diseaseRisk: "晚疫残留、根结线虫、虫卵。", warning: "病株残体不要直接混回盆土。", nextStep: "下一轮重新育苗或休整土壤。", temp: "清园后晾晒土壤。" })
+    ];
+
+    function lifecycleGuideForPlant(plant) {
+      if (isGrapePlant(plant)) return grapeLifecycleGuide;
+      if (isBlueberryPlant(plant)) return blueberryLifecycleGuide;
+      if (isTomatoPlant(plant)) return tomatoLifecycleGuide;
+      return genericLifecycleGuide;
+    }
+
+    function lifecycleDateValue(value) {
+      if (!value) return null;
+      if (typeof value === "number") return new Date(value);
+      const raw = String(value).trim();
+      const parsed = new Date(raw.length <= 10 ? `${raw}T00:00:00` : raw);
+      return Number.isNaN(parsed.getTime()) ? null : parsed;
+    }
+
+    function lifecycleAgeDays(plant) {
+      const start = lifecycleDateValue(plant?.purchaseDate || plant?.createdAt);
+      if (!start) return null;
+      const now = new Date(`${today()}T00:00:00`);
+      return Math.max(0, Math.floor((now - start) / 86400000));
+    }
+
+    function lifecycleRecordsForPlant(plant) {
+      return (records || []).filter(record => record.plantId === plant?.id || (!record.plantId && record.crop === (plant?.category || plant?.name)));
+    }
+
+    function lifecycleNameForKind(plant, genericName) {
+      const grape = isGrapePlant(plant);
+      const blueberry = isBlueberryPlant(plant);
+      const tomato = isTomatoPlant(plant);
+      const map = {
+        transplant: grape ? "缓苗期 7~15天" : blueberry ? "缓苗期" : tomato ? "移栽缓苗期" : "缓苗期",
+        root: grape ? "生根恢复期 2~4周" : blueberry ? "根系恢复期" : tomato ? "真叶期" : "生根恢复期",
+        fast: grape ? "新梢快速生长期" : blueberry ? "树冠扩大期" : tomato ? "营养生长期" : "快速生长期",
+        adult: grape ? "主蔓培养期" : blueberry ? "幼苗营养生长期" : tomato ? "营养生长期" : "成株营养生长期",
+        flower: grape ? "初结果期" : blueberry ? "初结果期" : tomato ? "开花坐果期" : "开花坐果期",
+        fruit: grape ? "成龄结果期" : blueberry ? "成株丰产期" : tomato ? "膨果期" : "果实膨大/成熟期",
+        harvest: grape ? "成龄结果期" : blueberry ? "成株丰产期" : tomato ? "转色采收期" : "果实膨大/成熟期",
+        post: grape ? "成龄结果期" : blueberry ? "采后恢复期" : tomato ? "清园期" : "采后恢复期",
+        winter: grape ? "休眠修剪期" : blueberry ? "越冬期" : tomato ? "清园期" : "休眠/越冬期"
+      };
+      return map[genericName] || genericName;
+    }
+
+    function getPlantLifecycleStage(plant) {
+      if (plant?.isDead || plant?.status === "死亡") return "死亡/纪念";
+      const stageText = `${plant?.stage || ""}${plant?.status || ""}`;
+      const recordText = lifecycleRecordsForPlant(plant)
+        .map(record => `${record.type || ""}${record.growth || ""}${record.stage || ""}${record.note || ""}`)
+        .join(" ");
+      const text = `${stageText} ${recordText}`;
+      if (/休眠|落叶|越冬/.test(text)) return lifecycleNameForKind(plant, "winter");
+      if (/采后|已收获/.test(text)) return lifecycleNameForKind(plant, "post");
+      if (/采收/.test(text)) return lifecycleNameForKind(plant, "harvest");
+      if (/膨大|膨果|成熟|转色/.test(text)) return lifecycleNameForKind(plant, "fruit");
+      if (/开花|花苞|授粉|坐果|结果|幼果/.test(text)) return lifecycleNameForKind(plant, "flower");
+      if (/缓苗/.test(text)) return lifecycleNameForKind(plant, "transplant");
+      const age = lifecycleAgeDays(plant);
+      if (age !== null) {
+        if (age <= 14) return lifecycleNameForKind(plant, "transplant");
+        if (age <= 45) return lifecycleNameForKind(plant, "root");
+        if (age <= 120) return lifecycleNameForKind(plant, "fast");
+      }
+      return lifecycleNameForKind(plant, "adult");
+    }
+
+    function activeLifecycleStage(plant) {
+      const guide = lifecycleGuideForPlant(plant);
+      const current = getPlantLifecycleStage(plant);
+      return guide.find(stage => stage.name === current)
+        || guide.find(stage => current.includes(stage.name) || stage.name.includes(current))
+        || guide[0];
+    }
+
+    function lifecycleIconForStage(name) {
+      if (/缓苗|新购|移栽|播种|出苗|幼苗|真叶/.test(name)) return "seedling";
+      if (/根|生根/.test(name)) return "root";
+      if (/生长|主蔓|树冠|营养|展叶|新梢/.test(name)) return "leaf";
+      if (/花|现蕾/.test(name)) return "flower";
+      if (/果|成熟|采收|结果/.test(name)) return "fruit";
+      if (/休眠|越冬|清园/.test(name)) return "winter";
+      return "stage";
+    }
+
+    function lifecycleStageDetailsHtml(stage, currentName) {
+      const isCurrent = stage.name === currentName;
+      return `
+        <details class="encyclopedia-details lifecycle-stage-card${isCurrent ? " active" : ""}" data-lifecycle-stage="${escapeHtml(stage.name)}"${isCurrent ? " open" : ""}>
+          <summary><span class="knowledge-icon">${knowledgeIcons[lifecycleIconForStage(stage.name)] || knowledgeIcons.stage}</span>${escapeHtml(stage.name)} · ${escapeHtml(stage.duration || "按长势判断")}</summary>
+          <div class="lifecycle-stage-body">
+            <p><strong>阶段目标：</strong>${escapeHtml(stage.goal)}</p>
+            <p><strong>光照：</strong>${escapeHtml(stage.light)}</p>
+            <p><strong>温度：</strong>${escapeHtml(stage.temp || "保持环境稳定，避免骤冷骤热。")}</p>
+            <p><strong>浇水：</strong>${escapeHtml(stage.water)}</p>
+            <p><strong>施肥：</strong>${escapeHtml(stage.fertilizer)}</p>
+            <p><strong>土壤：</strong>${escapeHtml(stage.soil)}</p>
+            <p><strong>换盆/定植：</strong>${escapeHtml(stage.pot)}</p>
+            <p><strong>修剪/管理：</strong>${escapeHtml(stage.pruning)}</p>
+            <p><strong>病虫害预警：</strong>${escapeHtml(stage.diseaseRisk)}</p>
+            <p><strong>禁忌：</strong>${escapeHtml(stage.warning)}</p>
+            <p><strong>下一阶段准备：</strong>${escapeHtml(stage.nextStep)}</p>
+          </div>
+        </details>
+      `;
+    }
+
+    function renderGrowthLifecycleGuide(plant) {
+      const guide = lifecycleGuideForPlant(plant);
+      const detected = activeLifecycleStage(plant);
+      const activeName = activeLifecycleStageName || detected?.name || "";
+      const active = guide.find(stage => stage.name === activeName) || detected || guide[0];
+      const activeIndex = Math.max(0, guide.findIndex(stage => stage.name === active.name));
+      const nextStage = guide[activeIndex + 1];
+      const age = lifecycleAgeDays(plant);
+      const ageText = age === null ? "养护天数未记录" : `养护第${age + 1}天`;
+      return `
+        <section class="encyclopedia-card lifecycle-guide">
+          <h3 class="encyclopedia-section-title"><span class="knowledge-icon">${knowledgeIcons.seedling}</span>从幼苗到成株</h3>
+          <div class="lifecycle-current">
+            <div class="professional-current-title">
+              <span class="knowledge-icon">${knowledgeIcons[lifecycleIconForStage(active.name)] || knowledgeIcons.stage}</span>
+              当前生命周期：${escapeHtml(active.name)}
+              <span class="risk-badge">${escapeHtml(ageText)}</span>
+            </div>
+            <p>${escapeHtml(active.goal)}</p>
+            <div class="lifecycle-field-grid">
+              ${professionalFieldHtml("light", "光照", active.light)}
+              ${professionalFieldHtml("temp", "温度", active.temp)}
+              ${professionalFieldHtml("water", "浇水", active.water)}
+              ${professionalFieldHtml("fertilizer", "施肥", active.fertilizer)}
+              ${professionalFieldHtml("soil", "土壤", active.soil)}
+              ${professionalFieldHtml("stage", "换盆/定植", active.pot)}
+              ${professionalFieldHtml("prune", "修剪/管理", active.pruning)}
+              ${professionalFieldHtml("disease", "病虫害预警", active.diseaseRisk)}
+            </div>
+            <div class="lifecycle-warning"><strong>幼苗风险提醒：</strong>${escapeHtml(active.warning)}</div>
+            <div class="lifecycle-next-step"><strong>下一阶段准备：</strong>${escapeHtml(nextStage ? `准备进入${nextStage.name}：${active.nextStep}` : active.nextStep)}</div>
+          </div>
+          <div class="lifecycle-timeline" aria-label="生命周期阶段">
+            ${guide.map(stage => `
+              <span class="lifecycle-step${stage.name === active.name ? " active" : ""}">
+                <span class="knowledge-icon">${knowledgeIcons[lifecycleIconForStage(stage.name)] || knowledgeIcons.stage}</span>
+                ${escapeHtml(stage.name)}
+              </span>
+            `).join("")}
+          </div>
+          <div class="stage-list">
+            ${guide.map(stage => lifecycleStageDetailsHtml(stage, active.name)).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function diagnosisForPlant(plant) {
+      const guide = professionalGuideForPlant(plant);
+      if (guide?.diagnosis?.length) return guide.diagnosis;
+      return [
+        problemGuide("叶片发黄", "浇水、根系、pH或缺素异常", "叶色变浅、局部黄化", "先检查盆土干湿和根系，再低浓度补微量元素", "保持疏松透气，避免积水和浓肥", "nutrient"),
+        problemGuide("长势弱", "光照不足、根系弱或肥水不稳", "新梢短、叶片小、恢复慢", "改善光照通风，低浓度促根，稳定水分", "换盆后缓苗，生长期少量多次施肥", "management"),
+        problemGuide("病虫害", "通风差、湿度高或虫源进入", "叶斑、虫孔、叶背虫卵或黏液", "隔离观察，摘除病虫叶，按类型处理", "定期拍照检查叶背和嫩梢", "disease")
+      ];
+    }
+
+    function diagnosisColor(kind = "disease") {
+      if (kind === "nutrient") return "#2e92f2";
+      if (kind === "water") return "#2e92f2";
+      if (kind === "fertilizer") return "#e08a24";
+      if (kind === "management") return "#35a66b";
+      return "#d95757";
+    }
+
+    function diagnosisIcon(kind = "disease") {
+      if (kind === "nutrient") return knowledgeIcons.soil;
+      if (kind === "water") return knowledgeIcons.water;
+      if (kind === "fertilizer") return knowledgeIcons.fertilizer;
+      if (kind === "management") return knowledgeIcons.stage;
+      return knowledgeIcons.disease;
+    }
+
+    function renderDiagnosisGuide(plant) {
+      const problems = diagnosisForPlant(plant);
+      return `
+        <section class="encyclopedia-card">
+          <h3 class="diagnosis-section-title"><span class="knowledge-icon">${knowledgeIcons.warning}</span>常见问题</h3>
+          <div class="diagnosis-grid">
+            ${problems.map(problem => `
+              <article class="diagnosis-card" style="--card-color:${diagnosisColor(problem.kind)}">
+                <h4><span class="knowledge-icon">${diagnosisIcon(problem.kind)}</span>${escapeHtml(problem.name)}</h4>
+                <p class="diagnosis-line"><strong>原因：</strong>${escapeHtml(problem.cause)}</p>
+                <p class="diagnosis-line"><strong>症状：</strong>${escapeHtml(problem.symptom)}</p>
+                <p class="diagnosis-line"><strong>防治：</strong>${escapeHtml(`${problem.treatment || ""}${problem.prevention ? "；" + problem.prevention : ""}`)}</p>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function availableMaterialNames() {
+      return (appData.materials || [])
+        .filter(item => item.status !== "过期" && item.status !== "已用完" && item.status !== "已删除")
+        .map(item => item.name)
+        .filter(Boolean);
+    }
+
+    function materialMatchedFormula(stage) {
+      const names = availableMaterialNames();
+      const text = `${(stage.formula || []).join(" ")} 硫酸铵 硫酸钾 磷酸二氢钾 鱼蛋白 黄腐酸钾 海藻精 硫酸镁 螯合铁 钙镁`;
+      const matched = names.filter(name => text.includes(name));
+      return matched.length ? matched : [];
+    }
+
+    function fallbackFormulaForPlant(plant, stage) {
+      if (isGrapePlant(plant)) {
+        if (/膨果/.test(stage.name)) return ["硫酸钾 0.5g/L", "鱼蛋白 1~2ml/L", "黄腐酸钾 0.3~0.5g/L", "7~10天一次"];
+        if (/转色/.test(stage.name)) return ["磷酸二氢钾 0.5g/L", "硫酸钾 0.3~0.5g/L", "适当控水增糖"];
+        return stage.formula || ["低浓度平衡肥", "黄腐酸钾 0.3g/L"];
+      }
+      if (isBlueberryPlant(plant)) {
+        if (/膨果/.test(stage.name)) return ["硫酸钾 0.3~0.5g/L", "硫酸镁 0.3g/L", "黄腐酸钾 0.3g/L", "避免高浓度肥"];
+        return stage.formula || ["硫酸铵低浓度少量多次", "维持pH 4.5~5.5"];
+      }
+      if (isTomatoPlant(plant)) {
+        if (/坐果|膨果/.test(stage.name)) return ["高钾肥", "钙镁肥", "稳定供水防脐腐", "7天左右一次低浓度"];
+        return stage.formula || ["平衡肥低浓度", "黄腐酸钾促根"];
+      }
+      return stage.formula || ["低浓度平衡肥", "7~14天一次"];
+    }
+
+    function renderStageFormulaGuide(plant) {
+      const stage = activeProfessionalStage(plant) || genericCurrentStage(plant);
+      const matched = materialMatchedFormula(stage);
+      const formula = fallbackFormulaForPlant(plant, stage);
+      const frequency = /开花期|成熟期/.test(stage.name) ? "本阶段少肥或停肥，必要时低浓度处理" : /膨果|坐果|营养|新梢|展叶/.test(stage.name) ? "7~10天一次，弱株减半" : "10~14天一次，按长势调整";
+      return `
+        <section class="encyclopedia-card">
+          <h3><span class="knowledge-icon">${knowledgeIcons.fertilizer}</span>自动配方建议</h3>
+          <article class="formula-card" style="--card-color:#e08a24">
+            <h4><span class="knowledge-icon">${knowledgeIcons.feed}</span>${escapeHtml(stage.name)}配方</h4>
+            <span class="risk-badge fertilizer">肥料建议</span>
+            <p><strong>推荐配方：</strong></p>
+            <ul class="formula-items">
+              ${formula.map(item => `<li>${escapeHtml(item)}</li>`).join("")}
+            </ul>
+            <p><strong>每升水用量：</strong>${escapeHtml(formula.filter(item => /g\/L|ml\/L|低浓度|高钾|钙镁/.test(item)).join("；") || "按标签低浓度兑水，先从半量开始。")}</p>
+            <p><strong>使用频率：</strong>${escapeHtml(frequency)}</p>
+            <p><strong>当前库存优先可用：</strong>${escapeHtml(matched.length ? matched.join("、") : "未匹配到专用库存，按现有农资选择同类低浓度替代。")}</p>
+            <p><strong>注意事项：</strong>${escapeHtml(stage.warning || "先浇清水再施肥，病弱根和高温中午避免施肥。")}</p>
+          </article>
+        </section>
+      `;
+    }
+
+    const plantBotanicalProfiles = {
+      "葡萄": {
+        latin: "Vitis vinifera",
+        family: "葡萄科",
+        genus: "葡萄属",
+        type: "果树",
+        origin: "西亚",
+        difficulty: 3,
+        light: 3,
+        water: 2,
+        description: [
+          "葡萄是多年生落叶藤本果树，适合棚架、篱架或盆栽整形栽培，结果期长，喜通风和充足日照。",
+          "家庭种植重点在于控旺、稳水、补钾钙镁和病害预防。开花期避免大水大肥，膨果和转色期重点提高糖度、防裂果。"
+        ]
+      },
+      "蓝莓": {
+        latin: "Vaccinium spp.",
+        family: "杜鹃花科",
+        genus: "越橘属",
+        type: "浆果果树",
+        origin: "北美",
+        difficulty: 4,
+        light: 3,
+        water: 3,
+        description: [
+          "蓝莓是浅根系浆果植物，喜欢酸性、疏松、透气的介质，适合盆栽精细管理。",
+          "养护关键是维持pH 4.5~5.5、避免积水和高盐肥。缺铁黄化常与土壤偏碱有关，施肥宜少量多次。"
+        ]
+      },
+      "番茄": {
+        latin: "Solanum lycopersicum",
+        family: "茄科",
+        genus: "番茄属",
+        type: "茄果蔬菜",
+        origin: "南美洲",
+        difficulty: 3,
+        light: 3,
+        water: 3,
+        description: [
+          "番茄是一年生或短期多年生茄果类作物，结果连续，需光照充足、通风良好。",
+          "家庭种植要控制徒长，花前补磷钾和钙镁硼，坐果后稳定供水并补钙，减少脐腐、裂果和落花落果。"
+        ]
+      },
+      "草莓": {
+        latin: "Fragaria × ananassa",
+        family: "蔷薇科",
+        genus: "草莓属",
+        type: "浆果",
+        origin: "温带地区",
+        difficulty: 3,
+        light: 3,
+        water: 3,
+        description: [
+          "草莓为多年生草本浆果，根系较浅，适合盆栽、槽栽和高架种植。",
+          "管理重点是保持通风、稳定水分、及时去老叶，开花坐果期补充磷钾和钙镁，避免灰霉病。"
+        ]
+      },
+      "月季": {
+        latin: "Rosa chinensis",
+        family: "蔷薇科",
+        genus: "蔷薇属",
+        type: "观花灌木",
+        origin: "中国",
+        difficulty: 3,
+        light: 3,
+        water: 2,
+        description: [
+          "月季是常见观花灌木，花期长、萌芽力强，适合庭院、阳台和盆栽养护。",
+          "养护重点是足光、通风、薄肥勤施和定期修剪。雨季注意黑斑、白粉和红蜘蛛，高温期避免重肥。"
+        ]
+      },
+      "柠檬": {
+        latin: "Citrus limon",
+        family: "芸香科",
+        genus: "柑橘属",
+        type: "常绿果树",
+        origin: "亚洲热带",
+        difficulty: 3,
+        light: 3,
+        water: 2,
+        description: [
+          "柠檬为常绿小乔木，喜温暖、光照充足和排水良好的微酸性土壤。",
+          "盆栽柠檬要避免长期积水，花果期补钾和中微量元素，北方冬季需防寒。"
+        ]
+      },
+      "苹果": {
+        latin: "Malus domestica",
+        family: "蔷薇科",
+        genus: "苹果属",
+        type: "落叶果树",
+        origin: "中亚",
+        difficulty: 4,
+        light: 3,
+        water: 2,
+        description: [
+          "苹果是落叶果树，需充足光照和一定低温休眠，适合庭院或矮化盆栽管理。",
+          "重点在冬剪、疏花疏果、病虫害预防和膨果期钾钙供应。"
+        ]
+      },
+      "黄瓜": {
+        latin: "Cucumis sativus",
+        family: "葫芦科",
+        genus: "黄瓜属",
+        type: "瓜果蔬菜",
+        origin: "南亚",
+        difficulty: 2,
+        light: 3,
+        water: 3,
+        description: [
+          "黄瓜是喜温瓜类蔬菜，生长快、需水多，适合支架栽培。",
+          "结果期保持水分稳定，薄肥勤施，注意白粉病、霜霉病和高温化瓜。"
+        ]
+      },
+      "辣椒": {
+        latin: "Capsicum annuum",
+        family: "茄科",
+        genus: "辣椒属",
+        type: "茄果蔬菜",
+        origin: "中南美洲",
+        difficulty: 2,
+        light: 3,
+        water: 2,
+        description: [
+          "辣椒喜温暖和充足日照，较耐旱但不耐积水，适合盆栽和地栽。",
+          "花果期需要稳定水分和钾钙供应，避免高氮徒长，注意蚜虫、蓟马和炭疽病。"
+        ]
+      },
+      "玉米": {
+        latin: "Zea mays",
+        family: "禾本科",
+        genus: "玉蜀黍属",
+        type: "粮食作物",
+        origin: "美洲",
+        difficulty: 2,
+        light: 3,
+        water: 3,
+        description: [
+          "玉米是喜光、喜温、需肥量较高的禾本科作物，适合地栽成片种植。",
+          "拔节到抽雄吐丝期需水需肥明显增加，注意补氮钾和防倒伏。"
+        ]
+      },
+      "三角梅": {
+        latin: "Bougainvillea spectabilis",
+        family: "紫茉莉科",
+        genus: "叶子花属",
+        type: "观花灌木",
+        origin: "南美洲",
+        difficulty: 3,
+        light: 3,
+        water: 1,
+        description: [
+          "三角梅是强阳性观花灌木，苞片色彩丰富，耐热耐晒，适合阳台和庭院盆栽。",
+          "促花关键是充足光照、适当控水和控氮，花后及时修剪可促进二次开花。"
+        ]
+      },
+      "通用": {
+        latin: "Garden plant",
+        family: "园艺植物",
+        genus: "通用属",
+        type: "盆栽植物",
+        origin: "庭院/阳台",
+        difficulty: 2,
+        light: 2,
+        water: 2,
+        description: [
+          "该植物使用通用园艺养护模板。先观察光照、盆土干湿、叶片颜色和新芽状态，再决定水肥。",
+          "保持通风、避免积水，生长期薄肥勤施，异常状态优先排查根系、病虫害和近期水肥操作。"
+        ]
+      }
+    };
+
+    function botanicalProfileForPlant(plant, data) {
+      const key = plantKnowledgeKey(plant);
+      if (plantBotanicalProfiles[key]) return plantBotanicalProfiles[key];
+      if (isGrapePlant(plant)) return plantBotanicalProfiles["葡萄"];
+      if (isBlueberryPlant(plant)) return plantBotanicalProfiles["蓝莓"];
+      if (isTomatoPlant(plant)) return plantBotanicalProfiles["番茄"];
+      const text = `${plant.name || ""}${plant.category || ""}${plant.variety || ""}`;
+      if (/月季|玫瑰/.test(text)) return plantBotanicalProfiles["月季"];
+      if (/三角梅|叶子花/.test(text)) return plantBotanicalProfiles["三角梅"];
+      return {
+        ...plantBotanicalProfiles["通用"],
+        family: data?.category || plant.category || plantBotanicalProfiles["通用"].family,
+        genus: plant.variety || plantBotanicalProfiles["通用"].genus,
+        description: [data?.intro || plantBotanicalProfiles["通用"].description[0], plantBotanicalProfiles["通用"].description[1]]
+      };
+    }
+
+    function scoreDots(value, total = 5, color = "#35c676") {
+      const count = Math.max(0, Math.min(total, Number(value) || 0));
+      return `<span class="profile-score-icons" style="--score-color:${color}">${Array.from({ length: total }, (_, index) => `<span class="${index < count ? "active" : ""}"></span>`).join("")}</span>`;
+    }
+
+    function renderPlantProfileHeader(plant, data) {
+      const profile = botanicalProfileForPlant(plant, data);
+      const image = plantImageUrl(plant);
+      const family = profile.family || data.category || plant.category || "园艺植物";
+      const genus = profile.genus || plant.variety || "通用";
+      const description = profile.description?.length ? profile.description : [data.intro];
+      return `
+        <section class="encyclopedia-card encyclopedia-profile">
+          <div class="encyclopedia-profile-hero" style="background-image:url('${escapeHtml(image)}')"></div>
+          <div class="encyclopedia-profile-body">
+            <div class="profile-head-row">
+              <div>
+                <h3 class="profile-name">${escapeHtml(plantDisplayName(plant))}</h3>
+                <div class="profile-latin">${escapeHtml(profile.latin || "Garden plant")}</div>
+              </div>
+              <div class="profile-chip-row">
+                <span class="profile-chip">${escapeHtml(family)}</span>
+                <span class="profile-chip secondary">${escapeHtml(genus)}</span>
+              </div>
+            </div>
+            <div class="profile-meta-row">
+              <span class="profile-meta"><span class="knowledge-icon">${knowledgeIcons.tree}</span>${escapeHtml(profile.type || plant.category || "植物")}</span>
+              <span class="profile-meta"><span class="knowledge-icon">${knowledgeIcons.stage}</span>${escapeHtml(profile.origin || "庭院/阳台")}</span>
+            </div>
+            <div class="profile-score-grid">
+              <div class="profile-score">
+                <strong>养护难度</strong>
+                ${scoreDots(profile.difficulty, 5, "#35a66b")}
+              </div>
+              <div class="profile-score">
+                <strong>光照需求</strong>
+                ${scoreDots(profile.light, 3, "#e0a72f")}
+              </div>
+              <div class="profile-score">
+                <strong>水分需求</strong>
+                ${scoreDots(profile.water, 3, "#2e92f2")}
+              </div>
+            </div>
+            <div class="profile-section-title"><span class="knowledge-icon">${knowledgeIcons.stage}</span>植物描述</div>
+            <div class="profile-description">
+              ${description.map(item => `<p>${escapeHtml(item)}</p>`).join("")}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function tipColor(title = "") {
+      if (/糖|光照|甜/.test(title)) return "#e0a72f";
+      if (/病|虫|防/.test(title)) return "#d95757";
+      if (/扦插|繁殖|嫁接/.test(title)) return "#8a35b5";
+      if (/肥|花|果/.test(title)) return "#e08a24";
+      if (/修剪|整形|枝/.test(title)) return "#35a66b";
+      return "#35a66b";
+    }
+
+    function renderTipCard(tip) {
+      return `
+        <article class="tip-list-card" style="--tip-color:${tipColor(tip.title)}">
+          <span class="knowledge-icon">${knowledgeIconForTip(tip.title)}</span>
+          <div>
+            <strong>${escapeHtml(tip.title)}</strong>
+            <p>${escapeHtml(tip.text)}</p>
+          </div>
+        </article>
+      `;
+    }
+
+    function seasonMeta(title, index) {
+      const map = {
+        "春季": { color: "#35a66b", badge: "萌芽展叶期" },
+        "夏季": { color: "#d9c82f", badge: "开花结果期" },
+        "秋季": { color: "#e08a24", badge: "成熟采收期" },
+        "冬季": { color: "#2e92f2", badge: "休眠管理期" }
+      };
+      return map[title] || [
+        { color: "#35a66b", badge: "生长期" },
+        { color: "#d9c82f", badge: "旺长期" },
+        { color: "#e08a24", badge: "恢复期" },
+        { color: "#2e92f2", badge: "休眠期" }
+      ][index] || { color: "#35a66b", badge: "管理期" };
+    }
+
+    function splitSeasonAdvice(text = "") {
+      const normalized = String(text || "按当前温度和植株状态调整水肥。");
+      const parts = normalized.split(/[，,；;]/).map(item => item.trim()).filter(Boolean);
+      const water = parts.find(item => /水|湿|控水|浇/.test(item)) || "按盆土干湿调整浇水";
+      const feed = parts.find(item => /肥|钾|氮|钙|镁|硼|有机质/.test(item)) || "根据长势低浓度补肥";
+      const tip = parts.filter(item => item !== water && item !== feed).join("，") || normalized;
+      return { water, feed, tip };
+    }
+
+    function renderSeasonCard(title, text, index) {
+      const meta = seasonMeta(title, index);
+      const advice = splitSeasonAdvice(text);
+      return `
+        <article class="season-guide-card" style="--season-color:${meta.color}">
+          <div class="season-head">
+            <h4>${escapeHtml(title)}</h4>
+            <span class="season-stage-badge">${escapeHtml(meta.badge)}</span>
+          </div>
+          <div class="season-action-grid">
+            <div class="season-action">
+              <span class="knowledge-icon">${knowledgeIcons.water}</span>
+              <div><strong>浇水：</strong>${escapeHtml(advice.water)}</div>
+            </div>
+            <div class="season-action">
+              <span class="knowledge-icon">${knowledgeIcons.fertilizer}</span>
+              <div><strong>施肥：</strong>${escapeHtml(advice.feed)}</div>
+            </div>
+            <div class="season-action">
+              <span class="knowledge-icon">${knowledgeIcons.warning}</span>
+              <div><strong>小贴士：</strong>${escapeHtml(advice.tip)}</div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function guideBullets(items) {
+      const list = (items || []).filter(Boolean);
+      return list.length ? `<ul>${list.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : "";
+    }
+
+    function renderOtherGuideBlock(title, items) {
+      const list = (items || []).filter(Boolean);
+      if (!list.length) return "";
+      return `
+        <div class="other-guide-block">
+          <strong>${escapeHtml(title)}</strong>
+          ${guideBullets(list)}
+        </div>
+      `;
+    }
+
+    function pruningGuideItems(guides) {
+      return {
+        winter: [
+          guides.winterPrune || "休眠期疏除病弱枝、过密枝，保留健壮主枝和结果枝。",
+          "控制植株高度，保持通风透光，减少病虫害越冬基数。"
+        ],
+        summer: [
+          guides.summerPrune || "生长期及时摘心、疏除过密新梢，改善通风和采光。",
+          "剪除基部老叶、病叶和遮光枝，减少养分无效消耗。"
+        ],
+        shape: [
+          guides.shape || "根据空间选择棚架、篱架、盆景或自然开心形。",
+          "整形目标是让主枝清晰、光照均匀、后续采收和管理方便。"
+        ]
+      };
+    }
+
+    function diseaseGuideItems(plant) {
+      const problems = diagnosisForPlant(plant);
+      const disease = problems.filter(item => item.kind === "disease").slice(0, 3);
+      const insects = problems.filter(item => /虫|虱|螨|蝇|天牛/.test(item.name)).slice(0, 3);
+      const common = (disease.length ? disease : problems.slice(0, 3)).map(item => `${item.name}：${item.treatment || item.prevention}`);
+      const pest = (insects.length ? insects : problems.filter(item => item.kind !== "nutrient").slice(0, 2)).map(item => `${item.name}：${item.treatment || item.prevention}`);
+      return {
+        disease: common,
+        pest,
+        prevent: [
+          "保持通风透光，避免叶面长期潮湿。",
+          "定期检查叶背、嫩梢和果实，发现异常及时隔离处理。",
+          "冬季或换季清园，清除病叶、落果和枯枝。"
+        ]
+      };
+    }
+
+    function renderOtherGuides(plant, guides, fertilizer, calendar) {
+      const pruning = pruningGuideItems(guides);
+      const disease = diseaseGuideItems(plant);
+      const fertilizerItems = (fertilizer || []).map(([stage, feed]) => `${stage}：${feed}`);
+      return `
+        <section class="encyclopedia-card other-guide-section">
+          <h3 class="other-guide-title"><span class="knowledge-icon">${knowledgeIcons.warning}</span>其他</h3>
+          <div class="other-guide-list">
+            <article class="other-guide-card">
+              <h4>修剪整形指南</h4>
+              ${renderOtherGuideBlock("冬季修剪（休眠期）：", pruning.winter)}
+              ${renderOtherGuideBlock("夏季修剪（生长期）：", pruning.summer)}
+              ${renderOtherGuideBlock("整形方式：", pruning.shape)}
+            </article>
+            <article class="other-guide-card">
+              <h4>施肥指南</h4>
+              <p>${escapeHtml(`${plantDisplayName(plant)}需肥要看阶段和长势，先保证根系安全，再少量多次补充。`)}</p>
+              ${renderOtherGuideBlock("阶段用肥：", fertilizerItems)}
+              <p>施肥方法：沿盆边或树冠投影范围施入，施肥后浇清水，弱苗、病苗和高温中午减量或暂停。</p>
+            </article>
+            <article class="other-guide-card">
+              <h4>病虫害防治</h4>
+              ${renderOtherGuideBlock("常见病害：", disease.disease)}
+              ${renderOtherGuideBlock("常见虫害：", disease.pest)}
+              ${renderOtherGuideBlock("预防措施：", disease.prevent)}
+            </article>
+            <details class="encyclopedia-details other-guide-card">
+              <summary><span class="knowledge-icon">${knowledgeIcons.calendar}</span>年度管理历</summary>
+              <div class="calendar-grid">
+                ${Array.from({ length: 12 }, (_, index) => `
+                  <div class="calendar-item">
+                    <strong>${index + 1}月</strong>
+                    <p>${escapeHtml(calendar[index] || "观察植株状态")}</p>
+                  </div>
+                `).join("")}
+              </div>
+            </details>
+          </div>
         </section>
       `;
     }
@@ -6772,12 +8253,7 @@
       const calendar = guides.calendar || [];
       return `
         <div class="encyclopedia">
-          <section class="encyclopedia-card">
-            <h3>植物简介</h3>
-            <p><strong>${escapeHtml(plantDisplayName(plant))}</strong></p>
-            <p>${escapeHtml(data.category || plant.category || "通用植物")}</p>
-            <p>${escapeHtml(data.intro)}</p>
-          </section>
+          ${renderPlantProfileHeader(plant, data)}
           <section class="encyclopedia-card">
             <h3>生长需求</h3>
             <div class="need-grid">
@@ -6791,25 +8267,19 @@
             </div>
           </section>
           <section class="encyclopedia-card">
-            <h3>养护技巧</h3>
-            <div class="guide-grid">
-              ${(data.tips || []).map(tip => `
-                <article class="tip-card">
-                  <span class="knowledge-icon">${knowledgeIconForTip(tip.title)}</span>
-                  <strong>${escapeHtml(tip.title)}</strong>
-                  <p>${escapeHtml(tip.text)}</p>
-                </article>
-              `).join("")}
+            <h3 class="encyclopedia-section-title"><span class="knowledge-icon">${knowledgeIcons.root}</span>养护技巧</h3>
+            <div class="tip-list">
+              ${(data.tips || []).map(tip => renderTipCard(tip)).join("")}
             </div>
           </section>
+          ${renderProfessionalGuide(plant)}
+          ${renderDiagnosisGuide(plant)}
+          ${renderStageFormulaGuide(plant)}
           <section class="encyclopedia-card">
-            <h3>季节养护</h3>
-            ${seasons.map(([title, text], index) => `
-              <details class="encyclopedia-details"${index === 0 ? " open" : ""}>
-                <summary><span class="knowledge-icon">${knowledgeIcons.season}</span>${escapeHtml(title)}</summary>
-                <p>${escapeHtml(text || "按当前温度和植株状态调整水肥。")}</p>
-              </details>
-            `).join("")}
+            <h3 class="encyclopedia-section-title"><span class="knowledge-icon">${knowledgeIcons.season}</span>季节性养护指南</h3>
+            <div class="season-guide-list">
+              ${seasons.map(([title, text], index) => renderSeasonCard(title, text, index)).join("")}
+            </div>
           </section>
           <section class="encyclopedia-card">
             <h3>常见问题</h3>
@@ -6820,27 +8290,45 @@
               </details>
             `).join("")}
           </section>
-          <section class="encyclopedia-card">
-            <h3>其他指南</h3>
-            <div class="guide-grid">
-              ${guides.summerPrune ? `<article class="guide-card"><span class="knowledge-icon">${knowledgeIcons.prune}</span><strong>夏季修剪</strong><p>${escapeHtml(guides.summerPrune)}</p></article>` : ""}
-              ${guides.winterPrune ? `<article class="guide-card"><span class="knowledge-icon">${knowledgeIcons.prune}</span><strong>冬季修剪</strong><p>${escapeHtml(guides.winterPrune)}</p></article>` : ""}
-              ${guides.shape ? `<article class="guide-card"><span class="knowledge-icon">${knowledgeIcons.tree}</span><strong>整形方式</strong><p>${escapeHtml(guides.shape)}</p></article>` : ""}
-              <article class="guide-card"><span class="knowledge-icon">${knowledgeIcons.feed}</span><strong>施肥指南</strong>${fertilizer.map(([stage, feed]) => `<p><strong>${escapeHtml(stage)}：</strong>${escapeHtml(feed)}</p>`).join("")}</article>
-            </div>
-            <h4><span class="knowledge-icon">${knowledgeIcons.calendar}</span>年度管理历</h4>
-            <div class="calendar-grid">
-              ${Array.from({ length: 12 }, (_, index) => `
-                <div class="calendar-item">
-                  <strong>${index + 1}月</strong>
-                  <p>${escapeHtml(calendar[index] || "观察植株状态")}</p>
-                </div>
-              `).join("")}
-            </div>
-          </section>
-          ${renderProfessionalGuide(plant)}
+          ${renderOtherGuides(plant, guides, fertilizer, calendar)}
         </div>
       `;
+    }
+
+    function openPlantEncyclopedia(plantId) {
+      const plant = appData.plants.find(item => item.id === plantId);
+      if (!plant) return;
+      currentEncyclopediaPlantId = plantId;
+      if (els.plantEncyclopediaTitle) {
+        els.plantEncyclopediaTitle.textContent = `${plant.name || "植物"}百科`;
+      }
+      if (els.plantEncyclopediaContent) {
+        els.plantEncyclopediaContent.innerHTML = renderPlantEncyclopedia(plant);
+      }
+      switchPage("plant-encyclopedia", true);
+    }
+
+    function renderPlantLifecyclePage(plant) {
+      return `
+        <div class="lifecycle-page">
+          ${renderCurrentStageGuide(plant)}
+          ${renderGrowthLifecycleGuide(plant)}
+        </div>
+      `;
+    }
+
+    function openPlantLifecycle(plantId, stageName = "") {
+      const plant = appData.plants.find(item => item.id === plantId);
+      if (!plant) return;
+      currentLifecyclePlantId = plantId;
+      activeLifecycleStageName = stageName || getPlantLifecycleStage(plant) || "";
+      if (els.plantLifecycleTitle) {
+        els.plantLifecycleTitle.textContent = `${plant.name || "植物"} · 生长阶段`;
+      }
+      if (els.plantLifecycleContent) {
+        els.plantLifecycleContent.innerHTML = renderPlantLifecyclePage(plant);
+      }
+      switchPage("plant-lifecycle", true);
     }
 
     function stageAdviceCardHtml(plant) {
@@ -7398,7 +8886,8 @@
           <button class="detail-tab" type="button" role="tab" aria-selected="false" data-detail-tab="care">养护记录</button>
           <button class="detail-tab" type="button" role="tab" aria-selected="false" data-detail-tab="album">植物相册</button>
           <button class="detail-tab" type="button" role="tab" aria-selected="false" data-detail-tab="stats">统计分析</button>
-          <button class="detail-tab" type="button" role="tab" aria-selected="false" data-detail-tab="encyclopedia">百科</button>
+          <button class="detail-tab" type="button" role="tab" aria-selected="false" data-open-encyclopedia="${escapeHtml(plant.id)}">百科</button>
+          <button class="detail-tab" type="button" role="tab" aria-selected="false" data-open-lifecycle="${escapeHtml(plant.id)}">生长阶段</button>
         </nav>
         <section class="detail-tab-panel active timeline" role="tabpanel" data-detail-panel="growth" style="--crop:${crop.color}">
           <h3>生长记录</h3>
@@ -7449,9 +8938,6 @@
             <div class="detail-stat"><span>养护天数</span><strong>${escapeHtml(plantAgeText(plant))}</strong></div>
           </div>
         </section>
-        <section class="detail-tab-panel" role="tabpanel" data-detail-panel="encyclopedia" style="--crop:${crop.color}" hidden>
-          ${renderPlantEncyclopedia(plant)}
-        </section>
       `;
       els.plantDetailContent.querySelectorAll("[data-quick-record]").forEach(button => {
         button.addEventListener("click", () => handleQuickRecord(plant.id, button.dataset.quickRecord));
@@ -7489,6 +8975,12 @@
           const record = photoRecords.find(item => item.id === button.dataset.openPhoto);
           openPhotoLightbox(record, plant);
         });
+      });
+      els.plantDetailContent.querySelectorAll("[data-open-encyclopedia]").forEach(button => {
+        button.addEventListener("click", () => openPlantEncyclopedia(button.dataset.openEncyclopedia));
+      });
+      els.plantDetailContent.querySelectorAll("[data-open-lifecycle]").forEach(button => {
+        button.addEventListener("click", () => openPlantLifecycle(button.dataset.openLifecycle));
       });
       els.plantDetailContent.querySelectorAll("[data-detail-tab]").forEach(button => {
         button.addEventListener("click", () => {
@@ -8593,6 +10085,25 @@
       renderSeedlingPlans();
       renderCalendar();
       renderTable();
+      if (activePage === "plant-encyclopedia" && currentEncyclopediaPlantId) {
+        const plant = appData.plants.find(item => item.id === currentEncyclopediaPlantId);
+        if (plant && els.plantEncyclopediaContent) {
+          els.plantEncyclopediaContent.innerHTML = renderPlantEncyclopedia(plant);
+          if (els.plantEncyclopediaTitle) {
+            els.plantEncyclopediaTitle.textContent = `${plant.name || "植物"}百科`;
+          }
+        }
+      }
+      if (activePage === "plant-lifecycle" && currentLifecyclePlantId) {
+        const plant = appData.plants.find(item => item.id === currentLifecyclePlantId);
+        if (plant && els.plantLifecycleContent) {
+          activeLifecycleStageName = getPlantLifecycleStage(plant) || "";
+          els.plantLifecycleContent.innerHTML = renderPlantLifecyclePage(plant);
+          if (els.plantLifecycleTitle) {
+            els.plantLifecycleTitle.textContent = `${plant.name || "植物"} · 生长阶段`;
+          }
+        }
+      }
     }
 
     els.form.addEventListener("submit", event => {
@@ -8852,6 +10363,21 @@
     els.viewTasks.addEventListener("click", () => switchPage("tasks"));
     els.viewAdvice.addEventListener("click", () => switchPage("records"));
     els.plantDetailBack.addEventListener("click", goBack);
+    els.plantEncyclopediaBack?.addEventListener("click", goBack);
+    els.plantLifecycleBack?.addEventListener("click", goBack);
+    els.plantLifecycleContent?.addEventListener("click", event => {
+      const summary = event.target.closest(".lifecycle-stage-card > summary");
+      if (!summary) return;
+      event.preventDefault();
+      const card = summary.closest(".lifecycle-stage-card");
+      if (!card) return;
+      activeLifecycleStageName = card.dataset.lifecycleStage || "";
+      els.plantLifecycleContent.querySelectorAll(".lifecycle-stage-card").forEach(item => {
+        const active = item === card;
+        item.classList.toggle("active", active);
+        item.open = active;
+      });
+    });
     els.export.addEventListener("click", exportCsv);
     els.backup.addEventListener("click", exportBackup);
     els.restore.addEventListener("click", () => els.restoreInput.click());
