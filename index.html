@@ -571,16 +571,37 @@
       display: none;
     }
 
-    .advice-collapse summary::after {
-      content: "展开";
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 900;
+    .summary-title,
+    .summary-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
     }
 
-    .advice-collapse[open] summary::after {
-      content: "收起";
+    .summary-toggle {
+      margin-left: auto;
+      flex: 0 0 auto;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .details-toggle-close {
+      display: none;
+    }
+
+    details[open] > summary .summary-toggle {
       color: var(--green);
+    }
+
+    details[open] > summary .details-toggle-open {
+      display: none;
+    }
+
+    details[open] > summary .details-toggle-close {
+      display: inline;
     }
 
     .advice-collapse-body {
@@ -611,19 +632,6 @@
 
     .plant-advice-item summary::-webkit-details-marker {
       display: none;
-    }
-
-    .plant-advice-item summary::after {
-      content: "展开";
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .plant-advice-item[open] summary::after {
-      content: "收起";
-      color: var(--green);
     }
 
     .plant-advice-content {
@@ -2989,7 +2997,15 @@
       color: var(--ink);
       font-size: 13px;
       font-weight: 800;
-      list-style-position: inside;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .advice-details summary::-webkit-details-marker {
+      display: none;
     }
 
     .advice-details[open] {
@@ -3719,7 +3735,7 @@
           </div>
         </section>
 
-        <section class="panel plan-panel app-page" data-page-panel="records">
+        <section class="panel plan-panel app-page" data-page-panel="advice">
           <div class="panel-heading">
             <h2 class="panel-title">养护建议</h2>
             <select class="month-select" id="planMonth"></select>
@@ -3729,16 +3745,16 @@
             <select id="advicePlantSelect"></select>
           </div>
           <details class="advice-collapse" open>
-            <summary>当前阶段建议</summary>
+            <summary><span class="summary-title">当前阶段建议</span><span class="summary-toggle" aria-hidden="true"><span class="details-toggle-open">展开</span><span class="details-toggle-close">收起</span></span></summary>
             <div class="advice-collapse-body">
               <div class="guidance-box" id="stageAdviceBox"></div>
             </div>
           </details>
         </section>
 
-        <section class="panel guidance-panel app-page" data-page-panel="records">
+        <section class="panel guidance-panel app-page" data-page-panel="advice">
           <details class="advice-collapse" id="recipeAdviceCollapse">
-            <summary>配料建议与指导</summary>
+            <summary><span class="summary-title">配料建议与指导</span><span class="summary-toggle" aria-hidden="true"><span class="details-toggle-open">展开</span><span class="details-toggle-close">收起</span></span></summary>
             <div class="advice-collapse-body">
               <div class="guidance-box" id="recipeGuidance">
                 <div class="empty">选择一键配料方案后，这里会显示购买建议、底肥指导、灌根和叶喷方案。</div>
@@ -3747,18 +3763,18 @@
           </details>
         </section>
 
-        <section class="panel plan-panel app-page" data-page-panel="records">
+        <section class="panel plan-panel app-page" data-page-panel="advice">
           <details class="advice-collapse">
-            <summary>动态养护建议</summary>
+            <summary><span class="summary-title">动态养护建议</span><span class="summary-toggle" aria-hidden="true"><span class="details-toggle-open">展开</span><span class="details-toggle-close">收起</span></span></summary>
             <div class="advice-collapse-body">
               <div class="plan-grid" id="planGrid"></div>
             </div>
           </details>
         </section>
 
-        <section class="panel guidance-panel app-page" data-page-panel="records">
+        <section class="panel guidance-panel app-page" data-page-panel="advice">
           <details class="advice-collapse" id="seedlingAdviceCollapse">
-            <summary>幼苗养护建议</summary>
+            <summary><span class="summary-title">幼苗养护建议</span><span class="summary-toggle" aria-hidden="true"><span class="details-toggle-open">展开</span><span class="details-toggle-close">收起</span></span></summary>
             <div class="advice-collapse-body">
               <div class="seedling-grid" id="seedlingGrid"></div>
             </div>
@@ -3954,7 +3970,7 @@
       <button class="active" type="button" data-page="home">首页</button>
       <button type="button" data-page="calendar">日历</button>
       <button type="button" data-page="tasks">任务</button>
-      <button type="button" data-page="records">养护建议</button>
+      <button type="button" data-page="records">记录</button>
       <button type="button" data-page="mine">我的</button>
     </nav>
     <div class="sheet-backdrop" id="plantSheet" hidden>
@@ -3993,6 +4009,32 @@
             <div class="field">
               <label for="plantPurchasePriceInput">购买价格</label>
               <input id="plantPurchasePriceInput" type="number" min="0" step="0.01" inputmode="decimal" placeholder="可不填">
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="plantSeedlingInput">幼苗阶段</label>
+              <select id="plantSeedlingInput">
+                <option value="auto">自动判断</option>
+                <option value="yes">是幼苗 / 小苗</option>
+                <option value="no">不是幼苗 / 已成株</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="plantGrowthAgeInput">已生长多久</label>
+              <select id="plantGrowthAgeInput">
+                <option value="">自动判断</option>
+                <option value="0">刚买回 / 刚移栽</option>
+                <option value="7">约 1 周</option>
+                <option value="14">约 2 周</option>
+                <option value="30">约 1 个月</option>
+                <option value="45">约 45 天</option>
+                <option value="60">约 2 个月</option>
+                <option value="90">约 3 个月</option>
+                <option value="120">约 4 个月</option>
+                <option value="180">约半年</option>
+                <option value="365">约 1 年或以上</option>
+              </select>
             </div>
           </div>
           <div class="field">
@@ -5070,6 +5112,9 @@
     let currentEncyclopediaPlantId = "";
     let currentLifecyclePlantId = "";
     let activeLifecycleStageName = "";
+    const lifecycleStageMemory = new Map();
+    let plantModalReturnPage = "home";
+    let plantModalReturnDetailTab = "growth";
     let plantPhotoBase64 = "";
     let plantPhotoCleared = false;
     let calendarCursor = today().slice(0, 7);
@@ -5139,6 +5184,8 @@
       plantHealth: document.getElementById("plantHealthInput"),
       plantPurchaseDate: document.getElementById("plantPurchaseDateInput"),
       plantPurchasePrice: document.getElementById("plantPurchasePriceInput"),
+      plantSeedling: document.getElementById("plantSeedlingInput"),
+      plantGrowthAge: document.getElementById("plantGrowthAgeInput"),
       plantPhoto: document.getElementById("plantPhotoInput"),
       plantPhotoPreview: document.getElementById("plantPhotoPreview"),
       plantPhotoClear: document.getElementById("plantPhotoClearBtn"),
@@ -5236,7 +5283,7 @@
         panel.classList.toggle("active", panel.dataset.pagePanel === page);
       });
       const mineSubPages = ["materials", "plant-tags", "task-templates", "tools", "memorial"];
-      const navPage = page === "plant-detail" || page === "plant-encyclopedia" || page === "plant-lifecycle" ? "home" : page === "record-form" ? "records" : mineSubPages.includes(page) ? "mine" : page;
+      const navPage = page === "plant-detail" || page === "plant-encyclopedia" || page === "plant-lifecycle" || page === "advice" ? "home" : page === "record-form" ? "records" : mineSubPages.includes(page) ? "mine" : page;
       els.pageButtons.forEach(button => {
         button.classList.toggle("active", button.dataset.page === navPage);
       });
@@ -5304,6 +5351,7 @@
       const rawStatus = plant?.status || plant?.health || "健康";
       const status = plantStatuses.includes(rawStatus) ? rawStatus : rawStatus === "病虫害" ? "病害" : rawStatus === "偏弱" ? "长势弱" : "健康";
       const isDead = plant?.isDead === true || status === "死亡";
+      const seedlingMode = ["auto", "yes", "no"].includes(plant?.seedlingMode) ? plant.seedlingMode : "auto";
       return {
         id: plant?.id || fallback.id,
         name: plant?.name || fallback.name,
@@ -5318,6 +5366,8 @@
         deathReason: plant?.deathReason || "",
         purchaseDate: plant?.purchaseDate || String(plant?.createdAt || "").slice(0, 10) || "",
         purchasePrice: plant?.purchasePrice ?? "",
+        seedlingMode,
+        growthStartDate: plant?.growthStartDate || "",
         createdAt: plant?.createdAt || fallback.createdAt,
         note: plant?.note || ""
       };
@@ -5325,9 +5375,14 @@
 
     function normalizeRecord(record, plantMap) {
       const cropName = record.crop || plantMap.get(record.plantId)?.name || crops[0].name;
+      const matchedPlant = [...plantMap.values()].find(item => {
+        const sameCrop = item.name === cropName || item.category === cropName;
+        const sameVariety = !record.variety || !item.variety || item.variety === record.variety;
+        return sameCrop && sameVariety;
+      });
       const plant = record.plantId && plantMap.has(record.plantId)
         ? plantMap.get(record.plantId)
-        : plantFromCrop(cropName, record.variety || defaultVariety(cropName));
+        : matchedPlant || plantFromCrop(cropName, record.variety || defaultVariety(cropName));
       if (!plantMap.has(plant.id)) plantMap.set(plant.id, plant);
       return {
         ...record,
@@ -5496,7 +5551,7 @@
           nextTasks.push(existing);
         } else {
           const task = normalizeTask({
-            id: makeId("task", `${normalized.id}:${rule.type}`),
+            id: makeId("task"),
             plantId: normalized.id,
             type: rule.type,
             nextDate,
@@ -5516,16 +5571,59 @@
       (appData.plants || []).map(normalizePlant).forEach(plant => generateAutoTasksForPlant(plant));
     }
 
+    function safePlantRecords(plant, options = {}) {
+      if (!plant?.id) return [];
+      const allowLegacyCropFallback = options.allowLegacyCropFallback !== false;
+      const cropKey = plant.category || plant.name || "";
+      const varietyKey = plant.variety || "";
+      const sameCropPlants = (appData.plants || []).map(normalizePlant).filter(item => {
+        return (item.category || item.name || "") === cropKey;
+      });
+      const sameCropVarietyPlants = sameCropPlants.filter(item => {
+        const itemVariety = item.variety || "";
+        if (!varietyKey) return true;
+        return itemVariety === varietyKey;
+      });
+      const canUseLegacyCropFallback = allowLegacyCropFallback && (
+        sameCropPlants.length <= 1 ||
+        (varietyKey && sameCropVarietyPlants.length <= 1)
+      );
+      return records.filter(record => {
+        if (record.plantId) return record.plantId === plant.id;
+        if (!canUseLegacyCropFallback) return false;
+        const sameCrop = record.crop === cropKey || record.crop === plant.name;
+        if (!sameCrop) return false;
+        if (varietyKey) {
+          return !record.variety || record.variety === varietyKey;
+        }
+        return !record.variety;
+      });
+    }
+
+    function isolatedPlantRecords(plant) {
+      if (!plant?.id) return [];
+      const cropKey = plant.category || plant.name || "";
+      const sameCropCount = (appData.plants || []).filter(item => {
+        const normalized = normalizePlant(item);
+        return (normalized.category || normalized.name || "") === cropKey;
+      }).length;
+      return safePlantRecords(plant, {
+        allowLegacyCropFallback: sameCropCount <= 1
+      });
+    }
+
+    function lifecycleRecordsForPlant(plant) {
+      return isolatedPlantRecords(plant);
+    }
+
     function clampDays(value, type) {
       const [min, max] = taskIntervalBounds(type);
       return Math.max(min, Math.min(max, Math.round(Number(value) || min)));
     }
 
     function latestPlantOperation(plant, type) {
-      return latest(records.filter(record =>
-        (record.plantId && record.plantId === plant.id) ||
-        (!record.plantId && record.crop === (plant.category || plant.name))
-      ), type);
+      const recordType = recordTypeForTask(type);
+      return latest(isolatedPlantRecords(plant), recordType);
     }
 
     function dynamicTaskSchedule(plant, template, fromDate = today()) {
@@ -5557,7 +5655,7 @@
         .map(template => {
           const schedule = dynamicTaskSchedule(plant, template);
           return normalizeTask({
-            id: makeId("task", `${plant.id}:${template.id}`),
+            id: makeId("task"),
             plantId: plant.id,
             type: template.type,
             nextDate: schedule.nextDate,
@@ -5641,11 +5739,36 @@
       return [...output.values()];
     }
 
+    function isUnusedLegacySeedPlant(plant, referencedPlantIds) {
+      const crop = crops.find(item => item.name === plant.name && item.name === plant.category);
+      if (!crop || plant.id !== makeId("plant", crop.name) || referencedPlantIds.has(plant.id)) return false;
+      const hasUserContent = Boolean(
+        plant.photo ||
+        plant.purchasePrice !== "" && plant.purchasePrice !== undefined && plant.purchasePrice !== null ||
+        plant.deathReason ||
+        plant.isDead ||
+        !["健康", ""].includes(plant.status || plant.health || "") ||
+        plant.note && plant.note !== crop.hint
+      );
+      return !hasUserContent;
+    }
+
     function migrateOldData(source = {}) {
       const stored = source.stored && !Array.isArray(source.stored) ? source.stored : {};
       const legacy = source.legacy || {};
+      const usedPlantIds = new Set();
+      const storedPlants = Array.isArray(stored.plants)
+        ? stored.plants.map((plant, index) => {
+            const originalId = plant?.id || "";
+            const id = originalId && !usedPlantIds.has(originalId)
+              ? originalId
+              : makeId("plant", `legacy:${plant?.name || plant?.category || "unknown"}:${plant?.variety || ""}:${plant?.createdAt || ""}:${index}`);
+            usedPlantIds.add(id);
+            return normalizePlant({ ...plant, id });
+          })
+        : [];
       const data = {
-        plants: Array.isArray(stored.plants) ? stored.plants.map(normalizePlant) : [],
+        plants: storedPlants,
         records: Array.isArray(stored.records) ? stored.records : [],
         tasks: Array.isArray(stored.tasks) ? stored.tasks : [],
         materials: Array.isArray(stored.materials) ? stored.materials.map(normalizeMaterial) : []
@@ -5654,14 +5777,29 @@
       const legacyRecords = Array.isArray(legacy.records) ? legacy.records : [];
       const recordSource = data.records.length ? data.records : legacyRecords;
 
-      crops.forEach(crop => {
-        const plant = plantFromCrop(crop.name, defaultVariety(crop.name));
-        if (!plantMap.has(plant.id)) plantMap.set(plant.id, plant);
-      });
-
       data.records = recordSource.map(record => normalizeRecord(record, plantMap));
-      data.plants = [...plantMap.values()].map(normalizePlant);
-      data.tasks = data.tasks.map(task => normalizeTask(task, data.plants));
+      const referencedPlantIds = new Set(data.records.map(record => record.plantId).filter(Boolean));
+      data.plants = [...plantMap.values()]
+        .map(normalizePlant)
+        .filter(plant => !isUnusedLegacySeedPlant(plant, referencedPlantIds));
+      const validPlantIds = new Set(data.plants.map(plant => plant.id));
+      const usedTaskIds = new Set();
+      const activeTaskKeys = new Set();
+      data.tasks = data.tasks
+        .map(task => normalizeTask(task, data.plants))
+        .filter(task => validPlantIds.has(task.plantId))
+        .map(task => {
+          if (!task.id || usedTaskIds.has(task.id)) task.id = makeId("task");
+          usedTaskIds.add(task.id);
+          return task;
+        })
+        .filter(task => {
+          if (task.done === true || task.enabled === false) return true;
+          const key = `${task.plantId}:${task.type}`;
+          if (activeTaskKeys.has(key)) return false;
+          activeTaskKeys.add(key);
+          return true;
+        });
       data.materials = buildMaterials(data.materials, legacy, Boolean(source.stored));
       return data;
     }
@@ -6369,6 +6507,8 @@
       }
       if (els.plantPurchaseDate) els.plantPurchaseDate.value = today();
       if (els.plantPurchasePrice) els.plantPurchasePrice.value = "";
+      if (els.plantSeedling) els.plantSeedling.value = "auto";
+      if (els.plantGrowthAge) els.plantGrowthAge.value = "";
       els.plantPhotoPreview.classList.remove("has-photo");
       els.plantPhotoPreview.style.backgroundImage = "";
       els.plantPhotoPreview.textContent = "照片缩略图";
@@ -6376,6 +6516,8 @@
 
     function openPlantModal(plantId = "") {
       resetPlantForm();
+      plantModalReturnPage = activePage || "home";
+      plantModalReturnDetailTab = els.plantDetailContent?.querySelector("[data-detail-tab].active")?.dataset.detailTab || "growth";
       const plant = plantId ? appData.plants.find(item => item.id === plantId) : null;
       if (plant) {
         const normalized = normalizePlant(plant);
@@ -6389,6 +6531,8 @@
         renderStatusOptions(els.plantHealth, normalized.status || "健康");
         els.plantPurchaseDate.value = normalized.purchaseDate || "";
         els.plantPurchasePrice.value = normalized.purchasePrice ?? "";
+        if (els.plantSeedling) els.plantSeedling.value = normalized.seedlingMode || "auto";
+        if (els.plantGrowthAge) els.plantGrowthAge.value = growthAgeOptionValue(normalized);
         els.plantNote.value = normalized.note || "";
         previewPlantPhoto(plantPhotoBase64);
       } else {
@@ -6400,6 +6544,44 @@
 
     function closePlantModal() {
       els.plantSheet.hidden = true;
+    }
+
+    function growthAgeDaysFromPlant(plant) {
+      const startDate = plant?.growthStartDate || plant?.purchaseDate || plant?.createdAt;
+      const start = lifecycleDateValue(startDate);
+      if (!start) return null;
+      const now = new Date(`${today()}T00:00:00`);
+      return Math.max(0, Math.floor((now - start) / 86400000));
+    }
+
+    function growthAgeOptionValue(plant) {
+      const days = growthAgeDaysFromPlant(plant);
+      if (days === null) return "";
+      const options = [0, 7, 14, 30, 45, 60, 90, 120, 180, 365];
+      const match = options.find(value => days <= value);
+      return String(match ?? 365);
+    }
+
+    function returnAfterPlantSave(plant) {
+      closePlantModal();
+      if (plant.isDead) {
+        switchPage("memorial");
+        return;
+      }
+      if (plantModalReturnPage === "plant-detail") {
+        renderPlantDetail(plant.id, false);
+        activatePlantDetailTab(plantModalReturnDetailTab || "growth");
+        return;
+      }
+      if (plantModalReturnPage === "plant-encyclopedia") {
+        openPlantEncyclopedia(plant.id, false);
+        return;
+      }
+      if (plantModalReturnPage === "plant-lifecycle") {
+        openPlantLifecycle(plant.id, lifecycleStageMemory.get(plant.id) || activeLifecycleStageName, false);
+        return;
+      }
+      switchPage(plantModalReturnPage || "home", false);
     }
 
     function deletePlant(plantId) {
@@ -6798,10 +6980,15 @@
         : "底肥/浅埋指导：盆栽若基质已肥沃，本轮不必再埋底肥；需要补底肥时只在盆边浅埋少量腐熟有机肥或缓释肥，再浇透观察。";
     }
 
-    function timingGuidance(rule, growth, cropName) {
-      const lastFeed = latest(records.filter(record => record.crop === cropName), "施肥");
+    function timingGuidance(rule, growth, cropName, options = {}) {
+      const cropRecords = Array.isArray(options.cropRecords)
+        ? options.cropRecords
+        : (options.plant ? isolatedPlantRecords(options.plant) : records.filter(record => record.crop === cropName));
+      const planting = options.planting || els.planting.value || "盆栽";
+      const temp = options.temp ?? els.temperature.value;
+      const lastFeed = latest(cropRecords, "施肥");
       const feedDays = daysBetween(lastFeed?.date);
-      const interval = safeFertilizerInterval(rule, growth, els.planting.value || "盆栽", els.temperature.value);
+      const interval = safeFertilizerInterval(rule, growth, planting, temp);
       if (growth.level === "skip") return "时机判断：当前状态不适合施肥。";
       if (feedDays !== Infinity && feedDays < interval) {
         return `时机判断：距离上次施肥 ${feedDays} 天，少于本阶段缩短后的建议间隔 ${interval} 天，本轮可先观察；确有缺素信号时只做极低浓度叶喷，和下次灌根至少间隔 24-48 小时。`;
@@ -6811,18 +6998,43 @@
     }
 
     function currentRecipeContext() {
-      const rule = ruleForMonth(selectedCrop, currentMonth());
-      const growth = analyzeGrowthStatus(els.growth.value || "健康", els.note.value || "");
-      growth.status = els.growth.value || "健康";
-      const cropRecords = records.filter(record => record.crop === selectedCrop);
+      return adviceRecipeContext();
+    }
+
+    function adviceRecipeContext(plant = null) {
+      const targetPlant = plant && plant.id ? plant : null;
+      const cropName = targetPlant ? (targetPlant.category || targetPlant.name) : selectedCrop;
+      const crop = cropMeta(cropName);
+      const monthRule = ruleForMonth(crop.name, currentMonth());
+      const lifecycleStage = targetPlant && shouldPreferLifecycleGuidance(targetPlant) ? activeLifecycleStage(targetPlant) : null;
+      const rule = lifecycleStage
+        ? {
+            ...monthRule,
+            stage: lifecycleStage.name,
+            action: lifecycleStage.fertilizer,
+            interval: /不施肥|不施浓肥|暂停施肥|禁止高浓度/.test(lifecycleStage.fertilizer || "") ? 14 : monthRule.interval
+          }
+        : monthRule;
+      const growthValue = targetPlant ? (targetPlant.stage || targetPlant.status || "健康") : (els.growth.value || "健康");
+      const growth = analyzeGrowthStatus(growthValue, targetPlant?.note || els.note.value || "");
+      growth.status = growthValue;
+      if (lifecycleStage && /不施肥|不施浓肥|暂停施肥|禁止高浓度/.test(lifecycleStage.fertilizer || "")) {
+        growth.level = "skip";
+        growth.text = `${lifecycleStage.name}以稳根缓苗为主，暂不安排常规施肥。`;
+      }
+      const cropRecords = targetPlant?.id
+        ? isolatedPlantRecords(targetPlant)
+        : records.filter(record => record.crop === crop.name);
       const feed = latest(cropRecords, "施肥");
       const water = latest(cropRecords, "浇水");
       const available = matchedFertilizer(rule);
-      const planting = els.planting.value || "盆栽";
-      const temp = els.temperature.value;
+      const planting = targetPlant
+        ? (cropRecords.find(record => record.planting)?.planting || "盆栽/地栽")
+        : (els.planting.value || "盆栽");
+      const temp = targetPlant ? "" : els.temperature.value;
       const interval = safeFertilizerInterval(rule, growth, planting, temp);
       const decision = fertilizerDecision(
-        cropMeta(selectedCrop),
+        crop,
         rule,
         daysBetween(feed?.date),
         daysBetween(water?.date),
@@ -6831,20 +7043,26 @@
         growth,
         interval
       );
-      return { rule, growth, planting, decision, interval };
+      return { crop, cropName: crop.name, rule, growth, planting, decision, interval, lifecycleStage, cropRecords, feed, water, temp, plant: targetPlant };
     }
 
     function actionGuidanceForDecision(context) {
-      const { rule, growth, planting, decision } = context;
+      const { cropName, rule, growth, planting, decision, lifecycleStage } = context;
       const stockAnalysis = analyzeFertilizerStockForRule(rule);
-      const habit = cropHabitProfiles[selectedCrop] || "按当前月份、生长状态和库存肥料做低浓度、少量多次的管理。";
-      const purchaseAdvice = purchaseAdviceText(stockAnalysis.missing, selectedCrop);
-      const baseAdvice = baseFertilizerGuidance(rule, growth, planting, selectedCrop);
-      const timingAdvice = timingGuidance(rule, growth, selectedCrop);
+      const habit = cropHabitProfiles[cropName] || "按当前月份、生长状态和库存肥料做低浓度、少量多次的管理。";
+      const purchaseAdvice = purchaseAdviceText(stockAnalysis.missing, cropName);
+      const baseAdvice = baseFertilizerGuidance(rule, growth, planting, cropName);
+      const timingAdvice = timingGuidance(rule, growth, cropName, {
+        plant: context.plant,
+        cropRecords: context.cropRecords,
+        planting,
+        temp: context.temp
+      });
       const nextAction = decision.type === "wait"
         ? "当前适合：先观察、补清水、检查根区湿度或补齐库存，不启用一键配肥。"
         : "当前适合：不施速效肥，先做养护、清园、控水、病虫害处理或少量有机质改土。";
-      return `${selectedCrop}${planting}当前不生成一键配料。${nextAction} 原因：${decision.label}，${decision.text} 习性需求：${habit} 当前阶段：${currentMonth()}月${rule.stage}，需求 ${rule.need.join("、")}；植株状态：${growth.status}，${growth.text} ${timingAdvice} 库存分析：${stockAnalysis.text}${stockAnalysis.missing.length ? `；缺口：${stockAnalysis.missing.join("、")}` : "；关键需求已有匹配"}。${purchaseAdvice} ${baseAdvice}`;
+      const stageLabel = lifecycleStage ? rule.stage : `${currentMonth()}月${rule.stage}`;
+      return `${cropName}${planting}当前不生成一键配料。${nextAction} 原因：${decision.label}，${decision.text} 习性需求：${habit} 当前阶段：${stageLabel}，需求 ${rule.need.join("、")}；植株状态：${growth.status}，${growth.text} ${timingAdvice} 库存分析：${stockAnalysis.text}${stockAnalysis.missing.length ? `；缺口：${stockAnalysis.missing.join("、")}` : "；关键需求已有匹配"}。${purchaseAdvice} ${baseAdvice}`;
     }
 
     function renderRecipeGuidance(text = "") {
@@ -6853,22 +7071,20 @@
         const plants = getSelectedAdvicePlants();
         if (plants.length) {
           els.recipeGuidance.innerHTML = plants.map(plant => {
-            const crop = cropMeta(plant.category || plant.name);
-            const rule = ruleForMonth(crop.name, currentMonth());
-            const growth = analyzeGrowthStatus(plant.stage || plant.status || "健康", plant.note || "");
-            growth.status = plant.stage || plant.status || "健康";
-            const recipes = recipesForRule(rule, growth);
+            const context = adviceRecipeContext(plant);
+            const { crop, rule, growth, decision } = context;
+            const recipes = decision.recipe ? recipesForRule(rule, growth) : [];
             const primary = recipes[0];
             const stockAnalysis = analyzeFertilizerStockForRule(rule);
             const openAttr = selectedAdvicePlantId === "全部" ? "" : " open";
             return `
               <details class="plant-advice-item"${openAttr} style="--crop:${crop.color}">
-                <summary><span>${escapeHtml(plantDisplayName(plant))}</span><span class="month-badge">${escapeHtml(primary?.name || "本轮不配肥")}</span></summary>
+                <summary><span class="summary-title"><span>${escapeHtml(plantDisplayName(plant))}</span><span class="month-badge">${escapeHtml(primary?.name || "本轮不配肥")}</span></span>${summaryToggleHtml()}</summary>
                 <div class="plant-advice-content">
                   <p class="recipe-detail"><strong>阶段：</strong>${escapeHtml(rule.stage)}；${escapeHtml(growth.text)}</p>
                   <p class="recipe-detail"><strong>需求：</strong>${escapeHtml(rule.need.join("、"))}</p>
                   <p class="recipe-detail"><strong>库存匹配：</strong>${escapeHtml(stockAnalysis.text)}</p>
-                  <p class="recipe-detail"><strong>建议：</strong>${escapeHtml(primary ? recipeComponents(primary).map(item => item.name).join(" + ") || "先补齐主要材料" : "当前先观察，不建议强行配肥。")}</p>
+                  <p class="recipe-detail"><strong>建议：</strong>${escapeHtml(primary ? recipeComponents(primary).map(item => item.name).join(" + ") || "先补齐主要材料" : decision.text || "当前先观察，不建议强行配肥。")}</p>
                 </div>
               </details>
             `;
@@ -6887,17 +7103,22 @@
         .join("");
     }
 
-    function recipePlanOptions() {
+    function recipePlanOptions(plant = null) {
       if (els.type.value !== "施肥") return [];
-      const context = currentRecipeContext();
-      const { rule, growth, planting, decision } = context;
+      const context = adviceRecipeContext(plant);
+      const { cropName, rule, growth, planting, decision, temp } = context;
       if (!decision.recipe) return [];
       const application = applicationAdvice(rule, growth);
       const stockAnalysis = analyzeFertilizerStockForRule(rule);
-      const habit = cropHabitProfiles[selectedCrop] || "按当前月份、生长状态和库存肥料做低浓度、少量多次的配肥。";
-      const purchaseAdvice = purchaseAdviceText(stockAnalysis.missing, selectedCrop);
-      const baseAdvice = baseFertilizerGuidance(rule, growth, planting, selectedCrop);
-      const timingAdvice = timingGuidance(rule, growth, selectedCrop);
+      const habit = cropHabitProfiles[cropName] || "按当前月份、生长状态和库存肥料做低浓度、少量多次的配肥。";
+      const purchaseAdvice = purchaseAdviceText(stockAnalysis.missing, cropName);
+      const baseAdvice = baseFertilizerGuidance(rule, growth, planting, cropName);
+      const timingAdvice = timingGuidance(rule, growth, cropName, {
+        plant: context.plant,
+        cropRecords: context.cropRecords,
+        planting,
+        temp: context.temp
+      });
       const plans = recipesForRule(rule, growth).map(recipe => {
         const components = recipeComponents(recipe);
         const parts = components.map(component => component.name);
@@ -6912,14 +7133,14 @@
         }));
         const rootPlan = rootPlanText(items, planting);
         const foliarPlan = foliarPlanText(items, rule, planting);
-        const intervalPlan = rootFoliarIntervalText(growth, planting, els.temperature.value);
+        const intervalPlan = rootFoliarIntervalText(growth, planting, temp);
         return {
           name: recipe.name,
           planting,
           fertilizer: parts.join("、"),
           dilution,
           items,
-          note: `${selectedCrop}${planting}${recipe.name}：${ratios.length ? ratios.join(" + ") : "当前库存缺少主要材料"}。习性需求：${habit} 当前阶段：${currentMonth()}月${rule.stage}，需求 ${rule.need.join("、")}；植株状态：${growth.status}，${growth.text} ${timingAdvice} 库存分析：${stockAnalysis.text}${stockAnalysis.missing.length ? `；缺口：${stockAnalysis.missing.join("、")}` : "；关键需求已有匹配"}。${purchaseAdvice} ${baseAdvice} 品牌型谱：${profile} ${rootPlan} ${foliarPlan} ${intervalPlan} 阶段建议：${dose} 施用方式：${application}。注意：${recipe.caution}`
+          note: `${cropName}${planting}${recipe.name}：${ratios.length ? ratios.join(" + ") : "当前库存缺少主要材料"}。习性需求：${habit} 当前阶段：${rule.stage}，需求 ${rule.need.join("、")}；植株状态：${growth.status}，${growth.text} ${timingAdvice} 库存分析：${stockAnalysis.text}${stockAnalysis.missing.length ? `；缺口：${stockAnalysis.missing.join("、")}` : "；关键需求已有匹配"}。${purchaseAdvice} ${baseAdvice} 品牌型谱：${profile} ${rootPlan} ${foliarPlan} ${intervalPlan} 阶段建议：${dose} 施用方式：${application}。注意：${recipe.caution}`
         };
       }).filter(plan => plan.fertilizer);
       if (plans.length) return plans;
@@ -6929,7 +7150,7 @@
         fertilizer: stockAnalysis.missing.length ? `建议购买：${stockAnalysis.missing.join("、")}` : "暂不施肥",
         dilution: "",
         items: [],
-        note: `${selectedCrop}${planting}库存不足购买建议：当前 ${currentMonth()}月${rule.stage}，需求 ${rule.need.join("、")}。习性需求：${habit} 植株状态：${growth.status}，${growth.text} ${timingAdvice} 库存分析：${stockAnalysis.text}${stockAnalysis.missing.length ? `；缺口：${stockAnalysis.missing.join("、")}` : "；关键需求已有匹配"}。${purchaseAdvice} ${baseAdvice} 暂无可直接生成的配料，先补齐库存或改用低风险有机养护。`
+        note: `${cropName}${planting}库存不足购买建议：当前 ${rule.stage}，需求 ${rule.need.join("、")}。习性需求：${habit} 植株状态：${growth.status}，${growth.text} ${timingAdvice} 库存分析：${stockAnalysis.text}${stockAnalysis.missing.length ? `；缺口：${stockAnalysis.missing.join("、")}` : "；关键需求已有匹配"}。${purchaseAdvice} ${baseAdvice} 暂无可直接生成的配料，先补齐库存或改用低风险有机养护。`
       }];
     }
 
@@ -7183,16 +7404,19 @@
       renderAll();
     }
 
+    function plantStartDate(plant) {
+      return String(plant?.growthStartDate || plant?.purchaseDate || plant?.createdAt || today()).slice(0, 10);
+    }
+
     function plantAgeText(plant) {
-      if (!plant?.createdAt) return "第1天";
-      const date = String(plant.createdAt).slice(0, 10);
+      const date = plantStartDate(plant);
       const end = plant.isDead && plant.deathDate ? plant.deathDate : today();
       const days = Math.max(0, Math.round((new Date(end + "T00:00:00") - new Date(date + "T00:00:00")) / 86400000));
       return `第${Number.isFinite(days) ? days + 1 : 1}天`;
     }
 
     function plantAgeTextForDate(plant, dateString) {
-      const start = String(plant?.createdAt || today()).slice(0, 10);
+      const start = plantStartDate(plant);
       const target = dateString || today();
       const days = Math.max(0, Math.round((new Date(target + "T00:00:00") - new Date(start + "T00:00:00")) / 86400000));
       return `养护第${Number.isFinite(days) ? days + 1 : 1}天`;
@@ -7347,8 +7571,8 @@
       const grape = isGrapePlant(plant);
       const blueberry = isBlueberryPlant(plant);
       const tomato = isTomatoPlant(plant);
-      if (/休眠|落叶|死亡/.test(stage)) return tomato ? "清园期" : blueberry ? "休眠期" : "休眠期";
-      if (/缓苗/.test(stage)) return tomato ? "缓苗期" : "萌芽期";
+      if (/休眠|落叶|死亡/.test(stage)) return tomato ? "清园期" : "休眠期";
+      if (/缓苗/.test(stage)) return tomato ? "缓苗期" : "";
       if (/萌芽/.test(stage)) return blueberry ? "花芽萌动期" : "萌芽期";
       if (/展叶/.test(stage)) return "展叶期";
       if (/新梢|旺长|徒长/.test(stage)) return tomato ? "营养生长期" : grape ? "新梢生长期" : "展叶期";
@@ -7360,40 +7584,7 @@
       if (/转色/.test(stage)) return blueberry ? "转蓝期" : "转色期";
       if (/成熟|采收/.test(stage)) return tomato ? "成熟采收期" : "成熟期";
       if (/已收获|采后/.test(stage)) return tomato ? "持续结果期" : "采后恢复期";
-
-      const month = new Date(`${today()}T00:00:00`).getMonth() + 1;
-      if (tomato) {
-        if (month <= 3) return "育苗期";
-        if (month === 4) return "缓苗期";
-        if (month === 5) return "现蕾期";
-        if (month === 6) return "开花期";
-        if (month === 7) return "坐果期";
-        if (month === 8) return "膨果期";
-        if (month === 9) return "转色期";
-        if (month === 10) return "成熟采收期";
-        return "清园期";
-      }
-      if (blueberry) {
-        if (month <= 2) return "休眠期";
-        if (month === 3) return "花芽萌动期";
-        if (month === 4) return "展叶期";
-        if (month === 5) return "坐果期";
-        if (month === 6) return "膨果期";
-        if (month === 7) return "转蓝期";
-        if (month === 8) return "成熟期";
-        if (month === 9) return "采后恢复期";
-        if (month === 10) return "花芽分化期";
-        return "越冬期";
-      }
-      if (month === 3) return "萌芽期";
-      if (month === 4) return "新梢生长期";
-      if (month === 5) return "花前期";
-      if (month === 6) return "坐果期";
-      if (month === 7) return "膨果期";
-      if (month === 8) return "转色期";
-      if (month === 9) return "成熟期";
-      if (month === 10) return "采后恢复期";
-      return "休眠期";
+      return "";
     }
 
     function professionalGuideForPlant(plant) {
@@ -7406,11 +7597,60 @@
     function activeProfessionalStage(plant) {
       const guide = professionalGuideForPlant(plant);
       if (!guide?.stages?.length) return null;
+      if (shouldPreferLifecycleGuidance(plant)) {
+        return lifecycleStageAsGuideStage(activeLifecycleStage(plant));
+      }
       const currentStage = currentProfessionalStage(plant);
       const month = new Date(`${today()}T00:00:00`).getMonth() + 1;
       return guide.stages.find(stage => stage.name === currentStage)
         || guide.stages.find(stage => Array.isArray(stage.months) && stage.months.includes(month))
         || guide.stages[0];
+    }
+
+    function professionalStageHighlightName(plant, guide, activeStage) {
+      if (!guide?.stages?.length) return "";
+      if (guide.stages.some(stage => stage.name === activeStage?.name)) return activeStage.name;
+      const explicitStage = currentProfessionalStage(plant);
+      if (explicitStage && guide.stages.some(stage => stage.name === explicitStage)) return explicitStage;
+      if (shouldPreferLifecycleGuidance(plant)) {
+        if (isTomatoPlant(plant)) return guide.stages.find(stage => /缓苗|营养/.test(stage.name))?.name || guide.stages[0].name;
+        if (isBlueberryPlant(plant)) return guide.stages.find(stage => /花芽萌动|展叶/.test(stage.name))?.name || guide.stages[0].name;
+        if (isGrapePlant(plant)) return guide.stages.find(stage => /萌芽|新梢/.test(stage.name))?.name || guide.stages[0].name;
+      }
+      return guide.stages[0].name;
+    }
+
+    function hasExplicitMatureStage(plant) {
+      const plantText = `${plant?.stage || ""} ${plant?.status || ""}`;
+      const recordText = lifecycleRecordsForPlant(plant)
+        .map(record => `${record.growth || ""} ${record.stage || ""} ${record.note || ""}`)
+        .join(" ");
+      return /花苞|现蕾|开花|授粉|坐果|结果|幼果|膨大|膨果|转色|成熟|采收|已收获|采后|休眠|落叶|越冬/.test(`${plantText} ${recordText}`);
+    }
+
+    function shouldPreferLifecycleGuidance(plant) {
+      if (!plant?.id || plant.isDead || plant.status === "死亡") return false;
+      if (/缓苗|生根|幼苗|小苗|新购|移栽|真叶/.test(`${plant.stage || ""}${plant.status || ""}`)) return true;
+      const age = lifecycleAgeDays(plant);
+      return age !== null && age <= 120 && !hasExplicitMatureStage(plant);
+    }
+
+    function lifecycleStageAsGuideStage(stage) {
+      if (!stage) return null;
+      return guideStage({
+        name: stage.name,
+        months: [],
+        goal: stage.goal,
+        watering: stage.water,
+        fertilizer: stage.fertilizer,
+        pruning: stage.pruning,
+        diseaseRisk: stage.diseaseRisk,
+        nutrientRisk: stage.soil,
+        warning: stage.warning,
+        formula: /不施肥|不施浓肥|暂停施肥|禁止高浓度/.test(stage.fertilizer || "")
+          ? ["本阶段暂停配肥", "优先稳定根系和水分"]
+          : [stage.fertilizer, stage.soil].filter(Boolean)
+      });
     }
 
     function genericCurrentStage(plant) {
@@ -7462,6 +7702,7 @@
     function renderProfessionalGuideCard(guide, plant) {
       if (!guide?.stages?.length) return "";
       const activeStage = activeProfessionalStage(plant) || guide.stages[0];
+      const highlightStageName = professionalStageHighlightName(plant, guide, activeStage);
       return `
         <section class="encyclopedia-card professional-guide">
           <h3>${escapeHtml(guide.title)}</h3>
@@ -7482,7 +7723,7 @@
           </div>
           <h4>全阶段管理</h4>
           <div class="stage-list">
-            ${guide.stages.map(stage => professionalStageDetailsHtml(stage, activeStage.name)).join("")}
+            ${guide.stages.map(stage => professionalStageDetailsHtml(stage, highlightStageName)).join("")}
           </div>
         </section>
       `;
@@ -7592,14 +7833,10 @@
     }
 
     function lifecycleAgeDays(plant) {
-      const start = lifecycleDateValue(plant?.purchaseDate || plant?.createdAt);
+      const start = lifecycleDateValue(plant?.growthStartDate || plant?.purchaseDate || plant?.createdAt);
       if (!start) return null;
       const now = new Date(`${today()}T00:00:00`);
       return Math.max(0, Math.floor((now - start) / 86400000));
-    }
-
-    function lifecycleRecordsForPlant(plant) {
-      return (records || []).filter(record => record.plantId === plant?.id || (!record.plantId && record.crop === (plant?.category || plant?.name)));
     }
 
     function lifecycleNameForKind(plant, genericName) {
@@ -7627,13 +7864,19 @@
         .map(record => `${record.type || ""}${record.growth || ""}${record.stage || ""}${record.note || ""}`)
         .join(" ");
       const text = `${stageText} ${recordText}`;
+      const explicitSeedling = plant?.seedlingMode === "yes";
+      const age = lifecycleAgeDays(plant);
       if (/休眠|落叶|越冬/.test(text)) return lifecycleNameForKind(plant, "winter");
       if (/采后|已收获/.test(text)) return lifecycleNameForKind(plant, "post");
       if (/采收/.test(text)) return lifecycleNameForKind(plant, "harvest");
       if (/膨大|膨果|成熟|转色/.test(text)) return lifecycleNameForKind(plant, "fruit");
       if (/开花|花苞|授粉|坐果|结果|幼果/.test(text)) return lifecycleNameForKind(plant, "flower");
       if (/缓苗/.test(text)) return lifecycleNameForKind(plant, "transplant");
-      const age = lifecycleAgeDays(plant);
+      if (explicitSeedling && age !== null) {
+        if (age <= 14) return lifecycleNameForKind(plant, "transplant");
+        if (age <= 45) return lifecycleNameForKind(plant, "root");
+        if (age <= 120) return lifecycleNameForKind(plant, "fast");
+      }
       if (age !== null) {
         if (age <= 14) return lifecycleNameForKind(plant, "transplant");
         if (age <= 45) return lifecycleNameForKind(plant, "root");
@@ -7685,7 +7928,8 @@
     function renderGrowthLifecycleGuide(plant) {
       const guide = lifecycleGuideForPlant(plant);
       const detected = activeLifecycleStage(plant);
-      const activeName = activeLifecycleStageName || detected?.name || "";
+      const rememberedStage = lifecycleStageMemory.get(plant.id) || "";
+      const activeName = rememberedStage || activeLifecycleStageName || detected?.name || "";
       const active = guide.find(stage => stage.name === activeName) || detected || guide[0];
       const activeIndex = Math.max(0, guide.findIndex(stage => stage.name === active.name));
       const nextStage = guide[activeIndex + 1];
@@ -7776,7 +8020,7 @@
 
     function availableMaterialNames() {
       return (appData.materials || [])
-        .filter(item => item.status !== "过期" && item.status !== "已用完" && item.status !== "已删除")
+        .filter(item => materialDisplayStatus(item) === "有效" && Number(item.stock) > 0)
         .map(item => item.name)
         .filter(Boolean);
     }
@@ -8295,7 +8539,7 @@
       `;
     }
 
-    function openPlantEncyclopedia(plantId) {
+    function openPlantEncyclopedia(plantId, push = true) {
       const plant = appData.plants.find(item => item.id === plantId);
       if (!plant) return;
       currentEncyclopediaPlantId = plantId;
@@ -8305,7 +8549,7 @@
       if (els.plantEncyclopediaContent) {
         els.plantEncyclopediaContent.innerHTML = renderPlantEncyclopedia(plant);
       }
-      switchPage("plant-encyclopedia", true);
+      switchPage("plant-encyclopedia", push);
     }
 
     function renderPlantLifecyclePage(plant) {
@@ -8317,24 +8561,36 @@
       `;
     }
 
-    function openPlantLifecycle(plantId, stageName = "") {
+    function openPlantLifecycle(plantId, stageName = "", push = true) {
       const plant = appData.plants.find(item => item.id === plantId);
       if (!plant) return;
       currentLifecyclePlantId = plantId;
-      activeLifecycleStageName = stageName || getPlantLifecycleStage(plant) || "";
+      activeLifecycleStageName = stageName || lifecycleStageMemory.get(plantId) || getPlantLifecycleStage(plant) || "";
+      if (activeLifecycleStageName) {
+        lifecycleStageMemory.set(plantId, activeLifecycleStageName);
+      }
       if (els.plantLifecycleTitle) {
         els.plantLifecycleTitle.textContent = `${plant.name || "植物"} · 生长阶段`;
       }
       if (els.plantLifecycleContent) {
         els.plantLifecycleContent.innerHTML = renderPlantLifecyclePage(plant);
       }
-      switchPage("plant-lifecycle", true);
+      switchPage("plant-lifecycle", push);
     }
 
     function stageAdviceCardHtml(plant) {
       const crop = cropMeta(plant.category || plant.name);
-      const rule = ruleForMonth(crop.name, currentMonth());
-      const plantRecords = records.filter(record => record.plantId === plant.id || (!record.plantId && record.crop === (plant.category || plant.name)));
+      const monthRule = ruleForMonth(crop.name, currentMonth());
+      const lifecycleStage = shouldPreferLifecycleGuidance(plant) ? activeLifecycleStage(plant) : null;
+      const rule = lifecycleStage
+        ? {
+            ...monthRule,
+            stage: lifecycleStage.name,
+            action: lifecycleStage.fertilizer,
+            interval: /不施肥|不施浓肥|暂停施肥|禁止高浓度/.test(lifecycleStage.fertilizer || "") ? 14 : monthRule.interval
+          }
+        : monthRule;
+      const plantRecords = isolatedPlantRecords(plant);
       const water = latest(plantRecords, "浇水");
       const feed = latest(plantRecords, "施肥");
       const waterTemplate = taskTemplateForType(plant, "浇水");
@@ -8343,6 +8599,10 @@
       const feedSchedule = feedTemplate ? dynamicTaskSchedule(plant, feedTemplate) : null;
       const growth = analyzeGrowthStatus(plant.stage || plant.status || "健康", plant.note || "");
       growth.status = plant.stage || plant.status || "健康";
+      if (lifecycleStage && /不施肥|不施浓肥|暂停施肥|禁止高浓度/.test(lifecycleStage.fertilizer || "")) {
+        growth.level = "skip";
+        growth.text = `${lifecycleStage.name}以稳根缓苗为主，暂不安排常规施肥。`;
+      }
       const plantingText = plantRecords.find(record => record.planting)?.planting || "盆栽/地栽";
       const decision = fertilizerDecision(crop, rule, daysBetween(feed?.date), daysBetween(water?.date), plantingText, matchedFertilizer(rule), growth, safeFertilizerInterval(rule, growth, plantingText));
       const recipe = recipesForRule(rule, growth)[0];
@@ -8350,7 +8610,7 @@
       const openAttr = selectedAdvicePlantId !== "全部" ? " open" : "";
       return `
         <details class="plant-advice-item"${openAttr} style="--crop:${crop.color}">
-          <summary><span>${escapeHtml(plantDisplayName(plant))}</span><span class="month-badge">${escapeHtml(plant.stage || plant.status || "健康")}</span></summary>
+          <summary><span class="summary-title"><span>${escapeHtml(plantDisplayName(plant))}</span><span class="month-badge">${escapeHtml(plant.stage || plant.status || "健康")}</span></span>${summaryToggleHtml()}</summary>
           <div class="plant-advice-content">
             <div class="brief-grid">
               <div class="brief-item"><strong>当前状态</strong>${escapeHtml(plant.status || "健康")}</div>
@@ -8358,7 +8618,7 @@
               <div class="brief-item"><strong>最近施肥</strong>${feed?.date ? escapeHtml(feed.date) : "暂无记录"}</div>
               <div class="brief-item"><strong>浇水频率</strong>${waterSchedule ? escapeHtml(`${waterSchedule.cycleDays}天；${waterSchedule.nextDate}`) : "按土壤干湿观察"}</div>
               <div class="brief-item"><strong>施肥频率</strong>${feedSchedule ? escapeHtml(`${feedSchedule.cycleDays}天；${feedSchedule.nextDate}`) : "当前阶段可暂停或观察"}</div>
-              <div class="brief-item"><strong>推荐配方</strong>${escapeHtml(recipe?.name || decision.label || "本轮不配肥")}</div>
+              <div class="brief-item"><strong>推荐配方</strong>${escapeHtml(decision.recipe ? (recipe?.name || decision.label) : "本轮不配肥")}</div>
               <div class="brief-item full"><strong>风险提醒</strong>${escapeHtml(risk || decision.text || "保持通风、稳水，避免连续大水大肥。")}</div>
             </div>
           </div>
@@ -8579,7 +8839,23 @@
       generateAutoTasksForPlant(plant);
       saveData();
       renderAll();
-      switchPage("home");
+      if (activePage === "plant-detail") {
+        renderPlantDetail(plant.id, false);
+        return;
+      }
+      if (activePage === "plant-encyclopedia") {
+        openPlantEncyclopedia(plant.id, false);
+        return;
+      }
+      if (activePage === "plant-lifecycle") {
+        openPlantLifecycle(plant.id, activeLifecycleStageName, false);
+        return;
+      }
+      if (activePage === "memorial") {
+        switchPage("home", false);
+        return;
+      }
+      goBack();
     }
 
     function markPlantDead(plantId) {
@@ -8728,7 +9004,7 @@
         amount: "",
         fertilizer: "",
         dilution: "",
-        growth: plant.status || plant.health || "健康",
+        growth: "",
         note: task.note || "",
         createdAt: Date.now()
       }, new Map(appData.plants.map(item => [item.id, item]))));
@@ -8789,7 +9065,7 @@
       els.photoLightboxMeta.innerHTML = "";
     }
 
-    function renderPlantDetail(plantId) {
+    function renderPlantDetail(plantId, push = true) {
       const storedPlant = appData.plants.find(item => item.id === plantId);
       if (!storedPlant) return;
       const plant = normalizePlant(storedPlant);
@@ -8801,8 +9077,7 @@
       const latestRecord = plantRecords[0];
       const growthRecords = plantRecords.filter(record =>
         ["拍照", "笔记", "测量", "里程碑"].includes(record.type) ||
-        (record.growth && record.growth !== "正常") ||
-        (record.temperature !== "" && record.temperature !== undefined)
+        (record.growth && !["正常", "健康"].includes(record.growth))
       );
       const careRecords = plantRecords.filter(record => ["浇水", "施肥", "修剪", "病虫害", "换盆", "换水"].includes(record.type));
       const photoRecords = plantRecords
@@ -8997,7 +9272,7 @@
           });
         });
       });
-      switchPage("plant-detail");
+      switchPage("plant-detail", push);
     }
 
     function activatePlantDetailTab(tab = "growth") {
@@ -9047,8 +9322,7 @@
       }, new Map(appData.plants.map(item => [item.id, item])));
       records.push(payload);
       saveRecords();
-      renderAll();
-      renderPlantDetail(plant.id);
+      return payload;
     }
 
     function openPlantPhotoPicker(plantId) {
@@ -9097,7 +9371,7 @@
       const openAttr = selectedAdvicePlantId === "全部" ? "" : " open";
       return `
         <details class="plant-advice-item"${openAttr} style="--crop:${crop.color}">
-          <summary><span>${escapeHtml(crop.name)}</span><span class="month-badge">${escapeHtml(plan.stage)}</span></summary>
+          <summary><span class="summary-title"><span>${escapeHtml(crop.name)}</span><span class="month-badge">${escapeHtml(plan.stage)}</span></span>${summaryToggleHtml()}</summary>
           <div class="plant-advice-content seedling-list">
             <p><strong>浇水：</strong>${escapeHtml(plan.water)}</p>
             <p><strong>施肥：</strong>${escapeHtml(plan.fertilizer)}</p>
@@ -9683,17 +9957,27 @@
         : [{ id: "", name: selectedCrop, category: selectedCrop, variety: defaultVariety(selectedCrop), stage: els.growth.value || "健康", status: els.growth.value || "健康", note: els.note.value || "" }];
       els.planGrid.innerHTML = targets.map(plant => {
         const crop = cropMeta(plant.category || plant.name || selectedCrop);
-        const rule = ruleForMonth(crop.name, month);
+        const monthRule = ruleForMonth(crop.name, month);
+        const lifecycleStage = plant.id && shouldPreferLifecycleGuidance(plant) ? activeLifecycleStage(plant) : null;
+        const rule = lifecycleStage
+          ? {
+              ...monthRule,
+              stage: lifecycleStage.name,
+              action: lifecycleStage.fertilizer,
+              interval: /不施肥|不施浓肥|暂停施肥|禁止高浓度/.test(lifecycleStage.fertilizer || "") ? 14 : monthRule.interval
+            }
+          : monthRule;
         const varieties = crop.varieties.join("、");
         const noteText = crop.varieties.map(variety => varietyNotes[variety]).filter(Boolean).join(" ");
-        const plantingRecords = records.filter(record => plant.id ? record.plantId === plant.id : record.crop === crop.name).filter(record => record.planting);
+        const plantingRecords = (plant.id ? isolatedPlantRecords(plant) : records.filter(record => record.crop === crop.name))
+          .filter(record => record.planting);
         const plantingText = plantingRecords[0]?.planting || "盆栽/地栽";
         const plantingAdvice = plantingText === "地栽"
           ? "地栽以根区改土、深浇和少次稳施为主，颗粒肥沿滴水线外圈浅埋。"
           : plantingText === "盆栽"
             ? "盆栽肥量按地栽思路减半或更低，优先低浓度水溶肥，避免盐分累积。"
             : "盆栽按低浓度多次，地栽按根区范围少次稳施。";
-        const cropRecords = records.filter(record => plant.id ? record.plantId === plant.id : record.crop === crop.name);
+        const cropRecords = plant.id ? isolatedPlantRecords(plant) : records.filter(record => record.crop === crop.name);
         const feed = latest(cropRecords, "施肥");
         const water = latest(cropRecords, "浇水");
         const observation = latest(cropRecords.filter(record => record.growth || record.note || record.temperature !== undefined), record => true);
@@ -9706,6 +9990,10 @@
         const currentTemp = observation?.temperature ?? "";
         const growth = analyzeGrowthStatus(currentGrowth || "正常", currentNote || "");
         growth.status = currentGrowth || "正常";
+        if (lifecycleStage && /不施肥|不施浓肥|暂停施肥|禁止高浓度/.test(lifecycleStage.fertilizer || "")) {
+          growth.level = "skip";
+          growth.text = `${lifecycleStage.name}以稳根缓苗为主，暂不安排常规施肥。`;
+        }
         const interval = safeFertilizerInterval(rule, growth, plantingText, currentTemp);
         const appAdvice = applicationAdvice(rule, growth);
         const decision = fertilizerDecision(crop, rule, feedDays, waterDays, plantingText, available, growth, interval);
@@ -9726,7 +10014,7 @@
         const openAttr = selectedAdvicePlantId !== "全部" ? " open" : "";
         return `
           <details class="plant-advice-item"${openAttr} style="--crop:${crop.color}">
-            <summary><span>${escapeHtml(plant.id ? plantDisplayName(plant) : crop.name)}</span><span class="month-badge">${month}月 · ${rule.stage}</span></summary>
+            <summary><span class="summary-title"><span>${escapeHtml(plant.id ? plantDisplayName(plant) : crop.name)}</span><span class="month-badge">${lifecycleStage ? "" : `${month}月 · `}${escapeHtml(rule.stage)}</span></span>${summaryToggleHtml()}</summary>
             <div class="plant-advice-content">
               <p class="plan-line"><span class="decision ${decision.type === "feed" ? "" : decision.type}">${escapeHtml(decision.label)}</span> ${escapeHtml(decision.text)}</p>
               <div class="brief-grid">
@@ -9737,7 +10025,7 @@
               </div>
               <div class="recipe-list">${recipeHtml}</div>
               <details class="advice-details">
-                <summary>养护 / 修剪 / 生长分析</summary>
+                <summary><span class="summary-title">养护 / 修剪 / 生长分析</span>${summaryToggleHtml()}</summary>
                 <p class="plan-line"><strong>生长：</strong>${escapeHtml(currentGrowth || "健康")}；${escapeHtml(growth.text)}</p>
                 <p class="plan-line"><strong>养护：</strong>${escapeHtml(varietyCareText(crop.varieties))}</p>
                 <p class="plan-line"><strong>修剪：</strong>${escapeHtml(temperatureAdvice(currentTemp, crop.name, rule.stage))}</p>
@@ -9750,17 +10038,27 @@
       }).join("");
     }
 
+    function recordCreatedAtValue(record) {
+      const raw = record?.createdAt;
+      if (typeof raw === "number") return raw;
+      if (!raw) return 0;
+      const parsed = Date.parse(raw);
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
     function latest(list, type) {
       return [...list]
         .filter(record => typeof type === "function" ? type(record) : record.type === type)
-        .sort((a, b) => b.date.localeCompare(a.date))[0];
+        .sort((a, b) => (
+          b.date.localeCompare(a.date) ||
+          recordCreatedAtValue(b) - recordCreatedAtValue(a)
+        ))[0];
     }
 
     function getFilteredRecords() {
       const keyword = els.search.value.trim().toLowerCase();
       return [...records]
-        .filter(record => selectedAdvicePlantId === "全部" || !selectedAdvicePlantId || record.plantId === selectedAdvicePlantId)
-        .filter(record => selectedAdvicePlantId !== "全部" || els.cropFilter.value === "全部" || record.crop === els.cropFilter.value)
+        .filter(record => els.cropFilter.value === "全部" || record.crop === els.cropFilter.value)
         .filter(record => els.typeFilter.value === "全部" || record.type === els.typeFilter.value)
         .filter(record => !els.recordMonthFilter || els.recordMonthFilter.value === "全部" || String(record.date || "").slice(0, 7) === els.recordMonthFilter.value)
         .filter(record => {
@@ -9768,7 +10066,7 @@
           const textWithDilution = `${text} ${record.dilution || ""}`.toLowerCase();
           return !keyword || textWithDilution.includes(keyword);
         })
-        .sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+        .sort((a, b) => b.date.localeCompare(a.date) || recordCreatedAtValue(b) - recordCreatedAtValue(a));
     }
 
     function renderTable() {
@@ -9870,6 +10168,27 @@
         '"': "&quot;",
         "'": "&#039;"
       }[char]));
+    }
+
+    function summaryToggleHtml() {
+      return `<span class="summary-toggle" aria-hidden="true"><span class="details-toggle-open">展开</span><span class="details-toggle-close">收起</span></span>`;
+    }
+
+    function syncDetailsToggleState(root = document) {
+      root.querySelectorAll("details > summary .summary-toggle").forEach(toggle => {
+        const details = toggle.closest("summary")?.parentElement;
+        if (!(details instanceof HTMLDetailsElement)) return;
+        const openLabel = toggle.querySelector(".details-toggle-open");
+        const closeLabel = toggle.querySelector(".details-toggle-close");
+        if (openLabel) {
+          openLabel.hidden = details.open;
+          openLabel.setAttribute("aria-hidden", details.open ? "true" : "false");
+        }
+        if (closeLabel) {
+          closeLabel.hidden = !details.open;
+          closeLabel.setAttribute("aria-hidden", details.open ? "false" : "true");
+        }
+      });
     }
 
     function resetForm() {
@@ -10097,13 +10416,22 @@
       if (activePage === "plant-lifecycle" && currentLifecyclePlantId) {
         const plant = appData.plants.find(item => item.id === currentLifecyclePlantId);
         if (plant && els.plantLifecycleContent) {
-          activeLifecycleStageName = getPlantLifecycleStage(plant) || "";
+          const lifecycleGuide = lifecycleGuideForPlant(plant);
+          const rememberedStage = lifecycleStageMemory.get(plant.id) || activeLifecycleStageName;
+          const hasManualActiveStage = lifecycleGuide.some(stage => stage.name === rememberedStage);
+          if (!hasManualActiveStage) {
+            activeLifecycleStageName = getPlantLifecycleStage(plant) || "";
+            lifecycleStageMemory.set(plant.id, activeLifecycleStageName);
+          } else {
+            activeLifecycleStageName = rememberedStage;
+          }
           els.plantLifecycleContent.innerHTML = renderPlantLifecyclePage(plant);
           if (els.plantLifecycleTitle) {
             els.plantLifecycleTitle.textContent = `${plant.name || "植物"} · 生长阶段`;
           }
         }
       }
+      syncDetailsToggleState();
     }
 
     els.form.addEventListener("submit", event => {
@@ -10299,9 +10627,9 @@
         });
         saveData();
         renderAll();
-        renderPlantDetail(plant.id);
+        renderPlantDetail(plant.id, false);
         activatePlantDetailTab("album");
-        switchPage("plant-detail", true);
+        switchPage("plant-detail", false);
       } catch (error) {
         alert(error.message || "图片处理失败");
       } finally {
@@ -10330,6 +10658,11 @@
         : null;
       const photo = plantPhotoCleared ? "" : (plantPhotoBase64 || existing?.photo || "");
       const status = els.plantHealth.value === "死亡" ? "健康" : (els.plantHealth.value || "健康");
+      const seedlingMode = els.plantSeedling?.value || "auto";
+      const growthAgeDays = els.plantGrowthAge?.value === "" ? null : Math.max(0, Number(els.plantGrowthAge.value) || 0);
+      const growthStartDate = growthAgeDays === null
+        ? (existing?.growthStartDate || "")
+        : addDays(today(), -growthAgeDays);
       const plant = normalizePlant({
         id,
         name,
@@ -10344,6 +10677,8 @@
         deathReason: "",
         purchaseDate: els.plantPurchaseDate.value || today(),
         purchasePrice: els.plantPurchasePrice.value === "" ? "" : Number(els.plantPurchasePrice.value),
+        seedlingMode,
+        growthStartDate: seedlingMode === "yes" && growthAgeDays === null ? today() : growthStartDate,
         createdAt: existing?.createdAt || new Date().toISOString(),
         note: els.plantNote.value.trim()
       });
@@ -10357,14 +10692,18 @@
       generateAutoTasksForPlant(plant);
       saveData();
       renderAll();
-      closePlantModal();
-      switchPage(plant.isDead ? "memorial" : "home");
+      returnAfterPlantSave(plant);
     });
     els.viewTasks.addEventListener("click", () => switchPage("tasks"));
-    els.viewAdvice.addEventListener("click", () => switchPage("records"));
+    els.viewAdvice.addEventListener("click", () => switchPage("advice"));
     els.plantDetailBack.addEventListener("click", goBack);
     els.plantEncyclopediaBack?.addEventListener("click", goBack);
     els.plantLifecycleBack?.addEventListener("click", goBack);
+    document.addEventListener("toggle", event => {
+      if (event.target instanceof HTMLDetailsElement) {
+        syncDetailsToggleState(event.target.parentElement || document);
+      }
+    }, true);
     els.plantLifecycleContent?.addEventListener("click", event => {
       const summary = event.target.closest(".lifecycle-stage-card > summary");
       if (!summary) return;
@@ -10372,6 +10711,9 @@
       const card = summary.closest(".lifecycle-stage-card");
       if (!card) return;
       activeLifecycleStageName = card.dataset.lifecycleStage || "";
+      if (currentLifecyclePlantId && activeLifecycleStageName) {
+        lifecycleStageMemory.set(currentLifecyclePlantId, activeLifecycleStageName);
+      }
       els.plantLifecycleContent.querySelectorAll(".lifecycle-stage-card").forEach(item => {
         const active = item === card;
         item.classList.toggle("active", active);
