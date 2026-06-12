@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
@@ -3463,6 +3463,11 @@
         </div>
 
         <div class="field">
+          <label for="varietyInput">品种</label>
+          <select id="varietyInput"></select>
+        </div>
+
+        <div class="field">
           <label for="plantingInput">种植方式</label>
           <select id="plantingInput">
             <option value="盆栽">盆栽</option>
@@ -3514,6 +3519,14 @@
           <label for="dilutionInput">稀释比例</label>
           <select id="dilutionInput"></select>
           <input class="custom-input" id="customDilutionInput" type="text" placeholder="输入其他稀释比例">
+        </div>
+
+        <div class="field custom-input" id="fertilizerMethodField">
+          <label for="fertilizerMethodInput">施用方式</label>
+          <select id="fertilizerMethodInput">
+            <option value="灌根">灌根</option>
+            <option value="叶喷">叶喷</option>
+          </select>
         </div>
 
         <div class="field">
@@ -5115,6 +5128,8 @@
     const lifecycleStageMemory = new Map();
     let plantModalReturnPage = "home";
     let plantModalReturnDetailTab = "growth";
+    let plantGrowthAgeInitialValue = "";
+    let plantGrowthStartDateInitial = "";
     let plantPhotoBase64 = "";
     let plantPhotoCleared = false;
     let calendarCursor = today().slice(0, 7);
@@ -5143,6 +5158,8 @@
       dilutionField: document.getElementById("dilutionField"),
       dilution: document.getElementById("dilutionInput"),
       customDilution: document.getElementById("customDilutionInput"),
+      fertilizerMethodField: document.getElementById("fertilizerMethodField"),
+      fertilizerMethod: document.getElementById("fertilizerMethodInput"),
       growth: document.getElementById("growthInput"),
       formAdvice: document.getElementById("formAdviceBox"),
       pestPanel: document.getElementById("pestPanel"),
@@ -5394,6 +5411,7 @@
         amount: record.amount || "",
         fertilizer: record.fertilizer || "",
         dilution: record.dilution || "",
+        fertilizerMethod: record.type === "施肥" ? (record.fertilizerMethod || "灌根") : "",
         note: record.note || "",
         photo: record.photo || "",
         createdAt: record.createdAt || Date.now()
@@ -6457,6 +6475,9 @@
 
     function applyPlantStatus(plant, status, date = today(), reason = "") {
       if (!plant) return plant;
+      if ((plant.isDead || plant.status === "死亡") && status !== "死亡") {
+        return plant;
+      }
       const value = growthStageOptions.includes(status) || plantStatuses.includes(status) ? status : "健康";
       const isStatusValue = plantStatuses.includes(value);
       const isStageOnly = growthStageOptions.includes(value) && !isStatusValue;
@@ -6484,23 +6505,13 @@
       return plant;
     }
 
-    function togglePlantDeathFields() {
-      const isDead = els.plantHealth?.value === "死亡";
-      els.plantDeathFields?.classList.toggle("show", isDead);
-      if (isDead && els.plantDeathDate && !els.plantDeathDate.value) {
-        els.plantDeathDate.value = today();
-      }
-      if (!isDead) {
-        if (els.plantDeathDate) els.plantDeathDate.value = "";
-        if (els.plantDeathReason) els.plantDeathReason.value = "";
-      }
-    }
-
     function resetPlantForm() {
       plantPhotoBase64 = "";
       plantPhotoCleared = false;
       els.plantForm.reset();
       els.plantId.value = "";
+      plantGrowthAgeInitialValue = "";
+      plantGrowthStartDateInitial = "";
       renderStatusOptions(els.plantHealth, "健康");
       if (els.plantCategory) {
         els.plantCategory.value = "无";
@@ -6532,7 +6543,10 @@
         els.plantPurchaseDate.value = normalized.purchaseDate || "";
         els.plantPurchasePrice.value = normalized.purchasePrice ?? "";
         if (els.plantSeedling) els.plantSeedling.value = normalized.seedlingMode || "auto";
-        if (els.plantGrowthAge) els.plantGrowthAge.value = growthAgeOptionValue(normalized);
+        const growthAgeValue = growthAgeOptionValue(normalized);
+        plantGrowthAgeInitialValue = growthAgeValue;
+        plantGrowthStartDateInitial = normalized.growthStartDate || "";
+        if (els.plantGrowthAge) els.plantGrowthAge.value = growthAgeValue;
         els.plantNote.value = normalized.note || "";
         previewPlantPhoto(plantPhotoBase64);
       } else {
@@ -6578,7 +6592,7 @@
         return;
       }
       if (plantModalReturnPage === "plant-lifecycle") {
-        openPlantLifecycle(plant.id, lifecycleStageMemory.get(plant.id) || activeLifecycleStageName, false);
+        openPlantLifecycle(plant.id, lifecycleStageMemory.get(plant.id) || getPlantLifecycleStage(plant), false);
         return;
       }
       switchPage(plantModalReturnPage || "home", false);
@@ -6589,13 +6603,22 @@
       if (!plant) return;
       const ok = confirm("确定要永久删除这株植物吗？这会同时删除它的任务和记录。");
       if (!ok) return;
+      const contextualPages = ["plant-detail", "plant-encyclopedia", "plant-lifecycle"];
+      const shouldReturnByHistory = contextualPages.includes(activePage);
       appData.plants = appData.plants.filter(item => item.id !== plantId);
       appData.tasks = (appData.tasks || []).filter(task => task.plantId !== plantId);
       records = records.filter(record => record.plantId !== plantId);
+      lifecycleStageMemory.delete(plantId);
+      if (currentLifecyclePlantId === plantId) currentLifecyclePlantId = "";
+      if (currentEncyclopediaPlantId === plantId) currentEncyclopediaPlantId = "";
+      if (selectedPlantId === plantId) selectedPlantId = "";
       saveData();
-      selectedPlantId = "";
+      if (shouldReturnByHistory) {
+        goBack();
+      } else {
+        switchPage(activePage || "home", false);
+      }
       renderAll();
-      switchPage("home");
     }
 
     function compressImageToBase64(file) {
@@ -6846,6 +6869,109 @@
       renderRecipeOptions();
     }
 
+    const fertilizerAdvice = {
+      葡萄: {
+        缓苗期: {
+          灌根: { formula: "黄腐酸钾 0.3-0.5g/L + 海藻精 0.5-1ml/L", frequency: "7天一次", effect: "以缓苗、促根、稳梢为主", caution: "刚移栽或根系受伤时不加高氮高盐肥。" },
+          叶喷: { formula: "海藻精 0.5-1ml/L + 微量元素 0.5g/L", frequency: "5-7天一次", effect: "减轻缓苗应激，帮助叶片恢复", caution: "傍晚喷施，避免正午强光和连续阴雨。" }
+        },
+        幼苗期: {
+          灌根: { formula: "硫酸铵 0.5g/L + 鱼蛋白 1ml/L + 黄腐酸钾 0.3g/L", frequency: "7-10天一次", effect: "轻促根、轻提苗，避免徒长", caution: "第一年先养根养蔓，不急着催花催果。" },
+          叶喷: { formula: "海藻精 1ml/L + 螯合多微元素肥 0.5-1g/L", frequency: "5-7天一次", effect: "促进叶片展开和新梢整齐", caution: "叶喷只做辅助，和灌根至少间隔 24 小时。" }
+        },
+        萌芽: {
+          灌根: { formula: "硫酸铵 1g/L + 鱼蛋白 2ml/L + 矿源黄腐酸钾 0.5g/L", frequency: "7天一次", effect: "促进根系和新梢生长", caution: "基质过干先补清水，避免直接浓肥贴根。" },
+          叶喷: { formula: "海藻精 1ml/L + 螯合多微元素肥 1g/L", frequency: "5-7天一次", effect: "促进叶片展开和芽体整齐", caution: "傍晚喷施，嫩叶先小范围试喷。" }
+        },
+        花前: {
+          灌根: { formula: "鱼蛋白 1-2ml/L + 硫酸钾 0.5g/L + 钙镁硼锌铁中量元素水溶肥 0.5g/L", frequency: "7-10天一次", effect: "稳花序、促授粉、提坐果基础", caution: "避免大水大肥，控氮防徒长。" },
+          叶喷: { formula: "磷酸二氢钾 0.5-1g/L + 海藻精 0.5ml/L + 螯合多微元素肥 0.5g/L", frequency: "5-7天一次", effect: "花前补磷钾和硼锌，减少落花", caution: "花开正盛时减量，避免反复喷花。" }
+        },
+        坐果期: {
+          灌根: { formula: "硫酸钾 0.8-1g/L + 鱼蛋白 1-2ml/L + 钙镁硼锌铁中量元素水溶肥 0.5g/L", frequency: "7天一次", effect: "稳果防落果，兼顾钙镁补充", caution: "保持水分稳定，不要忽干忽湿。" },
+          叶喷: { formula: "磷酸二氢钾 0.8g/L + 钙镁硼锌铁中量元素水溶肥 0.5g/L", frequency: "5-7天一次", effect: "辅助幼果稳果和叶片功能维持", caution: "高温天降浓度，花穗湿度大时暂停。" }
+        },
+        膨大期: {
+          灌根: { formula: "硫酸钾 1g/L + 鱼蛋白 2ml/L + 矿源黄腐酸钾 0.3-0.5g/L", frequency: "7-10天一次", effect: "稳果膨果、补钾增糖", caution: "控氮，避免裂果和徒长。" },
+          叶喷: { formula: "磷酸二氢钾 1g/L + 钙镁硼锌铁中量元素水溶肥 0.5g/L", frequency: "5-7天一次", effect: "辅助膨果和叶片保持功能", caution: "叶喷与灌根分开 24-48 小时。" }
+        },
+        转色期: {
+          灌根: { formula: "硫酸钾 0.5-0.8g/L + 鱼蛋白 1ml/L", frequency: "7-10天一次", effect: "高钾低氮，提高着色和糖度", caution: "适当控水，避免大水导致裂果或寡淡。" },
+          叶喷: { formula: "磷酸二氢钾 0.8-1g/L", frequency: "5-7天一次", effect: "辅助着色与提升风味", caution: "不要与强碱性药剂混喷。" }
+        }
+      },
+      蓝莓: {
+        缓苗期: {
+          灌根: { formula: "海藻精 0.5-1ml/L + 矿源黄腐酸钾 0.3g/L", frequency: "7-10天一次", effect: "缓苗稳根，减轻移栽应激", caution: "蓝莓怕高盐，缓苗期不要急着上浓肥。" },
+          叶喷: { formula: "海藻精 0.5ml/L", frequency: "5-7天一次", effect: "帮助叶片恢复和新梢启动", caution: "弱苗只低浓度喷施，避免连续重喷。" }
+        },
+        幼苗期: {
+          灌根: { formula: "硫酸铵 0.3-0.5g/L + 黄腐酸钾 0.3g/L", frequency: "7-10天一次", effect: "少量多次补氮，先养根养冠", caution: "检查 pH 4.5-5.5，避免高盐复合肥。" },
+          叶喷: { formula: "海藻精 0.5-1ml/L + 螯合多微元素肥 0.3-0.5g/L", frequency: "5-7天一次", effect: "温和提苗，辅助叶色恢复", caution: "嫩叶易敏感，先试喷再全株应用。" }
+        },
+        萌芽: {
+          灌根: { formula: "硫酸铵 0.5g/L + 黄腐酸钾 0.5g/L", frequency: "7-10天一次", effect: "促进萌芽与新根活性", caution: "宁淡勿浓，基质长期潮湿时暂停。" },
+          叶喷: { formula: "海藻精 1ml/L", frequency: "5-7天一次", effect: "帮助萌芽整齐和叶片展开", caution: "避免与高盐微肥同次叠加。" }
+        },
+        缺铁: {
+          灌根: { formula: "螯合铁 1g/L", frequency: "10天一次", effect: "调节黄化叶，优先处理根区铁吸收", caution: "先检查 pH 是否偏高，碱性水源先纠正。" },
+          叶喷: { formula: "螯合铁 0.5g/L", frequency: "傍晚喷施，连喷 2-3 次复查", effect: "快速缓解新叶黄化", caution: "避免强光和高温时喷施。" }
+        },
+        花前: {
+          灌根: { formula: "硫酸铵 0.3g/L + 硫酸钾 0.3-0.5g/L + 海藻精 0.5ml/L", frequency: "7-10天一次", effect: "稳花芽、提花质", caution: "蓝莓怕浓肥，花前肥水都要轻。" },
+          叶喷: { formula: "海藻精 0.5ml/L + 螯合多微元素肥 0.3g/L", frequency: "5-7天一次", effect: "辅助开花整齐，缓和缺素", caution: "花开正盛时减量或暂停。" }
+        },
+        膨大期: {
+          灌根: { formula: "硫酸钾 0.3-0.5g/L + 硫酸镁或钙镁硼锌铁中量元素水溶肥 0.3g/L + 黄腐酸钾 0.3g/L", frequency: "7-10天一次", effect: "稳果膨果，兼顾镁和根系活力", caution: "保持水分稳定，避免大水稀释风味。" },
+          叶喷: { formula: "磷酸二氢钾 0.5g/L + 海藻精 0.5ml/L", frequency: "5-7天一次", effect: "辅助果实发育和叶片保持功能", caution: "蓝莓叶片薄，浓度偏低更安全。" }
+        }
+      },
+      番茄: {
+        缓苗期: {
+          灌根: { formula: "海藻精 0.5-1ml/L + 黄腐酸钾 0.3g/L", frequency: "5-7天后再开始", effect: "控肥促根，帮助移栽恢复", caution: "缓苗前几天不急施肥，先稳根。" },
+          叶喷: { formula: "海藻精 0.5ml/L + 微量元素 0.5g/L", frequency: "5-7天一次", effect: "减轻移栽应激", caution: "新叶未恢复时只低浓度试喷。" }
+        },
+        萌芽: {
+          灌根: { formula: "鱼蛋白 1ml/L + 平衡水溶肥 0.5-0.8g/L", frequency: "7天一次", effect: "带动根系和枝叶起势", caution: "避免纯高氮导致徒长。" },
+          叶喷: { formula: "海藻精 0.5ml/L + 螯合多微元素肥 0.5g/L", frequency: "5-7天一次", effect: "促进叶片舒展", caution: "高温正午不要喷。" }
+        },
+        花前: {
+          灌根: { formula: "磷酸二氢钾 0.5g/L + 钙镁硼锌铁中量元素水溶肥 0.5g/L + 鱼蛋白 1ml/L", frequency: "7天一次", effect: "补磷钾和钙镁硼，为坐果打底", caution: "减少高氮，防徒长和落花。" },
+          叶喷: { formula: "磷酸二氢钾 0.5-0.8g/L + 螯合多微元素肥 0.5g/L", frequency: "5-7天一次", effect: "辅助花芽和花器质量", caution: "花期喷施避开盛花正午。" }
+        },
+        坐果期: {
+          灌根: { formula: "硫酸钾 0.8g/L + 钙镁硼锌铁中量元素水溶肥 0.5-1g/L", frequency: "5-7天一次", effect: "稳果、补钙、防脐腐", caution: "保持土壤湿度稳定，避免忽干忽湿。" },
+          叶喷: { formula: "磷酸二氢钾 0.8g/L + 钙镁硼锌铁中量元素水溶肥 0.5g/L", frequency: "5天一次", effect: "辅助坐果与钙镁补充", caution: "避免与铜制剂同喷。" }
+        },
+        膨大期: {
+          灌根: { formula: "硫酸钾 1g/L + 鱼蛋白 1-2ml/L + 钙镁硼锌铁中量元素水溶肥 0.5g/L", frequency: "5-7天一次", effect: "高钾膨果，补钙镁稳果", caution: "控氮，避免裂果和空心果。" },
+          叶喷: { formula: "磷酸二氢钾 1g/L + 钙镁硼锌铁中量元素水溶肥 0.5g/L", frequency: "5-7天一次", effect: "辅助着色和果面质量", caution: "果面将转色时降低喷施频率。" }
+        }
+      },
+      通用: {
+        缓苗期: {
+          灌根: { formula: "海藻精 0.5-1ml/L + 黄腐酸钾 0.3g/L", frequency: "7天一次", effect: "先缓苗促根，避免强刺激", caution: "不施浓肥、不暴晒、不积水。" },
+          叶喷: { formula: "海藻精 0.5ml/L + 微量元素 0.3-0.5g/L", frequency: "5-7天一次", effect: "缓和应激，帮助叶片恢复", caution: "傍晚喷施，连续阴雨暂停。" }
+        },
+        幼苗期: {
+          灌根: { formula: "鱼蛋白 1ml/L + 黄腐酸钾 0.3g/L", frequency: "7-10天一次", effect: "轻肥勤施，以根系建立为先", caution: "幼苗期宁淡勿浓，避免徒长。" },
+          叶喷: { formula: "海藻精 0.5ml/L + 微量元素 0.5g/L", frequency: "5-7天一次", effect: "辅助叶片和新芽恢复", caution: "叶喷只做辅助，不替代根部管理。" }
+        },
+        开花: {
+          灌根: { formula: "鱼蛋白 1ml/L + 硫酸钾 0.5g/L", frequency: "7-10天一次", effect: "稳花、稳势、减少生殖生长压力", caution: "开花盛期不大水大肥。" },
+          叶喷: { formula: "磷酸二氢钾 0.5g/L + 微量元素 0.3-0.5g/L", frequency: "5-7天一次", effect: "辅助花器质量和开花整齐", caution: "高温和强光时不喷。" }
+        },
+        膨大期: {
+          灌根: { formula: "硫酸钾 0.8-1g/L + 黄腐酸钾 0.3g/L", frequency: "7天一次", effect: "补钾稳果，支持膨大", caution: "果实阶段保持水分稳定。" },
+          叶喷: { formula: "磷酸二氢钾 0.8g/L", frequency: "5-7天一次", effect: "叶面快速补钾", caution: "叶喷与灌根分开安排。" }
+        },
+        缺铁: {
+          灌根: { formula: "螯合铁 1g/L", frequency: "7-10天一次", effect: "优先纠正缺铁黄化", caution: "先检查 pH、积水和根系状态。" },
+          叶喷: { formula: "螯合铁 0.5g/L", frequency: "傍晚喷施", effect: "快速缓解新叶黄化", caution: "避免强光暴晒时喷施。" }
+        }
+      }
+    };
+
     function profileForRule(rule, growth) {
       if (growth.level === "skip") return formulaProfiles.organic;
       if (rule.need.includes("高钾肥")) return `${formulaProfiles.highK} ${formulaProfiles.calMag}`;
@@ -6875,9 +7001,16 @@
       }).filter(Boolean);
     }
 
-    function doseForPlan(rule, growth, application, planting = els.planting.value) {
+    function doseForPlan(rule, growth, application, planting = els.planting.value, method = "") {
       const low = growth.level === "feed" ? "从 0.5-1 克/升试起" : "按 1 克/升以内";
-      if (application.startsWith("叶喷优先")) return `${low}，叶喷 1:1500-1:2000，傍晚喷叶背到湿而不滴；若还要灌根，至少间隔 24 小时，弱苗或高温间隔 48 小时。`;
+      if (method === "叶喷" || application.startsWith("叶喷优先") || application.startsWith("叶喷：")) {
+        return `${low}，叶喷 1:1500-1:2000，傍晚喷叶背到湿而不滴；若还要灌根，至少间隔 24 小时，弱苗或高温间隔 48 小时。`;
+      }
+      if (method === "灌根") {
+        return planting === "地栽"
+          ? `${low}，灌根 1:800-1:1200；地栽沿根区外缘少量施入，施后补清水。`
+          : `${low}，灌根 1:1200-1:1500；盆栽宁淡勿浓，沿盆边慢浇。`;
+      }
       if (rule.need.includes("有机肥")) return "灌根或浅埋后浇透；菌剂、海藻、黄腐酸单独低浓度更稳；叶喷另选海藻/氨基酸/螯合微量元素，和灌根间隔 24-48 小时。";
       return planting === "地栽"
         ? `${low}，灌根 1:800-1:1200；地栽沿根区外缘少量施入。叶喷辅助时 1:1500，和灌根间隔 24 小时。`
@@ -6903,8 +7036,9 @@
       return formatGram((planting === "地栽" ? 1 : 0.5) * ratio);
     }
 
-    function dilutionForPlan(rule, growth, application, planting) {
-      if (application.startsWith("叶喷优先")) return planting === "地栽" ? "1:1500" : "1:2000";
+    function dilutionForPlan(rule, growth, application, planting, method = "") {
+      if (method === "叶喷" || application.startsWith("叶喷优先") || application.startsWith("叶喷：")) return planting === "地栽" ? "1:1500" : "1:2000";
+      if (method === "灌根") return planting === "地栽" ? "1:1000" : "1:1500";
       if (rule.need.includes("有机肥")) return "不稀释";
       return planting === "地栽" ? "1:1000" : "1:1500";
     }
@@ -7032,6 +7166,9 @@
         ? (cropRecords.find(record => record.planting)?.planting || "盆栽/地栽")
         : (els.planting.value || "盆栽");
       const temp = targetPlant ? "" : els.temperature.value;
+      const fertilizerMethod = targetPlant
+        ? (cropRecords.filter(record => record.type === "施肥").sort((a, b) => recordCreatedAtValue(b) - recordCreatedAtValue(a))[0]?.fertilizerMethod || "灌根")
+        : (selectedFertilizerMethodValue() || "灌根");
       const interval = safeFertilizerInterval(rule, growth, planting, temp);
       const decision = fertilizerDecision(
         crop,
@@ -7043,7 +7180,7 @@
         growth,
         interval
       );
-      return { crop, cropName: crop.name, rule, growth, planting, decision, interval, lifecycleStage, cropRecords, feed, water, temp, plant: targetPlant };
+      return { crop, cropName: crop.name, rule, growth, planting, decision, interval, lifecycleStage, cropRecords, feed, water, temp, plant: targetPlant, fertilizerMethod };
     }
 
     function actionGuidanceForDecision(context) {
@@ -7073,18 +7210,23 @@
           els.recipeGuidance.innerHTML = plants.map(plant => {
             const context = adviceRecipeContext(plant);
             const { crop, rule, growth, decision } = context;
-            const recipes = decision.recipe ? recipesForRule(rule, growth) : [];
-            const primary = recipes[0];
+            const smart = smartFertilizerAdvice(context);
             const stockAnalysis = analyzeFertilizerStockForRule(rule);
+            const intervalText = fertilizerMethodIntervalAdvice(context, smart.method);
             const openAttr = selectedAdvicePlantId === "全部" ? "" : " open";
+            const title = decision.recipe ? `${smart.method} · ${smart.stageKey || rule.stage}` : "本轮不配肥";
             return `
               <details class="plant-advice-item"${openAttr} style="--crop:${crop.color}">
-                <summary><span class="summary-title"><span>${escapeHtml(plantDisplayName(plant))}</span><span class="month-badge">${escapeHtml(primary?.name || "本轮不配肥")}</span></span>${summaryToggleHtml()}</summary>
+                <summary><span class="summary-title"><span>${escapeHtml(plantDisplayName(plant))}</span><span class="month-badge">${escapeHtml(title)}</span></span>${summaryToggleHtml()}</summary>
                 <div class="plant-advice-content">
                   <p class="recipe-detail"><strong>阶段：</strong>${escapeHtml(rule.stage)}；${escapeHtml(growth.text)}</p>
-                  <p class="recipe-detail"><strong>需求：</strong>${escapeHtml(rule.need.join("、"))}</p>
+                  <p class="recipe-detail"><strong>施用方式：</strong>${escapeHtml(smart.method)}；${escapeHtml(smart.suitable)}</p>
+                  <p class="recipe-detail"><strong>智能配方：</strong>${escapeHtml(decision.recipe ? (smart.formula || "当前阶段先低浓度观察") : decision.text || "当前先观察，不建议强行配肥。")}</p>
+                  <p class="recipe-detail"><strong>频率：</strong>${escapeHtml(smart.frequency || `${context.interval || rule.interval || 7} 天左右一次`)}</p>
+                  <p class="recipe-detail"><strong>作用：</strong>${escapeHtml(smart.effect || "按当前阶段补充营养，避免大肥大水。")}</p>
+                  <p class="recipe-detail"><strong>间隔提醒：</strong>${escapeHtml(intervalText)}</p>
+                  <p class="recipe-detail"><strong>注意：</strong>${escapeHtml(smart.caution || applicationAdvice(rule, growth, smart.method))}</p>
                   <p class="recipe-detail"><strong>库存匹配：</strong>${escapeHtml(stockAnalysis.text)}</p>
-                  <p class="recipe-detail"><strong>建议：</strong>${escapeHtml(primary ? recipeComponents(primary).map(item => item.name).join(" + ") || "先补齐主要材料" : decision.text || "当前先观察，不建议强行配肥。")}</p>
                 </div>
               </details>
             `;
@@ -7108,7 +7250,8 @@
       const context = adviceRecipeContext(plant);
       const { cropName, rule, growth, planting, decision, temp } = context;
       if (!decision.recipe) return [];
-      const application = applicationAdvice(rule, growth);
+      const method = context.fertilizerMethod || selectedFertilizerMethodValue() || "灌根";
+      const application = applicationAdvice(rule, growth, method);
       const stockAnalysis = analyzeFertilizerStockForRule(rule);
       const habit = cropHabitProfiles[cropName] || "按当前月份、生长状态和库存肥料做低浓度、少量多次的配肥。";
       const purchaseAdvice = purchaseAdviceText(stockAnalysis.missing, cropName);
@@ -7124,8 +7267,8 @@
         const parts = components.map(component => component.name);
         const ratios = components.map(component => `${component.name}${component.ratio ? ` ${component.ratio}` : ""}`);
         const profile = profileForRule(rule, growth);
-        const dose = doseForPlan(rule, growth, application, planting);
-        const dilution = dilutionForPlan(rule, growth, application, planting);
+        const dose = doseForPlan(rule, growth, application, planting, method);
+        const dilution = dilutionForPlan(rule, growth, application, planting, method);
         const items = components.map(component => ({
           name: component.name,
           amount: amountForComponent(component, recipe, planting),
@@ -7202,6 +7345,7 @@
       document.getElementById("fertilizerField").classList.toggle("custom-input", !isFeeding);
       document.getElementById("fertilizerField").classList.toggle("show", isFeeding);
       els.dilutionField.classList.toggle("show", false);
+      els.fertilizerMethodField.classList.toggle("show", isFeeding);
       els.measurementHeight.classList.toggle("show", isMeasurement);
       els.customAmount.classList.toggle("show", !isMeasurement && needsAmount && els.amount.value === "其他");
       els.customFertilizerRecord.classList.toggle("show", isFeeding);
@@ -7236,6 +7380,11 @@
       return selectedFertilizerItems()
         .map(item => `${item.name} ${item.dilution || "不稀释"}`)
         .join("；");
+    }
+
+    function selectedFertilizerMethodValue() {
+      if (els.type.value !== "施肥") return "";
+      return els.fertilizerMethod?.value || "灌根";
     }
 
     function selectedTemperatureValue() {
@@ -7929,7 +8078,7 @@
       const guide = lifecycleGuideForPlant(plant);
       const detected = activeLifecycleStage(plant);
       const rememberedStage = lifecycleStageMemory.get(plant.id) || "";
-      const activeName = rememberedStage || activeLifecycleStageName || detected?.name || "";
+      const activeName = rememberedStage || detected?.name || "";
       const active = guide.find(stage => stage.name === activeName) || detected || guide[0];
       const activeIndex = Math.max(0, guide.findIndex(stage => stage.name === active.name));
       const nextStage = guide[activeIndex + 1];
@@ -8848,7 +8997,7 @@
         return;
       }
       if (activePage === "plant-lifecycle") {
-        openPlantLifecycle(plant.id, activeLifecycleStageName, false);
+        openPlantLifecycle(plant.id, lifecycleStageMemory.get(plant.id) || getPlantLifecycleStage(plant), false);
         return;
       }
       if (activePage === "memorial") {
@@ -9293,6 +9442,7 @@
       return [
         record.amount,
         record.dilution,
+        record.fertilizerMethod,
         record.fertilizer,
         record.growth,
         record.pestDiagnosis ? pestDiagnosisText(record.pestDiagnosis) : "",
@@ -9311,6 +9461,7 @@
         type,
         amount: extra.amount || "",
         dilution: extra.dilution || "",
+        fertilizerMethod: extra.fertilizerMethod || "",
         fertilizer: extra.fertilizer || "",
         fertilizerItems: extra.fertilizerItems || [],
         growth: extra.growth || "健康",
@@ -9618,7 +9769,7 @@
       return recipeLibrary.filter(recipe => recipe.tags.includes("有机肥")).slice(0, 1);
     }
 
-    function renderRecipe(recipe, application, rule, growth) {
+    function renderRecipe(recipe, application, rule, growth, method = "") {
       const chosen = recipeComponents(recipe);
       const chosenNames = new Set(chosen.map(component => component.name));
       const parts = chosen.map(component => `${component.name} ${component.ratio}`);
@@ -9630,11 +9781,11 @@
         .map(component => component.role);
       const missingText = missing.length ? `缺口：${[...new Set(missing)].join("、")}` : "材料齐全";
       const profile = profileForRule(rule, growth);
-      const dose = doseForPlan(rule, growth, application);
+      const dose = doseForPlan(rule, growth, application, els.planting.value || "盆栽", method);
       const items = chosen.map(component => ({
         name: component.name,
         amount: amountForComponent(component, recipe, els.planting.value || "盆栽"),
-        dilution: dilutionForPlan(rule, growth, application, els.planting.value || "盆栽")
+        dilution: dilutionForPlan(rule, growth, application, els.planting.value || "盆栽", method)
       }));
       const rootPlan = rootPlanText(items, els.planting.value || "盆栽");
       const foliarPlan = foliarPlanText(items, rule, els.planting.value || "盆栽");
@@ -9723,8 +9874,130 @@
       return { level: "normal", text: "生长情况正常，按间隔和阶段判断即可。" };
     }
 
-    function applicationAdvice(rule, growth) {
+    function normalizeFertilizerAdviceCropName(cropName = "", plant = null) {
+      const source = `${cropName || ""} ${plant?.name || ""} ${plant?.category || ""} ${plant?.variety || ""}`.trim();
+      const inferred = typeof inferPlantCategory === "function" ? inferPlantCategory(source) : "";
+      const normalized = inferred && inferred !== "无" ? inferred : (cropName || plant?.category || plant?.name || "通用");
+      if (/葡萄/.test(normalized)) return "葡萄";
+      if (/蓝莓/i.test(normalized)) return "蓝莓";
+      if (/番茄|西红柿/i.test(normalized)) return "番茄";
+      return normalized;
+    }
+
+    function fertilizerAdviceStageKey(context) {
+      const stageText = [
+        context.lifecycleStage?.name,
+        context.rule?.stage,
+        context.growth?.status,
+        context.plant?.stage,
+        context.plant?.status
+      ].filter(Boolean).join(" ");
+      if (/缺铁|黄化/.test(stageText)) return "缺铁";
+      if (/缓苗|刚移栽|刚买回/.test(stageText)) return "缓苗期";
+      if (/幼苗|生根恢复|生根|展叶|小苗/.test(stageText)) return "幼苗期";
+      if (/萌芽|萌芽期/.test(stageText)) return "萌芽";
+      if (/花前|花苞|现蕾|花芽/.test(stageText)) return "花前";
+      if (/开花|授粉/.test(stageText)) return "开花";
+      if (/坐果|幼果/.test(stageText)) return "坐果期";
+      if (/膨大|膨果/.test(stageText)) return "膨大期";
+      if (/转色/.test(stageText)) return "转色期";
+      if (/成熟|采收/.test(stageText)) return "成熟期";
+      if (/休眠|越冬/.test(stageText)) return "休眠期";
+      return "";
+    }
+
+    function fallbackFertilizerAdvice(context, method) {
+      const rule = context.rule;
+      const needText = rule.need.join("、");
+      const isLeaf = method === "叶喷";
+      if (context.growth.level === "skip") {
+        return {
+          stage: fertilizerAdviceStageKey(context) || rule.stage,
+          suitable: "当前阶段不建议常规施肥",
+          formula: "暂缓施肥，先观察根系、病虫害或药害恢复",
+          frequency: "3-7 天后再评估",
+          effect: "优先稳根、控水、缓解胁迫",
+          caution: "恢复前不要强行上肥，尤其不要高浓度叶喷或灌根。"
+        };
+      }
+      return {
+        stage: fertilizerAdviceStageKey(context) || rule.stage,
+        suitable: `适合当前阶段，重点需求：${needText}`,
+        formula: isLeaf
+          ? "海藻精 0.5-1ml/L + 螯合多微元素肥 0.3-0.5g/L"
+          : "鱼蛋白 1ml/L + 黄腐酸钾 0.3g/L",
+        frequency: isLeaf ? "5-7 天一次" : "7-10 天一次",
+        effect: isLeaf ? "以叶面快速补充和缓和应激为主" : "以稳根、低浓度补肥为主",
+        caution: isLeaf
+          ? "傍晚喷施，避开高温强光，和灌根错开 24 小时以上。"
+          : "基质过干先补清水，宁淡勿浓，观察 2-3 天再决定是否加量。"
+      };
+    }
+
+    function smartFertilizerAdvice(context) {
+      const method = context.fertilizerMethod || "灌根";
+      const cropKey = normalizeFertilizerAdviceCropName(context.cropName, context.plant);
+      const stageKey = fertilizerAdviceStageKey(context);
+      const advice =
+        fertilizerAdvice[cropKey]?.[stageKey]?.[method]
+        || fertilizerAdvice.通用?.[stageKey]?.[method]
+        || fallbackFertilizerAdvice(context, method);
+      return {
+        cropKey,
+        stageKey: stageKey || context.rule.stage,
+        method,
+        suitable: advice.suitable || (context.growth.level === "skip" ? "当前阶段不适合施肥" : "适合当前阶段"),
+        formula: advice.formula,
+        frequency: advice.frequency,
+        effect: advice.effect,
+        caution: advice.caution
+      };
+    }
+
+    function fertilizerMethodIntervalAdvice(context, method) {
+      const usedMethod = method || context.fertilizerMethod || "灌根";
+      const cropRecords = context.cropRecords || records.filter(record => record.crop === context.cropName);
+      const feeds = cropRecords.filter(record => record.type === "施肥");
+      const same = latest(feeds.filter(record => (record.fertilizerMethod || "灌根") === usedMethod), record => true);
+      const oppositeName = usedMethod === "叶喷" ? "灌根" : "叶喷";
+      const opposite = latest(feeds.filter(record => (record.fertilizerMethod || "灌根") === oppositeName), record => true);
+      const temp = context.temp === "" || Number.isNaN(Number(context.temp)) ? "" : Number(context.temp);
+      const sameDays = daysBetween(same?.date);
+      const oppositeDays = daysBetween(opposite?.date);
+      const sameGap = usedMethod === "叶喷" ? 5 : 7;
+      const oppositeGap = 1;
+      const parts = [];
+      if (same?.date && sameDays < sameGap) {
+        parts.push(`上次${usedMethod}是 ${same.date}，只隔 ${sameDays} 天，建议再等 ${sameGap - sameDays} 天。`);
+      } else if (same?.date) {
+        parts.push(`同方式已间隔 ${sameDays} 天，时间窗口基本安全。`);
+      } else {
+        parts.push(`没有${usedMethod}记录，可从低浓度试用开始。`);
+      }
+      if (opposite?.date && oppositeDays < oppositeGap) {
+        parts.push(`昨天刚做过${oppositeName}，今天不要叠加${usedMethod}。`);
+      } else if (opposite?.date && oppositeDays <= 2) {
+        parts.push(`与${oppositeName}已错开 ${oppositeDays} 天，可以但浓度取低值。`);
+      }
+      if (usedMethod === "叶喷") {
+        parts.push("叶喷只喷到叶面湿润不滴水；嫩叶、病叶、高温强光时减半或暂停。");
+      } else {
+        parts.push("灌根前先确认盆土不积水；伤根、沤根、死亡状态禁止重肥。 ");
+      }
+      if (temp !== "" && temp >= 30) {
+        parts.push("当前偏热，施肥浓度建议减半，叶喷放到傍晚。 ");
+      }
+      return parts.join(" ");
+    }
+
+    function applicationAdvice(rule, growth, method = "") {
       if (growth.level === "skip") return "不施肥";
+      if (method === "叶喷") {
+        return "叶喷：低浓度、傍晚喷施、以叶背喷湿不滴水为准，避免高温和盛花正午。";
+      }
+      if (method === "灌根") {
+        return "灌根：先看盆土湿度，宁淡勿浓，沿盆边或根区外缘慢浇，施后补清水。";
+      }
       if (rule.need.includes("微量元素") || /叶片发黄|不开花|落花落果/.test(growth.status || "")) {
         return "叶喷优先，浓度取低值；高温、花开正盛时不要喷";
       }
@@ -9751,6 +10024,7 @@
 
     function renderFormAdvice() {
       if (!els.formAdvice) return;
+      const isFeeding = els.type.value === "施肥";
       const status = els.growth.value || "正常";
       const note = els.note.value || "";
       const rule = ruleForMonth(selectedCrop, currentMonth());
@@ -9762,13 +10036,34 @@
       const pestAdvice = status === "病害" || status === "虫害"
         ? pestControlAdvice(growth, note, currentPestDiagnosis())
         : "";
-      const show = status !== "正常" || note.trim() || els.temperature.value !== "";
+      const show = isFeeding || status !== "正常" || note.trim() || els.temperature.value !== "";
       els.formAdvice.classList.toggle("show", show);
       if (!show) {
         els.formAdvice.innerHTML = "";
         return;
       }
+      let advisorHtml = "";
+      if (isFeeding) {
+        const context = currentRecipeContext();
+        context.fertilizerMethod = selectedFertilizerMethodValue() || "灌根";
+        const advisor = smartFertilizerAdvice(context);
+        const application = applicationAdvice(context.rule, context.growth, advisor.method);
+        advisorHtml = `
+          <div class="recipe">
+            <p class="recipe-title">智能施肥顾问 v2</p>
+            <p class="recipe-detail"><strong>植物：</strong>${escapeHtml(context.cropName)} · <strong>阶段：</strong>${escapeHtml(advisor.stageKey)} · <strong>方式：</strong>${escapeHtml(advisor.method)}</p>
+            <p class="recipe-detail"><strong>是否适合当前阶段：</strong>${escapeHtml(advisor.suitable)}</p>
+            <p class="recipe-detail"><strong>推荐肥料：</strong>${escapeHtml(advisor.formula)}</p>
+            <p class="recipe-detail"><strong>使用频率：</strong>${escapeHtml(advisor.frequency)}</p>
+            <p class="recipe-detail"><strong>目标：</strong>${escapeHtml(advisor.effect)}</p>
+            <p class="recipe-detail"><strong>注意事项：</strong>${escapeHtml(advisor.caution)}</p>
+            <p class="recipe-detail"><strong>${escapeHtml(advisor.method)}指导：</strong>${escapeHtml(application)}</p>
+            <p class="recipe-detail"><strong>安全间隔：</strong>${escapeHtml(fertilizerMethodIntervalAdvice(context, advisor.method))}</p>
+          </div>
+        `;
+      }
       els.formAdvice.innerHTML = `
+        ${advisorHtml}
         <p><strong>生长分析：</strong>${escapeHtml(growth.text)}</p>
         <p><strong>养护建议：</strong>${escapeHtml(care)}</p>
         <p><strong>修剪建议：</strong>${escapeHtml(trim)}</p>
@@ -9995,7 +10290,9 @@
           growth.text = `${lifecycleStage.name}以稳根缓苗为主，暂不安排常规施肥。`;
         }
         const interval = safeFertilizerInterval(rule, growth, plantingText, currentTemp);
-        const appAdvice = applicationAdvice(rule, growth);
+        const selectedMethod = els.type.value === "施肥" ? (selectedFertilizerMethodValue() || "灌根") : (feed?.fertilizerMethod || "灌根");
+        const appAdvice = applicationAdvice(rule, growth, selectedMethod);
+        const methodSafety = fertilizerMethodIntervalAdvice({ cropName: crop.name, cropRecords, temp: currentTemp, fertilizerMethod: selectedMethod }, selectedMethod);
         const decision = fertilizerDecision(crop, rule, feedDays, waterDays, plantingText, available, growth, interval);
         const fertilizerText = decision.type === "feed" || decision.recipe
           ? (available
@@ -10004,7 +10301,7 @@
           : "本轮不施肥；先按上面的判断浇水、观察或补齐合适肥料。";
         const pestAdvice = pestControlAdvice(growth, currentNote, currentPest);
         const recipeHtml = decision.recipe
-          ? recipesForRule(rule, growth).map(recipe => renderRecipe(recipe, appAdvice, rule, growth)).join("")
+          ? recipesForRule(rule, growth).map(recipe => renderRecipe(recipe, appAdvice, rule, growth, selectedMethod)).join("")
           : `<div class="recipe"><p class="recipe-title">本轮不配肥</p><p class="recipe-detail">${escapeHtml(decision.text)}</p></div>`;
         const timingText = feedDays === Infinity
           ? "还没有施肥记录，可按少量试施开始。"
@@ -10030,6 +10327,7 @@
                 <p class="plan-line"><strong>养护：</strong>${escapeHtml(varietyCareText(crop.varieties))}</p>
                 <p class="plan-line"><strong>修剪：</strong>${escapeHtml(temperatureAdvice(currentTemp, crop.name, rule.stage))}</p>
                 <p class="plan-line"><strong>施用：</strong>${escapeHtml(appAdvice)}</p>
+                <p class="plan-line"><strong>间隔：</strong>${escapeHtml(methodSafety)}</p>
                 <p class="plan-line"><strong>病虫害：</strong>${escapeHtml(pestAdvice)}</p>
               </details>
             </div>
@@ -10101,6 +10399,7 @@
                   <span><strong>种植</strong> ${escapeHtml(record.planting || "盆栽")}</span>
                   <span><strong>用量</strong> ${escapeHtml(record.amount || "-")}</span>
                   <span><strong>稀释</strong> ${escapeHtml(record.dilution || "-")}</span>
+                  <span><strong>方式</strong> ${escapeHtml(record.fertilizerMethod || "-")}</span>
                   <span><strong>肥料</strong> ${escapeHtml(record.fertilizer || "-")}</span>
                   <span><strong>状态</strong> ${escapeHtml(record.growth || "健康")}${record.pestDiagnosis ? `<span class="record-subtext">${escapeHtml(pestDiagnosisText(record.pestDiagnosis))}</span>` : ""}</span>
                   <span><strong>气温</strong> ${tempText}</span>
@@ -10204,6 +10503,7 @@
       renderAmountOptions();
       renderDilutionOptions();
       renderRecordFertilizerOptions();
+      if (els.fertilizerMethod) els.fertilizerMethod.value = "灌根";
       renderGrowthOptions(els.growth, "健康");
       els.growth.value = "健康";
       setPestDiagnosis(null);
@@ -10226,6 +10526,7 @@
       renderAmountOptions();
       renderDilutionOptions();
       renderRecordFertilizerOptions();
+      if (els.fertilizerMethod) els.fertilizerMethod.value = "灌根";
       renderGrowthOptions(els.growth, "健康");
       els.growth.value = "健康";
       setPestDiagnosis(null);
@@ -10252,6 +10553,7 @@
       renderAmountOptions(amountParts.amount);
       renderDilutionOptions(amountParts.dilution);
       renderRecordFertilizerOptions(record.fertilizerItems || record.fertilizer || "");
+      if (els.fertilizerMethod) els.fertilizerMethod.value = record.fertilizerMethod || "灌根";
       renderGrowthOptions(els.growth, record.growth || "健康");
       setPestDiagnosis(record.pestDiagnosis);
       els.temperature.value = record.temperature ?? "";
@@ -10286,9 +10588,9 @@
     }
 
     function exportCsv() {
-      const rows = [["日期", "作物", "品种", "种植方式", "类型", "用量", "稀释比例", "肥料", "生长情况", "气温", "备注"]];
+      const rows = [["日期", "作物", "品种", "种植方式", "类型", "用量", "稀释比例", "施用方式", "肥料", "生长情况", "气温", "备注"]];
       getFilteredRecords().forEach(record => {
-        rows.push([record.date, record.crop, record.variety || defaultVariety(record.crop), record.planting || "盆栽", record.type, record.amount || "", record.dilution || "", record.fertilizer || "", record.growth || "健康", record.temperature ?? "", record.note || ""]);
+        rows.push([record.date, record.crop, record.variety || defaultVariety(record.crop), record.planting || "盆栽", record.type, record.amount || "", record.dilution || "", record.fertilizerMethod || "", record.fertilizer || "", record.growth || "健康", record.temperature ?? "", record.note || ""]);
       });
       const csv = rows.map(row => row.map(cell => `"${String(cell).replaceAll('"', '""')}"`).join(",")).join("\n");
       const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
@@ -10388,7 +10690,6 @@
       renderCropChoices();
       renderGrowthOptions(els.growth, els.growth?.value || "健康");
       renderStatusOptions(els.plantHealth, els.plantHealth?.value || "健康");
-      togglePlantDeathFields();
       renderFilters();
       renderHome();
       renderMaterials();
@@ -10417,13 +10718,12 @@
         const plant = appData.plants.find(item => item.id === currentLifecyclePlantId);
         if (plant && els.plantLifecycleContent) {
           const lifecycleGuide = lifecycleGuideForPlant(plant);
-          const rememberedStage = lifecycleStageMemory.get(plant.id) || activeLifecycleStageName;
+          const rememberedStage = lifecycleStageMemory.get(plant.id) || "";
+          const detectedStage = getPlantLifecycleStage(plant) || "";
           const hasManualActiveStage = lifecycleGuide.some(stage => stage.name === rememberedStage);
-          if (!hasManualActiveStage) {
-            activeLifecycleStageName = getPlantLifecycleStage(plant) || "";
+          activeLifecycleStageName = hasManualActiveStage ? rememberedStage : detectedStage;
+          if (activeLifecycleStageName) {
             lifecycleStageMemory.set(plant.id, activeLifecycleStageName);
-          } else {
-            activeLifecycleStageName = rememberedStage;
           }
           els.plantLifecycleContent.innerHTML = renderPlantLifecyclePage(plant);
           if (els.plantLifecycleTitle) {
@@ -10444,12 +10744,13 @@
         id: id || crypto.randomUUID(),
         plantId: plant.id,
         crop: plant.category || selectedCrop,
-        variety: plant.variety || defaultVariety(selectedCrop),
+        variety: plant.variety || els.variety?.value || defaultVariety(selectedCrop),
         planting: els.planting.value,
         date: els.date.value,
         type: els.type.value,
         amount: selectedAmountValue(),
         dilution: selectedDilutionValue(),
+        fertilizerMethod: selectedFertilizerMethodValue(),
         fertilizer: selectedFertilizerValue(),
         fertilizerItems,
         growth: els.growth.value,
@@ -10575,7 +10876,6 @@
     els.plantName.addEventListener("input", syncPlantCategoryFromName);
     els.plantName.addEventListener("change", syncPlantCategoryFromName);
     els.plantCategory.addEventListener("change", syncPlantNameFromCategory);
-    els.plantHealth.addEventListener("change", togglePlantDeathFields);
     els.photoLightboxClose.addEventListener("click", closePhotoLightbox);
     els.photoLightbox.addEventListener("click", event => {
       if (event.target === els.photoLightbox) closePhotoLightbox();
@@ -10659,10 +10959,12 @@
       const photo = plantPhotoCleared ? "" : (plantPhotoBase64 || existing?.photo || "");
       const status = els.plantHealth.value === "死亡" ? "健康" : (els.plantHealth.value || "健康");
       const seedlingMode = els.plantSeedling?.value || "auto";
-      const growthAgeDays = els.plantGrowthAge?.value === "" ? null : Math.max(0, Number(els.plantGrowthAge.value) || 0);
-      const growthStartDate = growthAgeDays === null
-        ? (existing?.growthStartDate || "")
-        : addDays(today(), -growthAgeDays);
+      const growthAgeRaw = els.plantGrowthAge?.value ?? "";
+      const growthAgeDays = growthAgeRaw === "" ? null : Math.max(0, Number(growthAgeRaw) || 0);
+      const growthAgeChanged = !isEditing || growthAgeRaw !== plantGrowthAgeInitialValue;
+      const growthStartDate = isEditing && !growthAgeChanged
+        ? (existing?.growthStartDate || plantGrowthStartDateInitial || "")
+        : (growthAgeDays === null ? (existing?.growthStartDate || "") : addDays(today(), -growthAgeDays));
       const plant = normalizePlant({
         id,
         name,
@@ -10678,7 +10980,7 @@
         purchaseDate: els.plantPurchaseDate.value || today(),
         purchasePrice: els.plantPurchasePrice.value === "" ? "" : Number(els.plantPurchasePrice.value),
         seedlingMode,
-        growthStartDate: seedlingMode === "yes" && growthAgeDays === null ? today() : growthStartDate,
+        growthStartDate: (!isEditing && seedlingMode === "yes" && growthAgeDays === null) ? today() : growthStartDate,
         createdAt: existing?.createdAt || new Date().toISOString(),
         note: els.plantNote.value.trim()
       });
@@ -10766,6 +11068,11 @@
     });
     els.recipe.addEventListener("change", applyRecipeOption);
     els.dilution.addEventListener("change", toggleCustomInputs);
+    els.fertilizerMethod?.addEventListener("change", () => {
+      renderRecipeOptions();
+      renderFormAdvice();
+      renderPlans();
+    });
     els.growth.addEventListener("change", () => {
       togglePestPanel();
       syncPestAction();
